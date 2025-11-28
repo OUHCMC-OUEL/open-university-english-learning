@@ -1,7 +1,8 @@
-import Input from './Components/DataEntry';
+import QuestionIcon from './components/Icon';
+import Input from './components/DataEntry';
 import { Flex } from 'antd'
-import { Details, Output } from './Components/DataDisplay'
-import Button_Start from './Components/button';
+import { Details, Output } from './components/DataDisplay'
+import Button_Start from './components/button';
 import { useState, useEffect } from 'react';
 import correctWriting from "./services"
 // import ThemeProvider from './components/ThemeProvider';
