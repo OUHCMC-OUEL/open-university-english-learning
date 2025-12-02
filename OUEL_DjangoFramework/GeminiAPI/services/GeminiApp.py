@@ -23,7 +23,8 @@ class GeminiContentAPI(APIView):
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
+            log(str(e))
             return Response(
-                {'error': str(e)},
+                {'error': '500_INTERNAL_SERVER_ERROR'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
