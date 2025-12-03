@@ -44,14 +44,13 @@ def GeminiGenerateContent(user_input, app_id):
             json_str = result[start:end]
             data = json.loads(json_str)
 
-            result = {
-                "output": data.get("output") or data.get("Output"),
+            return {
+                "result": normalize_field(data.get("result")),
                 "vocabulary": normalize_field(data.get("vocabulary")),
-                "grammar": normalize_field(data.get("grammar") or data.get("Grammar")),
-                "coherence": normalize_field(data.get("coherence") or data.get("Coherence")),
-                "parsed": True
+                "grammar": normalize_field(data.get("grammar")),
+                "coh": normalize_field(data.get("coh")),
+                "issues": data.get("issues", [])
             }
-            return result
 
         except Exception as e:
             raise ValueError(f"Định dạng JSON không hợp lệ: {str(e)}")

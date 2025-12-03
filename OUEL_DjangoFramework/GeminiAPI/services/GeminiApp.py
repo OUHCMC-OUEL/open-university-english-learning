@@ -18,12 +18,10 @@ class GeminiContentAPI(APIView):
 
             result = GeminiGenerateContent(data, app_id)
 
-            return Response({
-                'result': result,
-            }, status=status.HTTP_200_OK)
+            return Response(result, status=status.HTTP_200_OK)
 
         except Exception as e:
-            log(str(e))
+            print(str(e))
             return Response(
                 {'error': '500_INTERNAL_SERVER_ERROR'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
