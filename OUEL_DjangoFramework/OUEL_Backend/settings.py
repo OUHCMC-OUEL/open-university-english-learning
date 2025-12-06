@@ -3,11 +3,11 @@ from pathlib import Path
 # Env library
 from dotenv import load_dotenv
 import os, pymysql
-load_dotenv()
+project_folder = os.path.expanduser('/home/juniorT')  # adjust as appropriate
+load_dotenv(os.path.join(project_folder, '.env'))
 
 # Mysql library
 pymysql.install_as_MySQLdb()
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

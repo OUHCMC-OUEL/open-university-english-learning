@@ -1,0 +1,27 @@
+name: Deploy to PythonAnywhere
+
+on:
+  push:
+    branches: [ Django_DB ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ssh.pythonanywhere.com
+          username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
+          password: ${{ secrets.PYTHONANYWHERE_PASSWORD }}
+          script: |
+            cd ~/OUEJ_OpenUniversityEnglishProject
+            git pull origin Django_DB
+            touch /var/www/juniort_pythonanywhere_com_wsgi.py
+
+      - name: Reload web app via API
+        run: |
+          curl -X POST \
+            https://www.pythonanywhere.com/api/v0/user/${{ secrets.PYTHONANYWHERE_USERNAME }}/webapps/JuniorT.pythonanywhere.com/reload/ \
+            -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
