@@ -3,7 +3,7 @@ from pathlib import Path
 # Env library
 from dotenv import load_dotenv
 import os, pymysql
-project_folder = os.path.expanduser('~/JuniorT')  # adjust as appropriate
+project_folder = os.path.expanduser('~/JuniorT/')  # adjust as appropriate
 load_dotenv(os.path.join(project_folder, '.env'))
 
 # Mysql library
