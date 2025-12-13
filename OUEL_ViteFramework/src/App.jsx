@@ -1,9 +1,18 @@
+import Body from "./components/Body.jsx";
+import Chatbot from "./components/Chatbot.jsx";
 import DateTimer from "./components/DateTimer.jsx";
+import Footer from "./components/Footer.jsx";
+import Header from "./components/Header.jsx";
 
 function App() {
   return (
     <>
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-[#1e90ff] to-[#8a2be2] bg-fixed bg-no-repeat font-geist">
+      <Header/>
+      <Body/>
+      <Footer/>
+      <Chatbot/>
+      
+      {/* <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-[#1e90ff] to-[#8a2be2] bg-fixed bg-no-repeat font-geist">
         <DateTimer />
         <main className="flex w-full max-w-[95%] flex-col items-center justify-center rounded-2xl border-4 border-brand bg-white px-[30px] py-[60px] max-md:px-6 max-md:py-12">
           <div className="flex w-full flex-row items-center justify-center gap-10 max-md:flex-col">
@@ -68,7 +77,7 @@ function App() {
             </p>
           </div>
         </main>
-      </div>
+      </div> */}
     </>
   );
 }

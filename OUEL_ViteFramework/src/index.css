@@ -7,3 +7,9 @@
     --color-primary-dark: #0d0d0d;
 }
 
+
+.darkModeEnabled {
+     background-color: rgb(12, 12, 23);
+     color: white;
+   }
+
