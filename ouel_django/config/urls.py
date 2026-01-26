@@ -1,3 +1,4 @@
+from django.views.generic import TemplateView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from django.urls import path, re_path, include
@@ -31,6 +32,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
+    path('', TemplateView.as_view(template_name='index.html'), name='home'),
     path("admin/", admin_site.urls),
     path('o/', include('oauth2_provider.urls',
                        namespace='oauth2_provider')),

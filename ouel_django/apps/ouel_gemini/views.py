@@ -1,10 +1,10 @@
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from . import serializers, selectors, managers
+from . import serializers, selectors, services
 
 class WritingAppView(viewsets.ViewSet):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     @action(methods=['post'], url_path='grammar', detail=False)
     def correct_grammar(self, request):
@@ -15,7 +15,7 @@ class WritingAppView(viewsets.ViewSet):
         try:
             prompt = selectors.get_active_prompt(name="Tìm thông tin giảng viên hướng dẫn")
 
-            result = managers.grammar_correction(
+            result = services.grammar_correction(
                 input=user_input,
                 prompt=prompt
             )
@@ -32,6 +32,6 @@ class WritingAppView(viewsets.ViewSet):
 class ReadingAppView(viewsets.ViewSet):
     permission_classes = [permissions.AllowAny]
 
-    @action(methods=['post'], url_path='',detail=False)
+    @action(methods=['post'], url_path='tips',detail=False)
     def get_reading_tips(self, request):
         pass

@@ -7,14 +7,24 @@ from .models import User
 class UserView(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = serializers.UserSerializer
-    parser_classes = [parsers.MultiPartParser,]
+    parser_classes = [parsers.MultiPartParser,parsers.JSONParser, parsers.FormParser,]
 
     @action(methods=['get', 'patch'], url_path='current-user',detail=False, permission_classes=[permissions.IsAuthenticated])
     def get_current_user(self, request):
         user = request.user
+        user_fields = {'first_name', 'last_name', 'email', 'avatar'}
+        profile_fields = {'biography', 'about', 'level', 'hobbies'}
         if request.method.__eq__('PATCH'):
-            s = serializers.UserSerializer(user,data=request.data, partial=True)
+            user_data = {k: v for k, v in request.data.items() if k in user_fields}
+            profile_data = {k: v for k, v in request.data.items() if k in profile_fields}
+
+            s = serializers.UserSerializer(user,data=user_data,partial=True)
             s.is_valid(raise_exception=True)
             s.save()
+
+            if profile_data:
+                p = serializers.ProfileSerializer(user, data=profile_data, partial=True)
+                p.is_valid(raise_exception=True)
+                p.save()
 
         return Response(serializers.UserSerializer(user).data, status=status.HTTP_200_OK)

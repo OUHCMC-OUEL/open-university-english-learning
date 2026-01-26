@@ -28,7 +28,6 @@ class AIModel(BaseModel):
     class Meta:
         verbose_name = "Model"
 
-
 class Prompt(BaseModel):
     name = models.CharField(max_length=255)
     version = models.PositiveIntegerField(default=1)

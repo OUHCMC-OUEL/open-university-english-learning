@@ -1,0 +1,30 @@
+{% extends "admin/login.html" %}
+{% load static %}
+
+{% block title %}Đăng nhập{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'home' %}" style="color: white; font-weight: bold">
+        Open University English Learning
+    </a>
+</h1>
+{% endblock %}
+
+{% block content_title %}
+    <div class="social-login-buttons">
+       <form method="post" action="{% url 'google_login' %}">
+            {% csrf_token %}
+            <button type="submit" class="google-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo">
+                 Đăng nhập bằng google
+            </button>
+        </form>
+        <div class="separator"><span>Hoặc</span></div>
+    </div>
+{% endblock %}

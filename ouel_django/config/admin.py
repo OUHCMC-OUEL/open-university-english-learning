@@ -35,6 +35,7 @@ class OUELAdminSite(admin.AdminSite):
         return app_list
 
 admin_site = OUELAdminSite(name='OUEL')
+
 admin_site.register(Group, GroupAdmin)
 admin_site.register(Application, OUELApplicationAdmin)
 admin_site.register(AccessToken, AccessTokenAdmin)
