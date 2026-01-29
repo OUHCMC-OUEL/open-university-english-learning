@@ -16,7 +16,7 @@ class WritingAppView(viewsets.ViewSet):
             prompt = selectors.get_active_prompt(name="Tìm thông tin giảng viên hướng dẫn")
 
             result = services.grammar_correction(
-                input=user_input,
+                user_input=user_input,
                 prompt=prompt
             )
 
@@ -30,8 +30,20 @@ class WritingAppView(viewsets.ViewSet):
 
 
 class ReadingAppView(viewsets.ViewSet):
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.IsAuthenticated]
 
-    @action(methods=['post'], url_path='tips',detail=False)
-    def get_reading_tips(self, request):
-        pass
+    @action(methods=['post'], url_path='highlight-passage', detail=False)
+    def highlight(self, request):
+        passage = request.data.get("passage")
+        question = request.data.get("question")
+
+        if not passage or not question:
+            return Response({"error": "Thiếu thông tin câu hỏi hoặc đoạn văn"}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            highlight_object = services.highlight_passage(passage=passage,question=question)
+            return Response(highlight_object)
+        except Exception as ex:
+            print(ex)
+            return Response({"error": "Gemini API error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

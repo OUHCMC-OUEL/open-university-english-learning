@@ -48,7 +48,7 @@ class UserSerializer(serializers.ModelSerializer):
                 ProfileManager.create_profile(user=user)
                 return user
         except:
-            raise ValidationError("Có lỗi trong việc tạo người dùng")
+            raise ValidationError({"detail": "Có lỗi trong việc tạo người dùng"})
 
     def update(self, instance, validated_data):
         keys = set(validated_data.keys())

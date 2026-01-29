@@ -23,8 +23,8 @@ schema_view = get_schema_view(
 app_list = {
     'gemini/': 'apps.ouel_gemini.urls',
     'oauth/': 'apps.ouel_oauth.urls',
-    'quiz/': 'apps.ouel_quizapp.urls',
-    'writing/': 'apps.ouel_writingapp.urls',
+    'reading/': 'apps.ouel_reading_app.urls',
+    'writing/': 'apps.ouel_writing_app.urls',
 }
 
 urlpatterns = [

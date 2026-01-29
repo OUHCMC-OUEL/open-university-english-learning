@@ -2,6 +2,7 @@ import time, json
 from django.conf import settings
 from google import genai
 from google.genai import types
+from rest_framework.exceptions import ValidationError
 from .models import Prompt
 from .managers import PromptLogManagement
 
@@ -56,3 +57,40 @@ def grammar_correction(user_input: str, prompt: Prompt):
             "status": status_code,
         }
         PromptLogManagement.create_prompt(validated_data)
+
+def highlight_passage(passage,question):
+    prompt = f"""
+                You are an AI powered answer suggestion system. Your task is to find the consecutive and complete text range in the provided Passage that suggests the answer to the Question.
+
+                Passage:
+                "{passage}"
+
+                Question:
+                "{question}"
+
+                Your task:
+                1. Identify the most accurate consecutive text range that suggests the correct answer in the passage.
+                2. Calculate the start and end index based on the characters of the extracted text compared to the provided Passage above.
+                3. Output only one JSON object.
+
+                The JSON format must be strictly followed:
+                {{
+                    "answerText": "exact suggested text range copied from the Passage",
+                    "startIndex": number,
+                    "endIndex": number
+                }}
+
+                Rule:
+                - Do not add, delete or change any characters in "answerText". The text in "answerText" must exactly match the Paragraph section and have at least 2 sentences.
+                - Do not return additional text outside of JSON.
+                """
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+        text = response.text.strip().replace("```json", "").replace("```", "").strip()
+        return json.loads(text)
+    except Exception as e:
+        raise ValidationError(e)

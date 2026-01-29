@@ -9,4 +9,4 @@ class PromptLogManagement:
             log = PromptLog.objects.create(**validated_data)
             return log
         except:
-            raise ValidationError("Có lỗi khi lưu prompt log")
+            raise ValidationError({"detail": "Có lỗi khi lưu prompt log"})
