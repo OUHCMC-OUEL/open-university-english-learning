@@ -1,0 +1,270 @@
+[
+  {
+    "model": "ouel_reading_app.part",
+    "pk": 5,
+    "fields": {
+      "name": "Bộ đề chỉnh câu 1",
+      "content": ""
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 1,
+    "fields": {
+      "part_id": 5,
+      "question_text": "The assets of Marble Faun Publishing Company ___ last quarter when one of their main local distributors went out of business.",
+      "option_a": "suffer",
+      "option_b": "suffers",
+      "option_c": "suffering",
+      "option_d": "suffered",
+      "correct_answer": "D"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 2,
+    "fields": {
+      "part_id": 5,
+      "question_text": "lndie film director Luke Steele will be in London for the premiere of ___ new movie.",
+      "option_a": "him",
+      "option_b": "his",
+      "option_c": "himself",
+      "option_d": "he",
+      "correct_answer": "B"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 3,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Laboratory employees are expected to wear a name tag and carry identification at ___ times.",
+      "option_a": "full",
+      "option_b": "complete",
+      "option_c": "all",
+      "option_d": "total",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 4,
+    "fields": {
+      "part_id": 5,
+      "question_text": "The latest training ___ contains tips on teaching a second language to international students:",
+      "option_a": "method",
+      "option_b": "guide",
+      "option_c": "staff",
+      "option_d": "role",
+      "correct_answer": "B"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 5,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Once you have your resume with references and ___ , please submit it to the Human Resources Department on the 3rd floor.",
+      "option_a": "qualified",
+      "option_b": "qualifications",
+      "option_c": "qualify",
+      "option_d": "qualifying",
+      "correct_answer": "B"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 6,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Ursa Major Corp. has ___ negotiated a deal with a Russian competitor in surveying the Kamchatka Peninsula.",
+      "option_a": "soon",
+      "option_b": "shortly",
+      "option_c": "recently",
+      "option_d": "yet",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 7,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Ms. Cho relayed her concerns about the company's financial situation while she ___ a meeting with the manager.",
+      "option_a": "having",
+      "option_b": "will have",
+      "option_c": "was having",
+      "option_d": "has",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 8,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Whether it is ___ to register for a student discount card depends on the needs of the individual.",
+      "option_a": "necessary",
+      "option_b": "necessarily",
+      "option_c": "necessitate",
+      "option_d": "necessity",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 9,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Even experienced clerks are encouraged to attend training ___ to keep them updated on new ideas in the world of banking.",
+      "option_a": "materials",
+      "option_b": "sessions",
+      "option_c": "experiences",
+      "option_d": "positions",
+      "correct_answer": "B"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 10,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Workers are advised not to operate certain machines by ___ .",
+      "option_a": "they",
+      "option_b": "them",
+      "option_c": "their",
+      "option_d": "themselves",
+      "correct_answer": "D"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 11,
+    "fields": {
+      "part_id": 5,
+      "question_text": ". The ___ of a discount department store was delayed by the protests of several members of the community.",
+      "option_a": "construct",
+      "option_b": "constructive",
+      "option_c": "construction",
+      "option_d": "constructed",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 12,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Ms. Maria Perreira is ___ responsible for some of our company's most successful marketing campaigns.",
+      "option_a": "large",
+      "option_b": "largely",
+      "option_c": "largest",
+      "option_d": "larger",
+      "correct_answer": "B"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 13,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Mr. Singh requested ___ from several catering companies before making his decision.",
+      "option_a": "estimates",
+      "option_b": "sponsors",
+      "option_c": "deliverance",
+      "option_d": "relocations",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 14,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Our apartment building's occupancy increased ___ the efforts of our knowledgeable and friendly rental agent, Ms. Gova.",
+      "option_a": "despite",
+      "option_b": "due to",
+      "option_c": "provided that",
+      "option_d": "because",
+      "correct_answer": "B"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 15,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Those employees wishing to change departments ___ the company may send their inquiries to Mr. Alvarez.",
+      "option_a": "among",
+      "option_b": "since",
+      "option_c": "within",
+      "option_d": "whereas",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 16,
+    "fields": {
+      "part_id": 5,
+      "question_text": "The New Economic Quarterly criticized the ___ of all new products produced by Yun Sung Industrial Co., Ltd.",
+      "option_a": "procedure",
+      "option_b": "layer",
+      "option_c": "accessory",
+      "option_d": "quality",
+      "correct_answer": "D"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 17,
+    "fields": {
+      "part_id": 5,
+      "question_text": "One of the ___ international research facilities in botany is located at the Hoskin Museum of Natural History.",
+      "option_a": "led",
+      "option_b": "leads",
+      "option_c": "leader",
+      "option_d": "leading",
+      "correct_answer": "D"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 18,
+    "fields": {
+      "part_id": 5,
+      "question_text": "In order to ensure customer safety, the government has ___ a new set of guidelines for pharmaceutical companies.",
+      "option_a": "instituted",
+      "option_b": "proved",
+      "option_c": "decided",
+      "option_d": "resembled",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 19,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Welton Textiles Inc. made a net profit of $ million, ___ it to fund its expansion across the continent.",
+      "option_a": "allowing",
+      "option_b": "allows",
+      "option_c": "allowance",
+      "option_d": "allowably",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 20,
+    "fields": {
+      "part_id": 5,
+      "question_text": "Our ___ production goals will be directed by a skilled team of qualified managers.",
+      "option_a": "comparative",
+      "option_b": "envious",
+      "option_c": "pleased",
+      "option_d": "ambitious",
+      "correct_answer": "D"
+    }
+  }
+]

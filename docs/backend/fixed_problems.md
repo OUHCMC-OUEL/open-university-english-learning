@@ -1,0 +1,3 @@
+1. "account.EmailAddress: (models.W036) MySQL does not support unique constraints with conditions. HINT: A constraint won't be created. Silence this warning if you don't care about it." 
+==> Đây là lỗi không thể fix vì nó là nhược điểm của MySQL nên đã được xem xét thêm vào danh sách silence (Xem thêm tại: https://github.com/pennersr/django-allauth/issues/3385)  
+2. Vấn đề ở chỗ cập nhật profile người dùng chưa có ăn và phải ghi đè o token để tạo lịch sử đăng nhập ==> Đã fix và chạy thành công qua thêm tín hiệu signals

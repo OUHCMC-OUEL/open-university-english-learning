@@ -1,0 +1,54 @@
+{% load static %}
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OUEL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <section class="hero">
+        <h1>Open University English Learning</h1>
+        {% if user.is_authenticated and user.is_staff %}
+            <p>Chào <strong>{{ user.get_full_name|default:user.username }}</strong> <br/>
+                Bạn đang đăng nhập với vai trò
+                <Strong>
+                    {% if user.is_superuser %}
+                        Quản trị viên
+                    {% else %}
+                        Giảng viên / Nhân viên
+                    {% endif %}
+                </Strong>
+            </p>
+        {% else %}
+            <p>Hệ thống hỗ trợ học tiếng Anh hiện đại tích hợp trí tuệ nhân tạo cho sinh viên Đại học Mở TP.Hồ Chí Minh.</p>
+        {% endif %}
+
+        <div class="nav-grid">
+            <a href="/admin/" target="_blank" class="nav-card">
+                <i class="fas fa-user-shield"></i>
+                <span>Trang quản trị</span>
+            </a>
+
+            <a href="https://ouel-vite.vercel.app/" target="_blank" class="nav-card">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Ứng dụng</span>
+            </a>
+
+            <a href="#" target="_blank" class="nav-card">
+                <i class="fas fa-book"></i>
+                <span>Tài liệu hướng dẫn</span>
+            </a>
+
+            <a href="#" target="_blank" class="nav-card">
+                <i class="fas fa-users"></i>
+                <span>Thành viên dự án</span>
+            </a>
+        </div>
+
+        <footer>© 2026 OUEL Project - Powered by Django 6.0</footer>
+    </section>
+</body>
+</html>
