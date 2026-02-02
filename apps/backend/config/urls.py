@@ -8,14 +8,16 @@ from config.admin import admin_site
 from rest_framework import permissions
 import debug_toolbar
 
+api_info = openapi.Info(
+    title="OUEL API",
+    default_version='v0.1',
+    description="Open University English Learning",
+    contact=openapi.Contact(email="2351050164thanh@ou.edu.vn"),
+    license=openapi.License(name="ouel@2026"),
+)
+
 schema_view = get_schema_view(
-    openapi.Info(
-        title="OUEL API",
-        default_version='v0.1',
-        description="Open University English Learning",
-        contact=openapi.Contact(email="2351050164thanh@ou.edu.vn"),
-        license=openapi.License(name="ouel@2026"),
-    ),
+    api_info,
     public=True,
     permission_classes=(permissions.AllowAny,),
 )

@@ -13,6 +13,18 @@ cloudinary.config(
   	api_secret = os.getenv('CLOUDINARY_API_SECRET')
 )
 
+SWAGGER_SETTINGS = {
+    'DEFAULT_INFO': 'config.urls.api_info', 
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+}
+
 SECRET_KEY = os.getenv('SECRET_KEY')
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
