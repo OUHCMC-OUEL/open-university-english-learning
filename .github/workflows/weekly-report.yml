@@ -8,6 +8,9 @@ on:
 jobs:
   ai-report:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -21,7 +24,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install google-generativeai PyGithub
+          pip install google-genai PyGithub
 
       - name: Run AI Agent Report Script
         env:

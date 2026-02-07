@@ -2,8 +2,8 @@ import os
 import json
 import logging
 from datetime import datetime, timedelta
-import google.generativeai as genai
-from github import Github
+from google import genai
+from github import Github, Auth 
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -27,10 +27,11 @@ def generate_weekly_report():
         GITHUB_TOKEN = get_env_variable("GITHUB_TOKEN")
         REPO_NAME = get_env_variable("GITHUB_REPOSITORY")
         GEMINI_API_KEY = get_env_variable("GEMINI_API_KEY")
-        PROJECT_NAME = get_env_variable("PROJECT_NAME", "Dự án NCKH AI Tiếng Anh")
+        PROJECT_NAME = get_env_variable("PROJECT_NAME", "open-university-english-learning")
         
-        genai.configure(api_key=GEMINI_API_KEY)
-        g = Github(GITHUB_TOKEN)
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        auth = Auth.Token(GITHUB_TOKEN)
+        g = Github(auth=auth) 
         repo = g.get_repo(REPO_NAME)
 
         today = datetime.now()
@@ -92,8 +93,10 @@ def generate_weekly_report():
         4. Phần "Vấn đề cần xem xét": Dựa vào tên các issue đang mở (open), hãy gợi ý các rủi ro kỹ thuật hoặc quản lý tiềm ẩn.
         """
 
-        model = genai.GenerativeModel('gemini-2.5-flash')
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model='gemini-1.5-flash',
+            contents=prompt
+        )
 
         report_title = f"Weekly Report: {date_range}"
         repo.create_issue(title=report_title, body=response.text, labels=["report", "weekly"])
