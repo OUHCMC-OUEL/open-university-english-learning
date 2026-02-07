@@ -1,0 +1,31 @@
+name: Weekly Report AI Agent
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' 
+  workflow_dispatch: 
+
+jobs:
+  ai-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run: |
+          pip install google-generativeai PyGithub
+
+      - name: Run AI Agent Report Script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python .github/scripts/create_report.py
