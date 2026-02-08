@@ -59,24 +59,43 @@ def create_html_body(member_name, issues):
 
     html = f"""
     <html>
-    <body style="font-family: Arial, sans-serif; color: #333;">
-        <h3>Xin chào {member_name},</h3>
-        <p>Đây là danh sách công việc <strong>đang chờ xử lý (Open Issues)</strong> của bạn tính đến 9h sáng nay:</p>
+    <body style="font-family: 'Segoe UI', Helvetica, Arial, sans-serif; line-height: 1.6; color: #24292e; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e4e8; border-radius: 8px;">
         
-        <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
-            <tr style="background-color: #f6f8fa; text-align: left;">
-                <th style="padding: 8px; border: 1px solid #ddd;">Tên công việc</th>
-                <th style="padding: 8px; border: 1px solid #ddd;">Link</th>
-                <th style="padding: 8px; border: 1px solid #ddd;">Thời gian tồn đọng</th>
-            </tr>
-            {rows}
+        <div style="margin-bottom: 24px;">
+            <h2 style="font-size: 18px; font-weight: 600; color: #0366d6; margin-top: 0;">
+                Thông báo: Danh sách công việc đang chờ xử lý
+            </h2>
+            <p style="margin: 0;">Xin chào <strong>{member_name}</strong>,</p>
+            <p style="margin: 8px 0 0;">Dưới đây là tổng hợp các công việc (Open Issues) đang được gán cho bạn tính đến <strong>09:00 AM hôm nay</strong>:</p>
+        </div>
+
+        <table style="border-collapse: collapse; width: 100%; margin-bottom: 24px;">
+            <thead>
+                <tr style="background-color: #f6f8fa;">
+                    <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: left; font-size: 13px;">Tên công việc</th>
+                    <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: center; font-size: 13px; width: 80px;">Liên kết</th>
+                    <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: left; font-size: 13px; width: 120px;">Thời gian tồn tại</th>
+                </tr>
+            </thead>
+            <tbody style="font-size: 14px;">
+                {rows}
+            </tbody>
         </table>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="https://github.com/orgs/OUHCMC-OUEL/projects/2" 
+            style="background-color: #2ea44f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px; display: inline-block;">
+                Truy cập Kanban Board
+            </a>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #e1e4e8; margin: 24px 0;">
         
-        <p style="margin-top: 20px; font-size: 12px; color: #666;">
-            <i>Email này được gửi tự động. Vui lòng cập nhật tiến độ trên GitHub Kanban nếu đã hoàn thành.</i>
-           
-        </p>
-        <a href="https://github.com/orgs/OUHCMC-OUEL/projects/2" style="color: #0366d6;">Link đến Kanban</a>
+        <footer style="font-size: 12px; color: #586069; line-height: 1.5;">
+            <p style="margin: 0;"><strong>Lưu ý:</strong> Email này được gửi tự động từ hệ thống quản lý dự án.</p>
+            <p style="margin: 4px 0;">Vui lòng cập nhật trạng thái trên <i>GitHub Kanban</i> sau khi hoàn thành để đội ngũ nắm bắt tiến độ kịp thời.</p>
+            <p style="margin: 15px 0 0;">Chúc bạn một ngày làm việc hiệu quả!</p>
+        </footer>
     </body>
     </html>
     """
