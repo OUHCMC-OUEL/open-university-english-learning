@@ -1,0 +1,32 @@
+name: Daily Task Reminder
+
+on:
+  schedule:
+    - cron: '0 2 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run: pip install PyGithub
+
+      - name: Run Unit Tests
+        run: |
+          python .github/test/unit_test/test_team_reminder.py
+
+      - name: Run Daily Reminder Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: python .github/scripts/team_reminder.py
