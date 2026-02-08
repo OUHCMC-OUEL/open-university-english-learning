@@ -26,9 +26,14 @@ jobs:
         run: |
           pip install google-genai PyGithub
 
+      - name: Run Unit Tests
+        run: |
+          pip install -r .github/test/test_requirements.txt
+          python .github/test/test.py
+
       - name: Run AI Agent Report Script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python .github/scripts/create_report.py
+          python .github/scripts/generate_week_report.py
