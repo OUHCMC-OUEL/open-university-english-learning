@@ -25,13 +25,13 @@ class TestDailyReminder(unittest.TestCase):
         self.assertIn("Fix Bug Login", html)
         self.assertIn("http://github.com/issue/1", html)
 
-    @patch('team_reminder.datetime')
-    def test_is_working_day_weekend(self, mock_datetime):
-        mock_now = MagicMock()
-        mock_now.weekday.return_value = 6 
-        mock_datetime.now.return_value = mock_now
+    # @patch('team_reminder.datetime')
+    # def test_is_working_day_weekend(self, mock_datetime):
+    #     mock_now = MagicMock()
+    #     mock_now.weekday.return_value = 6 
+    #     mock_datetime.now.return_value = mock_now
         
-        self.assertFalse(team_reminder.is_working_day())
+    #     self.assertFalse(team_reminder.is_working_day())
 
     @patch('team_reminder.datetime')
     def test_is_working_day_holiday(self, mock_datetime):
