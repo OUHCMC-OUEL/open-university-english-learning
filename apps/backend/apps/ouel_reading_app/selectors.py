@@ -19,14 +19,11 @@ def get_part_by_id(part_id: int) -> Part:
     return Part.objects.get(id=part_id)
 
 def get_type_parts(part_type:str):
-    print(part_type)
     if part_type not in PartType.values:
         raise ValueError({"error": "Type không hợp lệ"})
-
     parts = Part.objects.filter(type_part=part_type).annotate(question_count=Count("question"))
     if parts:
         return parts
-
     return None
 
 def get_questions_by_part(part: Part):

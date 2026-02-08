@@ -27,7 +27,7 @@ class PartViewSet(viewsets.ModelViewSet):
     @action(methods=['post'], url_name='type', detail=False)
     def type(self, request):
         try:
-            part = selectors.get_type_parts(request.data['type'])
+            part = selectors.get_type_parts(request.data['type_name'])
             return Response(serializers.PartSerializer(part, many=True).data, status=status.HTTP_200_OK)
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

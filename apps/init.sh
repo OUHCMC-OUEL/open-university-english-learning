@@ -41,7 +41,7 @@ if [[ "$confirm" == "Y" || "$confirm" == "y" ]]; then
     python manage.py migrate
 
     echo "Nap dữ liệu mẫu"
-    python manage.py loaddata data.json data_and.json 
+    python manage.py loaddata data.json
 
     echo "Khởi tạo Frontend"
     cd ../frontend

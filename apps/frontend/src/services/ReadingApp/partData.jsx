@@ -1,8 +1,8 @@
 import api, { endpoints } from "../../configs/apis";
 
+
 export const partData = async (part,type) => {
     let currentPart = part;
-    console.log(part)
     if (!currentPart || !currentPart.id) {
         const partRes = await api.post(endpoints.getPartRandom,{
             type:type

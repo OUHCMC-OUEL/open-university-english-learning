@@ -1,15 +1,594 @@
 [
   {
     "model": "ouel_reading_app.part",
-    "pk": 5,
+    "pk": 1,
     "fields": {
-      "name": "Bộ đề chỉnh câu 1",
-      "content": ""
+      "name": "Amazon Rainforest",
+      "content": "The Amazon rainforest is the largest tropical rainforest in the world. It spans nine countries in South America. The forest is home to millions of species of plants, animals, and insects. The Amazon River flows through the forest, providing essential water. Trees absorb carbon dioxide and produce oxygen. Indigenous tribes live throughout the forest. Annual rainfall is very high. Deforestation is a major threat. The forest regulates Earth's climate. Many species remain undiscovered. Logging and agriculture impact the ecosystem. Rivers provide transportation routes. Soil is rich but fragile. The forest is vital for global ecological balance. Many medicinal plants are found here. Rivers support biodiversity. Forest fires threaten habitats. Conservation projects are ongoing. The forest maintains the water cycle. Many birds, mammals, and reptiles live in the Amazon."
     }
   },
   {
     "model": "ouel_reading_app.question",
     "pk": 1,
+    "fields": {
+      "part_id": 1,
+      "question_text": "Which river flows through the Amazon rainforest?",
+      "option_a": "Nile",
+      "option_b": "Amazon",
+      "option_c": "Mississippi",
+      "option_d": "Yangtze",
+      "correct_answer": "B",
+      "explanation": "The Amazon River runs through the rainforest, providing essential water and maintaining the ecosystem, so B is correct."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 2,
+    "fields": {
+      "part_id": 1,
+      "question_text": "Why is the Amazon called the 'lungs of the Earth'?",
+      "option_a": "It absorbs CO2 and produces oxygen",
+      "option_b": "It has many rivers",
+      "option_c": "It is very large",
+      "option_d": "It has many animals",
+      "correct_answer": "A",
+      "explanation": "The trees absorb carbon dioxide and produce oxygen, which makes the Amazon the 'lungs of the Earth'."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 3,
+    "fields": {
+      "part_id": 1,
+      "question_text": "What is the main threat to the Amazon?",
+      "option_a": "Tourism",
+      "option_b": "Deforestation",
+      "option_c": "Rainfall",
+      "option_d": "Volcanoes",
+      "correct_answer": "B",
+      "explanation": "Deforestation destroys habitats and reduces biodiversity, making it the major threat."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 4,
+    "fields": {
+      "part_id": 1,
+      "question_text": "How many countries does the Amazon span?",
+      "option_a": "5",
+      "option_b": "7",
+      "option_c": "9",
+      "option_d": "11",
+      "correct_answer": "C",
+      "explanation": "The forest stretches across nine countries, so the correct answer is C."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 5,
+    "fields": {
+      "part_id": 1,
+      "question_text": "What is one ecological function of the Amazon?",
+      "option_a": "Regulates climate",
+      "option_b": "Reduces rainfall",
+      "option_c": "Drains rivers",
+      "option_d": "Increases pollution",
+      "correct_answer": "A",
+      "explanation": "The Amazon rainforest helps regulate Earth's climate by absorbing CO2 and maintaining humidity."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 6,
+    "fields": {
+      "part_id": 1,
+      "question_text": "Why are medicinal plants important in the Amazon?",
+      "option_a": "They provide food for animals",
+      "option_b": "They support indigenous medicine",
+      "option_c": "They absorb water",
+      "option_d": "They produce oxygen",
+      "correct_answer": "B",
+      "explanation": "Medicinal plants are used by indigenous tribes for traditional medicine, making B correct."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 7,
+    "fields": {
+      "part_id": 1,
+      "question_text": "What role do rivers in the Amazon play?",
+      "option_a": "Transportation and habitat",
+      "option_b": "Producing oxygen",
+      "option_c": "Reducing rainfall",
+      "option_d": "Causing deforestation",
+      "correct_answer": "A",
+      "explanation": "Rivers provide transportation and habitats for aquatic species, so A is correct."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 8,
+    "fields": {
+      "part_id": 1,
+      "question_text": "Why is soil in the Amazon fragile?",
+      "option_a": "Because it is sandy",
+      "option_b": "Because it is overused",
+      "option_c": "Because of heavy rainfall and logging",
+      "option_d": "Because of low rainfall",
+      "correct_answer": "C",
+      "explanation": "Heavy rainfall and deforestation cause soil erosion, making the soil fragile."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 9,
+    "fields": {
+      "part_id": 1,
+      "question_text": "Why are conservation efforts necessary?",
+      "option_a": "To promote tourism",
+      "option_b": "To protect biodiversity",
+      "option_c": "To reduce rainfall",
+      "option_d": "To build roads",
+      "correct_answer": "B",
+      "explanation": "Conservation protects biodiversity, endangered species, and the ecosystem, so B is correct."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 10,
+    "fields": {
+      "part_id": 1,
+      "question_text": "What is one consequence of deforestation?",
+      "option_a": "Loss of habitats",
+      "option_b": "More oxygen",
+      "option_c": "Stronger rivers",
+      "option_d": "Increased rainfall",
+      "correct_answer": "A",
+      "explanation": "Deforestation removes trees and habitats, negatively affecting biodiversity."
+    }
+  },
+  {
+    "model": "ouel_reading_app.part",
+    "pk": 2,
+    "fields": {
+      "name": "Solar System",
+      "content": "The Solar System consists of the Sun and all celestial objects orbiting it, including planets, moons, asteroids, and comets. Mercury is the closest planet to the Sun and experiences extreme temperatures. Venus has a thick toxic atmosphere that traps heat. Earth supports diverse life forms due to its moderate climate and abundant water. Mars is known as the Red Planet and has signs of past liquid water. Jupiter is the largest planet with a strong magnetic field. Saturn is famous for its rings. Uranus rotates on its side. Neptune is a blue gas giant with strong winds. The asteroid belt lies between Mars and Jupiter. Comets have icy cores and elliptical orbits. The Sun's gravity keeps planets in orbit. Solar flares affect space weather. Moons orbit planets and can have atmospheres. Dwarf planets like Pluto exist in the Kuiper belt. The Solar System formed about 4.6 billion years ago."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 11,
+    "fields": {
+      "part_id": 2,
+      "question_text": "Which planet is closest to the Sun?",
+      "option_a": "Earth",
+      "option_b": "Mercury",
+      "option_c": "Venus",
+      "option_d": "Mars",
+      "correct_answer": "B",
+      "explanation": "Mercury is the closest planet to the Sun."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 12,
+    "fields": {
+      "part_id": 2,
+      "question_text": "Why is Venus hotter than Mercury in some areas?",
+      "option_a": "It is closer to the Sun",
+      "option_b": "Thick toxic atmosphere traps heat",
+      "option_c": "It rotates faster",
+      "option_d": "It has more moons",
+      "correct_answer": "B",
+      "explanation": "Venus has a thick toxic atmosphere that traps heat, making it hotter in some regions."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 13,
+    "fields": {
+      "part_id": 2,
+      "question_text": "Which planet is known as the Red Planet?",
+      "option_a": "Mars",
+      "option_b": "Jupiter",
+      "option_c": "Saturn",
+      "option_d": "Venus",
+      "correct_answer": "A",
+      "explanation": "Mars is known as the Red Planet due to its reddish appearance."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 14,
+    "fields": {
+      "part_id": 2,
+      "question_text": "Which planet has the largest size?",
+      "option_a": "Earth",
+      "option_b": "Jupiter",
+      "option_c": "Saturn",
+      "option_d": "Neptune",
+      "correct_answer": "B",
+      "explanation": "Jupiter is the largest planet in the Solar System."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 15,
+    "fields": {
+      "part_id": 2,
+      "question_text": "What lies between Mars and Jupiter?",
+      "option_a": "Oort Cloud",
+      "option_b": "Kuiper Belt",
+      "option_c": "Asteroid Belt",
+      "option_d": "Earth",
+      "correct_answer": "C",
+      "explanation": "The Asteroid Belt lies between Mars and Jupiter."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 16,
+    "fields": {
+      "part_id": 2,
+      "question_text": "Why does the Sun's gravity matter?",
+      "option_a": "It produces solar flares",
+      "option_b": "It keeps planets in orbit",
+      "option_c": "It forms moons",
+      "option_d": "It makes planets red",
+      "correct_answer": "B",
+      "explanation": "The Sun's gravity keeps all planets in orbit."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 17,
+    "fields": {
+      "part_id": 2,
+      "question_text": "Which planet rotates on its side?",
+      "option_a": "Uranus",
+      "option_b": "Saturn",
+      "option_c": "Neptune",
+      "option_d": "Mars",
+      "correct_answer": "A",
+      "explanation": "Uranus rotates on its side compared to other planets."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 18,
+    "fields": {
+      "part_id": 2,
+      "question_text": "Which planets are gas giants?",
+      "option_a": "Jupiter and Saturn",
+      "option_b": "Mercury and Venus",
+      "option_c": "Earth and Mars",
+      "option_d": "Uranus and Neptune",
+      "correct_answer": "A",
+      "explanation": "Jupiter and Saturn are gas giants."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 19,
+    "fields": {
+      "part_id": 2,
+      "question_text": "Where are dwarf planets like Pluto found?",
+      "option_a": "Asteroid Belt",
+      "option_b": "Oort Cloud",
+      "option_c": "Kuiper Belt",
+      "option_d": "Earth orbit",
+      "correct_answer": "C",
+      "explanation": "Dwarf planets like Pluto are located in the Kuiper Belt."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 20,
+    "fields": {
+      "part_id": 2,
+      "question_text": "Why is Earth able to support diverse life forms?",
+      "option_a": "It has a moderate climate and water",
+      "option_b": "It rotates quickly",
+      "option_c": "It has no moons",
+      "option_d": "It is the closest planet to the Sun",
+      "correct_answer": "A",
+      "explanation": "Earth has a moderate climate and abundant water, which supports diverse life forms."
+    }
+  },
+  {
+    "model": "ouel_reading_app.part",
+    "pk": 3,
+    "fields": {
+      "name": "Oceans",
+      "content": "Oceans cover over 70% of Earth's surface. They regulate climate by storing and moving heat. Oceans are home to countless species, from plankton to whales. Coral reefs provide habitats for fish and invertebrates. Oceans absorb carbon dioxide, helping reduce greenhouse gases. Tides are caused by the moon's gravity. Currents circulate nutrients and heat across the globe. Overfishing threatens marine life. Pollution, such as plastics, affects ecosystems. Deep oceans remain largely unexplored. Hydrothermal vents support unique organisms. Mangroves protect coastlines. Oceans provide food and livelihoods. Oil spills have disastrous effects. Sea levels are rising due to climate change. Oceans are crucial for human survival. Tsunamis can cause mass destruction. Waves shape coastlines. Phytoplankton produce oxygen. Ocean ecosystems are interconnected."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 21,
+    "fields": {
+      "part_id": 3,
+      "question_text": "What percentage of Earth's surface is covered by oceans?",
+      "option_a": "50%",
+      "option_b": "60%",
+      "option_c": "70%",
+      "option_d": "80%",
+      "correct_answer": "C",
+      "explanation": "Oceans cover over 70% of Earth's surface, so C is correct."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 22,
+    "fields": {
+      "part_id": 3,
+      "question_text": "What causes tides?",
+      "option_a": "Sun's rotation",
+      "option_b": "Moon's gravity",
+      "option_c": "Earthquakes",
+      "option_d": "Wind",
+      "correct_answer": "B",
+      "explanation": "The moon's gravity causes ocean tides."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 23,
+    "fields": {
+      "part_id": 3,
+      "question_text": "Why are coral reefs important?",
+      "option_a": "They provide oxygen",
+      "option_b": "They are tourist attractions",
+      "option_c": "They provide habitats for marine life",
+      "option_d": "They reduce tides",
+      "correct_answer": "C",
+      "explanation": "Coral reefs provide habitats for fish and invertebrates, making C correct."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 24,
+    "fields": {
+      "part_id": 3,
+      "question_text": "How do oceans help regulate climate?",
+      "option_a": "By storing and moving heat",
+      "option_b": "By absorbing sunlight",
+      "option_c": "By producing clouds",
+      "option_d": "By creating mountains",
+      "correct_answer": "A",
+      "explanation": "Oceans store and circulate heat, helping to regulate global climate."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 25,
+    "fields": {
+      "part_id": 3,
+      "question_text": "What threatens marine life?",
+      "option_a": "Volcanoes",
+      "option_b": "Overfishing",
+      "option_c": "Rainfall",
+      "option_d": "Waves",
+      "correct_answer": "B",
+      "explanation": "Overfishing reduces fish populations and threatens marine ecosystems."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 26,
+    "fields": {
+      "part_id": 3,
+      "question_text": "Why are phytoplankton important?",
+      "option_a": "They produce oxygen",
+      "option_b": "They produce carbon dioxide",
+      "option_c": "They cause tides",
+      "option_d": "They form mountains",
+      "correct_answer": "A",
+      "explanation": "Phytoplankton produce a significant amount of Earth's oxygen."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 27,
+    "fields": {
+      "part_id": 3,
+      "question_text": "What effect do oil spills have?",
+      "option_a": "Improve water quality",
+      "option_b": "Harm marine life",
+      "option_c": "Increase oxygen",
+      "option_d": "Reduce tides",
+      "correct_answer": "B",
+      "explanation": "Oil spills pollute water and harm marine organisms."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 28,
+    "fields": {
+      "part_id": 3,
+      "question_text": "Why are deep oceans significant?",
+      "option_a": "They are fully explored",
+      "option_b": "They host unique organisms",
+      "option_c": "They have no life",
+      "option_d": "They control weather",
+      "correct_answer": "B",
+      "explanation": "Deep oceans are largely unexplored and contain unique life forms."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 29,
+    "fields": {
+      "part_id": 3,
+      "question_text": "How do mangroves protect coastlines?",
+      "option_a": "By absorbing heat",
+      "option_b": "By acting as barriers against waves",
+      "option_c": "By producing oxygen",
+      "option_d": "By creating rivers",
+      "correct_answer": "B",
+      "explanation": "Mangroves reduce coastal erosion and act as barriers against strong waves."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 30,
+    "fields": {
+      "part_id": 3,
+      "question_text": "Why is ocean conservation important?",
+      "option_a": "To support human survival and ecosystems",
+      "option_b": "To build ships",
+      "option_c": "To reduce oxygen",
+      "option_d": "To stop tides",
+      "correct_answer": "A",
+      "explanation": "Healthy oceans provide food, livelihoods, and maintain global ecosystems."
+    }
+  },
+  {
+    "model": "ouel_reading_app.part",
+    "pk": 4,
+    "fields": {
+      "name": "Space Exploration",
+      "content": "Space exploration has advanced rapidly in the last century. Rockets enable humans to travel beyond Earth. Satellites provide communication, navigation, and weather data. The International Space Station orbits Earth for research. Astronauts conduct experiments in microgravity. Space probes explore other planets and moons. Telescopes allow observation of distant galaxies. Mars rovers have provided insights into the planet's surface. Space missions help understand Earth's climate. Private companies are entering space travel. Space telescopes detect exoplanets. Space debris poses hazards. Human settlement on other planets is a future goal. Space agencies collaborate internationally. Observing asteroids helps prevent collisions. Satellites monitor natural disasters. Space science inspires technology innovations. International cooperation advances exploration. Understanding the universe expands knowledge. Research in space benefits life on Earth."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 31,
+    "fields": {
+      "part_id": 4,
+      "question_text": "What enables humans to travel beyond Earth?",
+      "option_a": "Satellites",
+      "option_b": "Telescopes",
+      "option_c": "Rockets",
+      "option_d": "Space stations",
+      "correct_answer": "C",
+      "explanation": "Rockets provide the necessary propulsion to leave Earth's atmosphere."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 32,
+    "fields": {
+      "part_id": 4,
+      "question_text": "What is the function of satellites?",
+      "option_a": "Weather monitoring, communication, navigation",
+      "option_b": "Producing oxygen",
+      "option_c": "Exploring oceans",
+      "option_d": "Mining planets",
+      "correct_answer": "A",
+      "explanation": "Satellites are used for communication, navigation, and monitoring Earth's weather."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 33,
+    "fields": {
+      "part_id": 4,
+      "question_text": "What is the ISS used for?",
+      "option_a": "Traveling to Mars",
+      "option_b": "Microgravity research",
+      "option_c": "Mining asteroids",
+      "option_d": "Producing satellites",
+      "correct_answer": "B",
+      "explanation": "The ISS orbits Earth and allows astronauts to conduct experiments in microgravity."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 34,
+    "fields": {
+      "part_id": 4,
+      "question_text": "Why do space probes explore other planets?",
+      "option_a": "To send humans immediately",
+      "option_b": "To gather scientific data",
+      "option_c": "To mine resources",
+      "option_d": "To orbit Earth",
+      "correct_answer": "B",
+      "explanation": "Space probes collect data about other planets and moons for scientific research."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 35,
+    "fields": {
+      "part_id": 4,
+      "question_text": "How do telescopes help in space exploration?",
+      "option_a": "They propel rockets",
+      "option_b": "They observe distant celestial objects",
+      "option_c": "They mine planets",
+      "option_d": "They create satellites",
+      "correct_answer": "B",
+      "explanation": "Telescopes allow astronomers to observe distant galaxies, stars, and planets."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 36,
+    "fields": {
+      "part_id": 4,
+      "question_text": "Why do private companies enter space travel?",
+      "option_a": "To build roads",
+      "option_b": "For commercial and scientific purposes",
+      "option_c": "To replace satellites",
+      "option_d": "To destroy asteroids",
+      "correct_answer": "B",
+      "explanation": "Private companies pursue space tourism, research, and technological innovation."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 37,
+    "fields": {
+      "part_id": 4,
+      "question_text": "What hazard does space debris pose?",
+      "option_a": "Pollutes oceans",
+      "option_b": "Collisions with spacecraft",
+      "option_c": "Destroys satellites on Earth",
+      "option_d": "Affects tides",
+      "correct_answer": "B",
+      "explanation": "Space debris can collide with satellites or spacecraft, causing damage."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 38,
+    "fields": {
+      "part_id": 4,
+      "question_text": "Why is observing asteroids important?",
+      "option_a": "To prevent collisions with Earth",
+      "option_b": "To produce energy",
+      "option_c": "To orbit Mars",
+      "option_d": "To build satellites",
+      "correct_answer": "A",
+      "explanation": "Monitoring asteroids helps prevent potential catastrophic collisions with Earth."
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 39,
+    "fields": {
+      "part_id": 4,
+      "question_text": "Why is international cooperation important in space?",
+      "option_a": "To share resources and knowledge",
+      "option_b": "To launch private companies",
+      "option_c": "To explore oceans",
+      "option_d": "To reduce pollution",
+      "correct_answer": "A",
+      "explanation": "Collaboration allows countries to share technology, data, and costs of exploration."
+    }
+  },
+  {
+    "model": "ouel_reading_app.part",
+    "pk": 5,
+    "fields": {
+      "name": "Bộ đề chỉnh câu 1",
+      "content": "",
+      "type_part": "complete_sentence"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 41,
     "fields": {
       "part_id": 5,
       "question_text": "The assets of Marble Faun Publishing Company ___ last quarter when one of their main local distributors went out of business.",
@@ -22,7 +601,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 2,
+    "pk": 42,
     "fields": {
       "part_id": 5,
       "question_text": "lndie film director Luke Steele will be in London for the premiere of ___ new movie.",
@@ -35,7 +614,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 3,
+    "pk": 43,
     "fields": {
       "part_id": 5,
       "question_text": "Laboratory employees are expected to wear a name tag and carry identification at ___ times.",
@@ -48,7 +627,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 4,
+    "pk": 44,
     "fields": {
       "part_id": 5,
       "question_text": "The latest training ___ contains tips on teaching a second language to international students:",
@@ -61,7 +640,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 5,
+    "pk": 45,
     "fields": {
       "part_id": 5,
       "question_text": "Once you have your resume with references and ___ , please submit it to the Human Resources Department on the 3rd floor.",
@@ -74,7 +653,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 6,
+    "pk": 46,
     "fields": {
       "part_id": 5,
       "question_text": "Ursa Major Corp. has ___ negotiated a deal with a Russian competitor in surveying the Kamchatka Peninsula.",
@@ -87,7 +666,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 7,
+    "pk": 47,
     "fields": {
       "part_id": 5,
       "question_text": "Ms. Cho relayed her concerns about the company's financial situation while she ___ a meeting with the manager.",
@@ -100,7 +679,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 8,
+    "pk": 48,
     "fields": {
       "part_id": 5,
       "question_text": "Whether it is ___ to register for a student discount card depends on the needs of the individual.",
@@ -113,7 +692,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 9,
+    "pk": 49,
     "fields": {
       "part_id": 5,
       "question_text": "Even experienced clerks are encouraged to attend training ___ to keep them updated on new ideas in the world of banking.",
@@ -126,7 +705,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 10,
+    "pk": 50,
     "fields": {
       "part_id": 5,
       "question_text": "Workers are advised not to operate certain machines by ___ .",
@@ -139,7 +718,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 11,
+    "pk": 51,
     "fields": {
       "part_id": 5,
       "question_text": ". The ___ of a discount department store was delayed by the protests of several members of the community.",
@@ -152,7 +731,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 12,
+    "pk": 52,
     "fields": {
       "part_id": 5,
       "question_text": "Ms. Maria Perreira is ___ responsible for some of our company's most successful marketing campaigns.",
@@ -165,7 +744,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 13,
+    "pk": 53,
     "fields": {
       "part_id": 5,
       "question_text": "Mr. Singh requested ___ from several catering companies before making his decision.",
@@ -178,7 +757,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 14,
+    "pk": 54,
     "fields": {
       "part_id": 5,
       "question_text": "Our apartment building's occupancy increased ___ the efforts of our knowledgeable and friendly rental agent, Ms. Gova.",
@@ -191,7 +770,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 15,
+    "pk": 55,
     "fields": {
       "part_id": 5,
       "question_text": "Those employees wishing to change departments ___ the company may send their inquiries to Mr. Alvarez.",
@@ -204,7 +783,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 16,
+    "pk": 56,
     "fields": {
       "part_id": 5,
       "question_text": "The New Economic Quarterly criticized the ___ of all new products produced by Yun Sung Industrial Co., Ltd.",
@@ -217,7 +796,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 17,
+    "pk": 57,
     "fields": {
       "part_id": 5,
       "question_text": "One of the ___ international research facilities in botany is located at the Hoskin Museum of Natural History.",
@@ -230,7 +809,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 18,
+    "pk": 58,
     "fields": {
       "part_id": 5,
       "question_text": "In order to ensure customer safety, the government has ___ a new set of guidelines for pharmaceutical companies.",
@@ -243,7 +822,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 19,
+    "pk": 59,
     "fields": {
       "part_id": 5,
       "question_text": "Welton Textiles Inc. made a net profit of $ million, ___ it to fund its expansion across the continent.",
@@ -256,7 +835,7 @@
   },
   {
     "model": "ouel_reading_app.question",
-    "pk": 20,
+    "pk": 60,
     "fields": {
       "part_id": 5,
       "question_text": "Our ___ production goals will be directed by a skilled team of qualified managers.",
@@ -265,6 +844,390 @@
       "option_c": "pleased",
       "option_d": "ambitious",
       "correct_answer": "D"
+    }
+  },
+  {
+    "model": "ouel_reading_app.part",
+    "pk": 6,
+    "fields": {
+      "name": "Bộ đề chỉnh câu 2",
+      "content": "",
+      "type_part": "complete_sentence"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 61,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Prattchet Co. has ___ turned to making most of its products from recycled materials.",
+      "option_a": "increasingly",
+      "option_b": "increasing",
+      "option_c": "increased",
+      "option_d": "increase",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 62,
+    "fields": {
+      "part_id": 6,
+      "question_text": "___ our financial goals for this year may require cutting back on some overhead costs.",
+      "option_a": "Bringing",
+      "option_b": "Helping",
+      "option_c": "Maintaining",
+      "option_d": "Promoting",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 63,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Heidelberg Publishing Co. offers employees ___ performance bonuses to encourage success.",
+      "option_a": "of",
+      "option_b": "for",
+      "option_c": "with",
+      "option_d": "to",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 64,
+    "fields": {
+      "part_id": 6,
+      "question_text": "An anniversary dinner was held ___ for high-ranking officials in the corporation.",
+      "option_a": "gradually",
+      "option_b": "nearly",
+      "option_c": "exclusively",
+      "option_d": "precisely",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 65,
+    "fields": {
+      "part_id": 6,
+      "question_text": "___ contacting our Human Resources Department by phone, please include your contact information.",
+      "option_a": "During",
+      "option_b": "Until",
+      "option_c": "After",
+      "option_d": "When",
+      "correct_answer": "D"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 66,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Because of the added guests from our allied financial firm, a more ___ meeting room had to be used than usual.",
+      "option_a": "satisfied",
+      "option_b": "spacious",
+      "option_c": "considerable",
+      "option_d": "capable",
+      "correct_answer": "B"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 67,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Ms. Richards has been an exceptionally ___ member of the marketing team, providing Billingsgate Enterprises with great service for nine years.",
+      "option_a": "energy",
+      "option_b": "energize",
+      "option_c": "energetic",
+      "option_d": "energetically",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 68,
+    "fields": {
+      "part_id": 6,
+      "question_text": "___ his falling out with his former employer, Mr. Lee still meets with some of his old co-workers from time to time.",
+      "option_a": "Subsequently",
+      "option_b": "However",
+      "option_c": "Meanwhile",
+      "option_d": "Despite",
+      "correct_answer": "D"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 69,
+    "fields": {
+      "part_id": 6,
+      "question_text": "The chief financial officer of Waterhouse Inc. is expressing ___ concerning his predecessor's informative advice.",
+      "option_a": "appreciation",
+      "option_b": "appreciative",
+      "option_c": "appreciating",
+      "option_d": "appreciates",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 70,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Since opening last year, Savannah Safari Park quickly ___ one of the leading recreational spots in the region.",
+      "option_a": "competed",
+      "option_b": "became",
+      "option_c": "continued",
+      "option_d": "thought",
+      "correct_answer": "B"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 71,
+    "fields": {
+      "part_id": 6,
+      "question_text": "The board of directors will ___ the proposal before making a final decision.",
+      "option_a": "review",
+      "option_b": "reviewed",
+      "option_c": "reviewing",
+      "option_d": "reviews",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 72,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Employees are encouraged to submit their reports ___ the end of the week.",
+      "option_a": "by",
+      "option_b": "until",
+      "option_c": "during",
+      "option_d": "since",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 73,
+    "fields": {
+      "part_id": 6,
+      "question_text": "The conference room was renovated to better ___ large group meetings.",
+      "option_a": "support",
+      "option_b": "supporting",
+      "option_c": "supported",
+      "option_d": "supports",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 74,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Mr. Dawson was promoted ___ his outstanding performance over the past year.",
+      "option_a": "because",
+      "option_b": "although",
+      "option_c": "despite",
+      "option_d": "because of",
+      "correct_answer": "D"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 75,
+    "fields": {
+      "part_id": 6,
+      "question_text": "The training seminar was designed to help staff work more ___.",
+      "option_a": "efficiency",
+      "option_b": "efficient",
+      "option_c": "efficiently",
+      "option_d": "efficiencies",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 76,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Please notify the manager immediately if any equipment is found to be ___.",
+      "option_a": "damage",
+      "option_b": "damages",
+      "option_c": "damaged",
+      "option_d": "damaging",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 77,
+    "fields": {
+      "part_id": 6,
+      "question_text": "The marketing campaign was successful, ___ resulting in increased sales.",
+      "option_a": "therefore",
+      "option_b": "however",
+      "option_c": "meanwhile",
+      "option_d": "otherwise",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 78,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Customers are advised to keep their receipts for future ___.",
+      "option_a": "reference",
+      "option_b": "refer",
+      "option_c": "referring",
+      "option_d": "referred",
+      "correct_answer": "A"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 79,
+    "fields": {
+      "part_id": 6,
+      "question_text": "The software update will be installed automatically ___ the system restarts.",
+      "option_a": "unless",
+      "option_b": "until",
+      "option_c": "when",
+      "option_d": "while",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.question",
+    "pk": 80,
+    "fields": {
+      "part_id": 6,
+      "question_text": "Ms. Turner is responsible ___ coordinating travel arrangements for executives.",
+      "option_a": "to",
+      "option_b": "with",
+      "option_c": "for",
+      "option_d": "on",
+      "correct_answer": "C"
+    }
+  },
+  {
+    "model": "ouel_reading_app.tag",
+    "pk": 1,
+    "fields": {
+      "name": "Tổng hợp"
+    }
+  },
+  {
+    "model": "ouel_reading_app.tag",
+    "pk": 2,
+    "fields": {
+      "name": "Thiên nhiên"
+    }
+  },
+  {
+    "model": "ouel_reading_app.tag",
+    "pk": 3,
+    "fields": {
+      "name": "Khoa học"
+    }
+  },
+  {
+    "model": "ouel_reading_app.tag",
+    "pk": 4,
+    "fields": {
+      "name": "Vũ trụ"
+    }
+  },
+  {
+    "model": "ouel_reading_app.tag",
+    "pk": 5,
+    "fields": {
+      "name": "TOEIC Grammar"
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 3,
+    "fields": {
+      "part_id": 1,
+      "tag_id": 2
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 4,
+    "fields": {
+      "part_id": 1,
+      "tag_id": 3
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 5,
+    "fields": {
+      "part_id": 2,
+      "tag_id": 3
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 6,
+    "fields": {
+      "part_id": 2,
+      "tag_id": 4
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 7,
+    "fields": {
+      "part_id": 3,
+      "tag_id": 2
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 8,
+    "fields": {
+      "part_id": 3,
+      "tag_id": 3
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 9,
+    "fields": {
+      "part_id": 4,
+      "tag_id": 4
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 10,
+    "fields": {
+      "part_id": 4,
+      "tag_id": 3
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 11,
+    "fields": {
+      "part_id": 5,
+      "tag_id": 5
+    }
+  },
+  {
+    "model": "ouel_reading_app.part_tag",
+    "pk": 12,
+    "fields": {
+      "part_id": 6,
+      "tag_id": 5
     }
   }
 ]

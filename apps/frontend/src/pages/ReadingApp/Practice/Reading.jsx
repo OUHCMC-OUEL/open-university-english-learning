@@ -1,13 +1,13 @@
-import Quiz from "../../components/ReadingApp/Quiz/Quiz";
-import Passage from "../../components/ReadingApp/Quiz/Passage";
-import ResultQuiz from "../../components/ReadingApp/Quiz/ResultQuiz";
-import { useState } from "react";
-import { useReading } from "../../hooks/ReadingApp/useReading";
+import Quiz from "../../../components/ReadingApp/Quiz/QuizOne";
+import Passage from "../../../components/ReadingApp/Quiz/Passage";
+import ResultQuiz from "../../../components/ReadingApp/Quiz/ResultQuiz";
+import { useEffect, useState } from "react";
+import { useReading } from "../../../hooks/ReadingApp/Practice/useReading";
 import {
     Alert,
     AlertDescription,
     AlertTitle,
-} from "../../components/ReadingApp/ui/alert";
+} from "@/components/ui/alert";
 import { useLocation } from "react-router-dom";
 
 function Reading() {
@@ -33,7 +33,7 @@ function Reading() {
     }
 
     return (
-        <div className="flex flex-row min-h-full bg-violet-500 mt-16 mb-2 p-6 rounded-lg"> 
+        <div className="flex flex-row min-h-full">
             {/* <div className="flex flex-row h-screen bg-violet-500"> */}
             <div className="basis-1/2 flex justify-center place-self-center">
                 <Passage

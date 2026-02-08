@@ -3,8 +3,8 @@ import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 // import './Quiz.css';
 import api, { endpoints } from "../../../configs/apis";
-import { Card, CardContent, CardTitle, CardHeader, CardDescription, CardAction, CardFooter } from "../ui/card";
-import { Button } from "../ui/button";
+import { Card, CardContent, CardTitle, CardHeader, CardDescription, CardAction, CardFooter } from "../../ui/card.jsx";
+import { Button } from "../../ui/button.jsx";
 import {
   Sheet,
   SheetContent,
@@ -12,7 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../ui/sheet"
+} from "../../ui/sheet.jsx"
 import Passage from './Passage.jsx';
 
 export default function Quiz({ passage, questions, question, setQuestion,index,setIndex,setPartHistory }) {
@@ -50,15 +50,13 @@ export default function Quiz({ passage, questions, question, setQuestion,index,s
 
   const checkAns = (e, ans) => {
     const correct = question.correct_answer;
+    // const prevAns = userAnswers[index];
     setUserAnswers(prev => ({
       ...prev,
       [index]: ans
     }));
     resetOptions();
     e.target.classList.add("bg-blue-500");
-    if (correct === ans) {
-      setScore(prev => prev + 1);
-    }
   };
 
 
@@ -123,13 +121,14 @@ export default function Quiz({ passage, questions, question, setQuestion,index,s
         is_correct: userAns === q.correct_answer
       };
     });
+    const correctCount = answersPayload.filter(a => a.is_correct).length;
     
     const payload = {
       part: passage.id,
       user_id: 1,
       total_answers:Object.values(userAnswers).filter(ans => ans != null).length,
-      correct_answers: score,
-      score: Math.round((score / questions.length) * 100,2),
+      correct_answers: correctCount,
+      score: Math.round((correctCount / questions.length) * 100),
       time : new Date() - time,
       answers: answersPayload
     };
@@ -137,7 +136,6 @@ export default function Quiz({ passage, questions, question, setQuestion,index,s
     try {
       const res = await api.post(endpoints['submitQuiz'], payload);
       console.log("Saved quiz:", res.data);
-      // navigate("/ResultQuiz",{partHistory:res.data});
       setPartHistory(res.data)
     } catch (err) {
       console.error("Save quiz error:", err);
@@ -150,7 +148,6 @@ export default function Quiz({ passage, questions, question, setQuestion,index,s
     setSuggestionOptions(['A', 'B', 'C', 'D']);
     setQuestion(questions[0]);
     setUserAnswers({});
-    setScore(0);
     setResult(false);
     resetOptions();
     setSuggestioned(false);
@@ -237,6 +234,9 @@ export default function Quiz({ passage, questions, question, setQuestion,index,s
                 < button ref={OptionC} onClick={(e) => checkAns(e, "C")} className={!suggestionOptions.includes("C") ? "hidden" : "w-full py-3 rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors"}>{question.option_c}</ button>
                 < button ref={OptionD} onClick={(e) => checkAns(e, "D")} className={!suggestionOptions.includes("D") ? "hidden" : "w-full py-3 rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors"}>{question.option_d}</ button>
               </CardContent>
+              <CardFooter className="justify-center">
+                {index + 1} / {questions.length} Câu hỏi
+              </CardFooter>
             </Card>
             <div className='flex justify-center'>
               {/* {lock ? (

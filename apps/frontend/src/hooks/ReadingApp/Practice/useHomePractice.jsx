@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { partByType } from "../../services/ReadingApp/servicesPartByType";
+import { partByType } from "../../../services/ReadingApp/partByType";
 export function useHome(type) {
   const [parts, setParts] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -17,7 +16,6 @@ export function useHome(type) {
         setLoading(false);
       }
     };
-
     loadData();
   }, [type]);
 

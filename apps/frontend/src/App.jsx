@@ -8,7 +8,7 @@ const App = () => {
     <div className="min-h-screen flex flex-col">
         <Header />
        
-       <main className="grow container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[calc(100vh-160px)]">
+       <main className="grow container mx-auto px-4 py-8  pt-16 flex flex-col items-center justify-center min-h-[calc(100vh-160px)]">
           <AppRoutes />
         </main>
 
