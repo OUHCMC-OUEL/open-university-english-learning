@@ -172,7 +172,7 @@ class GeminiContentGenerator:
 
     def generate(self, prompt):
         response = self.client.models.generate_content(
-            model='gemini-2.5-pro',
+            model='gemini-2.5-flash',
             contents=prompt
         )
         return response.text
