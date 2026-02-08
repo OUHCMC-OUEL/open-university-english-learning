@@ -1,5 +1,5 @@
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "../../ui/card";
-import { Button } from "../../ui/button";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function QuizResult({ questions, userAnswers, onJump, onSubmit }) {
   const answeredCount = Object.values(userAnswers).filter(Boolean).length;

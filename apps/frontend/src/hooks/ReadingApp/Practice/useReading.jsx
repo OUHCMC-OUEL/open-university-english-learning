@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { partData } from "../../../services/ReadingApp/partData";
+import { partData } from "@/services/ReadingApp/partData";
 
 export function useReading(part,type) {
     const [passage, setPassage] = useState(null);

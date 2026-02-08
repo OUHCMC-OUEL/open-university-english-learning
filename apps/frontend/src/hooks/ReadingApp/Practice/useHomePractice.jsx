@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { partByType } from "../../../services/ReadingApp/partByType";
+import { partByType } from "@/services/ReadingApp/partByType";
 export function useHome(type) {
   const [parts, setParts] = useState([]);
   const [loading, setLoading] = useState(true);

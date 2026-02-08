@@ -1,5 +1,6 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../ui/card";
-import { Button } from "../../ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
 import { useState } from "react";
 import { usePassage } from "../../../hooks/ReadingApp/Quiz/usePassage";
 const Passage = ({ passage, question, index}) => {

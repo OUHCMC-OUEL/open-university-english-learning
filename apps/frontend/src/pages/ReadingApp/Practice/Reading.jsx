@@ -1,8 +1,8 @@
-import Quiz from "../../../components/ReadingApp/Quiz/QuizOne";
-import Passage from "../../../components/ReadingApp/Quiz/Passage";
-import ResultQuiz from "../../../components/ReadingApp/Quiz/ResultQuiz";
+import Quiz from "@/components/ReadingApp/Quiz/QuizOne";
+import Passage from "@/components/ReadingApp/Quiz/Passage";
+import ResultQuiz from "@/components/ReadingApp/Quiz/ResultQuiz";
 import { useEffect, useState } from "react";
-import { useReading } from "../../../hooks/ReadingApp/Practice/useReading";
+import { useReading } from "@/hooks/ReadingApp/Practice/useReading";
 import {
     Alert,
     AlertDescription,

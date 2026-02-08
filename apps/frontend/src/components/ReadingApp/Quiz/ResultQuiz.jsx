@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../ui/table.jsx";
+} from "@/components/ui/table.jsx";
 import {
   Card,
   CardAction,
@@ -16,8 +16,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../ui/card.jsx"
-import { Button } from "../../ui/button.jsx";
+} from "@/components/ui/card.jsx"
+import { Button } from "@/components/ui/button.jsx";
 
 import React, { useState, useEffect, useRef } from 'react';
 

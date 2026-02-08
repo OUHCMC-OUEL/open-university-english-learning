@@ -4,8 +4,8 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle
-} from "../../ui/sheet";
-import { Button } from "../../ui/button";
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 export default function QuestionSheet({ questions, userAnswers, onJump }) {
   return (
@@ -15,7 +15,6 @@ export default function QuestionSheet({ questions, userAnswers, onJump }) {
         <SheetHeader>
           <SheetTitle>Danh sách câu</SheetTitle>
         </SheetHeader>
-
         <div className="flex flex-wrap gap-2 mt-4">
           {questions.map((_, idx) => {
             const answered = userAnswers[idx] != null;

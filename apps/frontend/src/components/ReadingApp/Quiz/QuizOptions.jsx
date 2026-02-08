@@ -1,4 +1,4 @@
-import { Button } from "../../ui/button";
+import { Button } from "@/components/ui/button";
 
 export default function QuizOptions({ question, selected, hiddenOptions, onSelect }) {
   const options = [

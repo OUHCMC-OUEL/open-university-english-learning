@@ -1,4 +1,4 @@
-import api, { endpoints } from "../../configs/apis";
+import api, { endpoints } from "@/configs/apis";
 import React from "react";
 
 export const highlights = async (passageContent, questionText) => {

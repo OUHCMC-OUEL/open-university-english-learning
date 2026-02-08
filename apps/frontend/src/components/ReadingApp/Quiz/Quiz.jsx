@@ -3,8 +3,8 @@ import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 // import './Quiz.css';
 import api, { endpoints } from "../../../configs/apis";
-import { Card, CardContent, CardTitle, CardHeader, CardDescription, CardAction, CardFooter } from "../../ui/card.jsx";
-import { Button } from "../../ui/button.jsx";
+import { Card, CardContent, CardTitle, CardHeader, CardDescription, CardAction, CardFooter } from "@/components/ui/card.jsx";
+import { Button } from "@/components/ui/button.jsx";
 import {
   Sheet,
   SheetContent,
@@ -12,20 +12,18 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "../../ui/sheet.jsx"
+} from "@/components/ui/sheet.jsx"
 import Passage from './Passage.jsx';
 
 export default function Quiz({ passage, questions, question, setQuestion,index,setIndex,setPartHistory }) {
   // const navigate = useNavigate();
   const [complete, setComplete] = useState(false);
-  const [userAnswers, setUserAnswers] = useState({});
-  const [score, setScore] = useState(0);
+  const [userAnswers, setUserAnswers] = useState({});;
   const [result, setResult] = useState(false);
   const [suggestionOptions, setSuggestionOptions] = useState(['A', 'B', 'C', 'D']);
   const [suggestioned, setSuggestioned] = useState(false);
   const [time,setTime]=useState(new Date());
   const [lock50, setLock50] = useState([]);
-  const [ai,setAi]=useState([]);
 
   const OptionA = useRef(null);
   const OptionB = useRef(null);

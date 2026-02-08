@@ -1,4 +1,4 @@
-import api, { endpoints } from "../../configs/apis";
+import api, { endpoints } from "@/configs/apis";
 
 
 export const partData = async (part,type) => {

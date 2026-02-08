@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, CardHeader, CardContent, CardFooter } from "../../ui/card";
-import { Badge } from "../../ui/badge";
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 function PartList({ parts }) {
     const navigate = useNavigate();
