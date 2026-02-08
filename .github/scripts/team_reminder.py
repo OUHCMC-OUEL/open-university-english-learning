@@ -11,10 +11,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 MEMBERS_EMAIL = {
     "JuniorThanhBQ": {"email": "2351050164thanh@ou.edu.vn", "name": "Văn Trung Thành"},
-    "ITPhongou23": {"email": "2351050133@ou.edu.vn", "name": "Nguyễn Thanh Phong"},
-    "ngochine": {"email": "2351050189@ou.edu.vn", "name": "Hồ Thị Ngọc Trinh"},
-    "Thao225": {"email": "2351050165@ou.edu.vn", "name": "Bùi Thiên Hương Thảo"},
-    "thisismyhong": {"email": "2351050049@ou.edu.vn", "name": "Lê Thị Mai Hồng"},
+    "ITPhongou23": {"email": "2351050133phong@ou.edu.vn", "name": "Nguyễn Thanh Phong"},
+    "ngochine": {"email": "2351050189trinh@ou.edu.vn", "name": "Hồ Thị Ngọc Trinh"},
+    "Thao225": {"email": "2351050165thao@ou.edu.vn", "name": "Bùi Thiên Hương Thảo"},
+    "thisismyhong": {"email": "2351050049hong@ou.edu.vn", "name": "Lê Thị Mai Hồng"},
 }
 
 HOLIDAYS_FIXED = ["01/01", "30/04", "01/05", "02/09"]
@@ -74,7 +74,7 @@ def create_html_body(member_name, issues):
                 <tr style="background-color: #f6f8fa;">
                     <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: left; font-size: 13px;">Tên công việc</th>
                     <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: center; font-size: 13px; width: 80px;">Liên kết</th>
-                    <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: left; font-size: 13px; width: 120px;">Thời gian tồn tại</th>
+                    <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: left; font-size: 13px; width: 80px;">Thời gian tồn tại</th>
                 </tr>
             </thead>
             <tbody style="font-size: 14px;">
