@@ -1,4 +1,4 @@
-export function useQuizState({ questions, question, setQuestion, index, setIndex }) {
+export function useQuizState({ questions, question, setQuestion, index, setIndex,setShowResult }) {
   const next = () => {
     if (index + 1 < questions.length) {
       setQuestion(questions[index + 1]);
@@ -16,6 +16,7 @@ export function useQuizState({ questions, question, setQuestion, index, setIndex
   const jumpTo = (i) => {
     setQuestion(questions[i]);
     setIndex(i);
+    setShowResult(false);
   };
 
   return { next, prev, jumpTo };

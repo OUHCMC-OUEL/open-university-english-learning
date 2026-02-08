@@ -16,7 +16,7 @@ export default function Quiz({ passage, questions, question, setQuestion, index,
     const [showResult, setShowResult] = useState(false);
     const startTime = new Date();
 
-    const { next, prev, jumpTo } = useQuizState({ questions, question, setQuestion, index, setIndex });
+    const { next, prev, jumpTo } = useQuizState({ questions, question, setQuestion, index, setIndex, setShowResult });
     const { userAnswers, selectAnswer } = useQuizAnswer();
     const { hiddenOptions, apply5050, used } = useQuizFiftyFifty();
     const { submitQuiz } = useQuizSubmit({
