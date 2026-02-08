@@ -1,6 +1,6 @@
 import os
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Any
 from google import genai
 from github import Github, Auth
@@ -70,7 +70,7 @@ class ReportDataAnalyzer:
         stale_issues = []
         formatted_rows = ""
         
-        current_time = datetime.now()
+        current_time = datetime.now(timezone.utc)
 
         for issue in open_issues:
             assignee = issue.assignee.login if issue.assignee else "Unassigned"

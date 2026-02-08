@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 import unittest
 from unittest.mock import MagicMock, patch, PropertyMock
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 base_folder = Path(__file__).resolve().parent.parent.parent
 script_path = os.path.join(base_folder, "scripts")
@@ -21,7 +21,7 @@ class TestWeeklyReport(unittest.TestCase):
         self.mock_issue_open.title = "Task Open 1"
         self.mock_issue_open.html_url = "http://url1"
         self.mock_issue_open.state = "open"
-        self.mock_issue_open.created_at = datetime.now() - timedelta(days=20) 
+        self.mock_issue_open.created_at = datetime.now(timezone.utc) - timedelta(days=20)
         self.mock_issue_open.assignee.login = "JuniorThanhBQ"
         self.mock_issue_open.labels = [MagicMock(name="backend")]
         type(self.mock_issue_open.labels[0]).name = PropertyMock(return_value="backend")
