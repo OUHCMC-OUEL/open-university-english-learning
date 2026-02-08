@@ -30,8 +30,8 @@ def is_working_day():
     vn_timezone = timezone(timedelta(hours=7))
     now_vn = datetime.now(vn_timezone)
     
-    if now_vn.weekday() >= 5:
-        return False
+    # if now_vn.weekday() >= 6: đáng lý là nên mở nhưng tôi cần demo
+    #     return False
 
     today_str = now_vn.strftime("%d/%m")
     if today_str in HOLIDAYS_FIXED or today_str in HOLIDAYS_DYNAMIC:
