@@ -69,11 +69,14 @@ class ReportDataAnalyzer:
         workload = defaultdict(int)
         stale_issues = []
         formatted_rows = ""
+
+        active_assignees = set()
         
         current_time = datetime.now(timezone.utc)
 
         for issue in open_issues:
             assignee = issue.assignee.login if issue.assignee else "Unassigned"
+            active_assignees.add(assignee)
             workload[assignee] += 1
             
             days_open = (current_time - issue.created_at).days
@@ -83,6 +86,11 @@ class ReportDataAnalyzer:
             user_info = self.members.get(assignee, {"name": assignee})
             labels = ", ".join([l.name for l in issue.labels])
             formatted_rows += f"| {user_info['name']} | {labels} | {issue.title} | {days_open} days |\n"
+        
+        for member_id, member_info in self.members.items():
+            if member_id not in active_assignees:
+                formatted_rows += f"| {member_info['name']} | None | **(Hiện không có task nào)** | 0 days |\n"
+                workload[member_id] = 0
 
         return {
             "workload_stats": dict(workload),
@@ -94,8 +102,11 @@ class ReportDataAnalyzer:
         completed_by_user = defaultdict(int)
         formatted_rows = ""
 
+        active_assignees = set()
+
         for issue in closed_issues:
             assignee = issue.assignee.login if issue.assignee else "Unassigned"
+            active_assignees.add(assignee)
             completed_by_user[assignee] += 1
             
             user_info = self.members.get(assignee, {"name": assignee})
@@ -103,6 +114,11 @@ class ReportDataAnalyzer:
             evidence = data_provider.get_issue_evidence(issue)
             
             formatted_rows += f"| {user_info['name']} | {labels} | {issue.title} | {evidence} | [Link]({issue.html_url}) |\n"
+
+        for member_id, member_info in self.members.items():
+            if member_id not in active_assignees:
+                formatted_rows += f"| {member_info['name']} | None | **(Không hoàn thành task nào)** | No evidence | N/A |\n"
+                completed_by_user[member_id] = 0
 
         return {
             "performance_stats": dict(completed_by_user),

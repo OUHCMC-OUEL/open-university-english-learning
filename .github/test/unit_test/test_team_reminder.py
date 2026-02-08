@@ -21,7 +21,7 @@ class TestDailyReminder(unittest.TestCase):
         
         html = team_reminder.create_html_body("Thành", [mock_issue])
         
-        self.assertIn("Xin chào Thành", html)
+        self.assertIn("Xin chào <strong>Thành</strong>", html)
         self.assertIn("Fix Bug Login", html)
         self.assertIn("http://github.com/issue/1", html)
 
