@@ -15,18 +15,18 @@ function Practice() {
     const navigate = useNavigate();
     const [type, setType] = useState("complete_sentence");
     const { parts, loading } = useHome(type);
-    if (loading) {
-        return (
-            <div className="grid w-full max-w-md items-start gap-4">
-                <Alert>
-                    <AlertTitle>Vui lòng chờ</AlertTitle>
-                    <AlertDescription>
-                        Đang tải dữ liệu
-                    </AlertDescription>
-                </Alert>
-            </div>
-        )
-    }
+    // if (loading) {
+    //     return (
+    //         <div className="grid w-full max-w-md items-start gap-4">
+    //             <Alert>
+    //                 <AlertTitle>Vui lòng chờ</AlertTitle>
+    //                 <AlertDescription>
+    //                     Đang tải dữ liệu
+    //                 </AlertDescription>
+    //             </Alert>
+    //         </div>
+    //     )
+    // }
     return (
         <div className="w-full min-h-full p-6">
 
@@ -37,17 +37,24 @@ function Practice() {
                     <TabsTrigger value="reading_comprehension">Đọc hiểu đoạn văn</TabsTrigger>
                 </TabsList>
                 <TabsContent value={type}>
-                    <Card>
+                    <Card className="relative">
                         <CardHeader>
                             <CardTitle>Danh sách bộ đề</CardTitle>
                             <CardDescription>
                                 Chọn một bộ đề để bắt đầu luyện tập
                             </CardDescription>
                             <CardAction>
-                                <Button onClick={() => navigate("/reading", { state: {type} })}>Chọn ngẫu nhiên</Button>
+                                <Button onClick={() => navigate("/reading", { state: { type } })}>Chọn ngẫu nhiên</Button>
                             </CardAction>
                         </CardHeader>
                         <CardContent className="text-muted-foreground text-sm h-[300px] overflow-y-auto scrollbar-hide">
+                            {loading && (
+                            <div className="absolute inset-0 z-10 bg-background/70 flex items-center justify-center">
+                                <span className="text-sm text-muted-foreground">
+                                    Đang tải dữ liệu...
+                                </span>
+                            </div>
+                        )}
                             <PartsList parts={parts} />
                         </CardContent>
                     </Card>
