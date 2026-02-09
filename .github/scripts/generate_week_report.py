@@ -1,8 +1,10 @@
 import os
 import logging
+import re
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Any
 from google import genai
+from google.genai import types
 from github import Github, Auth
 from collections import defaultdict
 
@@ -47,51 +49,94 @@ class GitHubDataProvider:
             return list(self.repo.get_issues(state=state, since=since))
         return list(self.repo.get_issues(state=state))
 
-    def get_issue_evidence(self, issue):
-        if issue.body and len(issue.body) > 20:
-            return f"Body: {issue.body[:100]}..."
+    @staticmethod
+    def extract_subtasks(body):
+        if not body:
+            return ""
+
+        pattern = r'- \[(x| )\] (.*)'
+        matches = re.findall(pattern, body)
         
-        comments = list(issue.get_comments())
+        if not matches:
+            return ""
+
+        summary = []
+        total = len(matches)
+        done = 0
+        
+        for status, content in matches:
+            is_done = status.lower() == 'x'
+            if is_done: done += 1
+            mark = "[x]" if is_done else "[ ]"
+            summary.append(f"{mark} {content[:40]}...")
+
+        return f"<br>Sub-tasks: {done}/{total} Done<br>" + "<br>".join(summary)
+
+    def get_issue_evidence(self, issue):
+        evidence_parts = []
+        
+        if issue.body and len(issue.body) > 20:
+            evidence_parts.append(f"Desc: {issue.body[:80]}...")
+        
+        comments = list(issue.get_comments()) 
         if comments:
             last_comment = comments[-1]
-            return f"Comment: {last_comment.body[:100]}..."
-        
+            evidence_parts.append(f"Last Comment: {last_comment.body[:80]}...")
+
         if issue.pull_request:
-            return "Linked Pull Request"
+            evidence_parts.append("Linked PR: Yes")
+
+        subtasks_info = GitHubDataProvider.extract_subtasks(issue.body)
+        if subtasks_info:
+            evidence_parts.append(subtasks_info)
+
+        if not evidence_parts:
+            return "No evidence provided"
             
-        return "No evidence provided"
+        return "<br>".join(evidence_parts)
 
 class ReportDataAnalyzer:
     def __init__(self, members_dict):
         self.members = members_dict
 
+    def _get_assignee_names(self, issue):
+        if not issue.assignees:
+            return ["Unassigned"], "Unassigned"
+        
+        assignee_ids = [a.login for a in issue.assignees]
+        display_names = []
+        for login in assignee_ids:
+            member_info = self.members.get(login, {"name": login})
+            display_names.append(member_info["name"])
+            
+        return assignee_ids, ", ".join(display_names)
+
     def analyze_workload(self, open_issues):
         workload = defaultdict(int)
         stale_issues = []
         formatted_rows = ""
-
-        active_assignees = set()
+        active_assignees_ids = set()
         
         current_time = datetime.now(timezone.utc)
 
         for issue in open_issues:
-            assignee = issue.assignee.login if issue.assignee else "Unassigned"
-            active_assignees.add(assignee)
-            workload[assignee] += 1
+            assignee_ids, assignee_display = self._get_assignee_names(issue)
+            
+            for uid in assignee_ids:
+                if uid != "Unassigned":
+                    active_assignees_ids.add(uid)
+                    workload[uid] += 1
             
             days_open = (current_time - issue.created_at).days
             if days_open > 14:
                 stale_issues.append(f"{issue.title} ({days_open} days)")
 
-            user_info = self.members.get(assignee, {"name": assignee})
             labels = ", ".join([l.name for l in issue.labels])
-            formatted_rows += f"| {user_info['name']} | {labels} | {issue.title} | {days_open} days |\n"
-        
-        for member_id, member_info in self.members.items():
-            if member_id not in active_assignees:
-                formatted_rows += f"| {member_info['name']} | None | **(Hiện không có task nào)** | 0 days |\n"
-                workload[member_id] = 0
 
+            subtasks = GitHubDataProvider.extract_subtasks(issue.body)
+            
+            formatted_rows += f"| {assignee_display} | {labels} | {issue.title} {subtasks} | {days_open} days |\n"
+        
         return {
             "workload_stats": dict(workload),
             "stale_issues": stale_issues,
@@ -102,23 +147,17 @@ class ReportDataAnalyzer:
         completed_by_user = defaultdict(int)
         formatted_rows = ""
 
-        active_assignees = set()
-
         for issue in closed_issues:
-            assignee = issue.assignee.login if issue.assignee else "Unassigned"
-            active_assignees.add(assignee)
-            completed_by_user[assignee] += 1
+            assignee_ids, assignee_display = self._get_assignee_names(issue)
             
-            user_info = self.members.get(assignee, {"name": assignee})
+            for uid in assignee_ids:
+                if uid != "Unassigned":
+                    completed_by_user[uid] += 1
+            
             labels = ", ".join([l.name for l in issue.labels])
             evidence = data_provider.get_issue_evidence(issue)
             
-            formatted_rows += f"| {user_info['name']} | {labels} | {issue.title} | {evidence} | [Link]({issue.html_url}) |\n"
-
-        for member_id, member_info in self.members.items():
-            if member_id not in active_assignees:
-                formatted_rows += f"| {member_info['name']} | None | **(Không hoàn thành task nào)** | No evidence | N/A |\n"
-                completed_by_user[member_id] = 0
+            formatted_rows += f"| {assignee_display} | {labels} | {issue.title} | {evidence} | [Link]({issue.html_url}) |\n"
 
         return {
             "performance_stats": dict(completed_by_user),
@@ -132,71 +171,73 @@ class GeminiContentGenerator:
 
     def create_prompt(self, date_range, open_data, closed_data, metrics):
         stale_issues_str = ', '.join(open_data['stale_issues']) if open_data['stale_issues'] else "None"
-        
+
         return f"""
-        You are an Bot Project Manager. Your task is to generate a Weekly Progress Report in **Vietnamese**.
+        Role: Senior Project Manager.
+        Task: Generate a Weekly Status Report for project "{self.project_name}" in **Vietnamese**.
+        Period: {date_range}
+
+        ---
+        INPUT DATA:
         
-        TONE & STYLE:
-        - Professional, strict, data-driven, yet constructive.
-        - Do not be afraid to point out failures directly. But using methods below:
-            - Psychologically-informed constructive feedback: Deliver hard truths without triggering defensive dejection.
-            - High-challenge, high-support delivery: Be strict on data and failures, but maintain psychological safety.
-            - Radical Candor: Challenge directly while showing deep personal care. 
-        
-        PROJECT CONTEXT:
-        - Project Name: {self.project_name}
-        - Reporting Period: {date_range}
-        
-        KEY METRICS:
-        - Tasks Completed: {metrics['total_closed']}
-        - Tasks Remaining (Open): {metrics['total_open']}
+        1. METRICS:
+        - Completed: {metrics['total_closed']}
+        - Remaining: {metrics['total_open']}
         - Completion Rate: {metrics['progress_percent']}%
-        - Stale Tasks (> 14 days): {len(open_data['stale_issues'])}
+        - Stale Tasks (>14 days): {len(open_data['stale_issues'])} ({stale_issues_str})
 
-        DATASETS:
-
-        1. COMPLETED TASKS TABLE (Review "Evidence/Content" column carefully):
-        | Member | Labels | Task Title | Evidence/Content | Link |
+        2. COMPLETED TASKS (Done):
+        | Assignees | Labels | Task | Evidence | Link |
         |---|---|---|---|---|
         {closed_data['table_str']}
 
-        2. BACKLOG/OPEN TASKS TABLE (Review "Days Open" column):
-        | Member | Labels | Task Title | Days Open |
+        3. ONGOING/BACKLOG (Not Done):
+        | Assignees | Labels | Task | Days Open |
         |---|---|---|---|
         {open_data['table_str']}
 
-        ---------------------------------------------------------
+        ---
+        INSTRUCTIONS (STRICTLY FOLLOW):
         
-        OUTPUT INSTRUCTIONS (Generate the response in VIETNAMESE):
+        1. **Tone & Style**: 
+           - Professional, Objective, Data-driven, Concise.
+           - NO emotional words (e.g., "tuyệt vời", "đáng tiếc", "buồn thay"). 
+           - NO fluff or greetings. Start directly with the report content.
+        
+        2. **Report Structure**:
+        
+           **I. TỔNG QUAN (Executive Summary)**
+           - State the Completion Rate clearly.
+           - Assessment: "On Track" (if > 70%) or "At Risk" (if < 50%) or "Needs Attention".
+           - Mention critical blockers (Stale Tasks) if any.
 
-        1. **TỔNG QUAN TIẾN ĐỘ (Progress Overview)**:
-           - Evaluate the week based on the completion rate ({metrics['progress_percent']}%) and the number of stale tasks.
-           - If the rate is < 50%, express disappointment. If > 80%, give praise. Else, maintain a neutral tone.
+           **II. CHI TIẾT TIẾN ĐỘ (Progress Details)**
+           - List completed key tasks (summarize from table 2).
+           - Mention specific members who contributed (based on Assignees column).
+           - **Review Evidence**: Verify column "Evidence" in table 2. If "No evidence provided", explicitly flag this as "Missing Documentation" for that member.
 
-        2. **ĐÁNH GIÁ CÁ NHÂN (Individual Performance Review)** - CRITICAL SECTION:
-           - Analyze EACH member listed in the tables.
-           - **STRICT RULE**: Look at the "Evidence/Content" column in the Completed Tasks table. If any task has "No evidence provided", you focus on the tone&style has given to tell that member for lack of professionalism and transparency.
-           - **Bottleneck Check**: Look at the "Days Open" column in the Backlog table. Warn specific members who are holding tasks for too long.
-           - Acknowledge high performers who have clear evidence and high completion rates.
+           **III. VẤN ĐỀ TỒN ĐỌNG (Issues & Risks)**
+           - List tasks open > 14 days.
+           - Identify members with high WIP (Work In Progress) from table 3.
+           - Identify sub-tasks progress (e.g., "Task A has 0/5 sub-tasks done").
 
-        3. **RỦI RO & VẤN ĐỀ (Risks & Issues)**:
-           - Address the stale issues specifically: {stale_issues_str}.
-           - Analyze the workload distribution: {open_data['workload_stats']}. Point out if someone is overloaded or if the work is unevenly distributed.
-           - Using Team Cognitive Load method to analyst the situation and give feedback.
-           - Using Bus Factor method to consider risks of knowledge concentration.
-           - Finally, using Team Topologies method to suggest team structure improvements if necessary.
+           **IV. KẾ HOẠCH TUẦN TỚI (Next Actions)**
+           - Propose 3-5 specific actions to clear the backlog.
+           - Assign checking documentation responsibility if evidence is missing.
 
-
-        4. **KẾ HOẠCH TUẦN TỚI (Next Week Plan)**:
-           - Provide 4-6 bullet points of actionable suggestions based on the current backlog.
-
-        FORMAT: Use Markdown. Be direct and clear.
+        3. **Format**: Markdown. Use tables or bullet points for readability.
         """
 
     def generate(self, prompt):
+        config = types.GenerateContentConfig(
+            temperature=0.2, 
+            top_p=0.8,
+            top_k=40
+        )
         response = self.client.models.generate_content(
             model='gemini-2.5-flash',
-            contents=prompt
+            contents=prompt,
+            config=config
         )
         return response.text
 
@@ -205,10 +246,10 @@ def main():
         GITHUB_TOKEN = ConfigLoader.get_env("GITHUB_TOKEN")
         REPO_NAME = ConfigLoader.get_env("GITHUB_REPOSITORY")
         GEMINI_API_KEY = ConfigLoader.get_env("GEMINI_API_KEY")
-        PROJECT_NAME = ConfigLoader.get_env("PROJECT_NAME", "open-university-english-learning")
+        PROJECT_NAME = ConfigLoader.get_env("PROJECT_NAME", "Open University English Learning")
 
         date_info = DateManager.get_reporting_period()
-        logging.info(f"Processing report for: {date_info['formatted_range']}")
+        logging.info(f"Generating report for: {date_info['formatted_range']}")
 
         gh_provider = GitHubDataProvider(GITHUB_TOKEN, REPO_NAME)
         analyzer = ReportDataAnalyzer(MEMBERS)
@@ -233,12 +274,11 @@ def main():
         
         report_content = generator.generate(prompt)
 
-        report_title = f"Weekly Report: {date_info['formatted_range']}"
-        gh_provider.repo.create_issue(title=report_title, body=report_content, labels=["report", "weekly"])
-        logging.info(f"Report created successfully: {report_title}")
+        logging.info(f"Report Generated Preview:\n{report_content[:500]}...")
+        logging.info("Done.")
 
     except Exception as e:
-        logging.error(f"Failed to generate report: {str(e)}")
+        logging.error(f"Critical Error: {str(e)}")
         raise e
 
 if __name__ == "__main__":

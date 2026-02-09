@@ -7,6 +7,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from config.admin import admin_site
 from rest_framework import permissions
 import debug_toolbar
+from django.conf import settings
 
 api_info = openapi.Info(
     title="OUEL API",
@@ -38,7 +39,6 @@ urlpatterns += [
     path("admin/", admin_site.urls),
     path('o/', include('oauth2_provider.urls',
                        namespace='oauth2_provider')),
-    path('__debug__/',include(debug_toolbar.urls)),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui(cache_timeout=0),
             name='schema-json'),
@@ -50,3 +50,8 @@ urlpatterns += [
             name='schema-redoc'),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico')))
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]

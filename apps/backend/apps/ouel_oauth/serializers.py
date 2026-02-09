@@ -28,18 +28,23 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(read_only=True)
+    login_history = serializers.SerializerMethodField()
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
         if instance.avatar:
             data['avatar'] = instance.avatar.url
-        if instance.login_history:
-            history = instance.login_history.all()[:5]
-            data['profile']['login_history'] = LoginHistorySerializer(history, many=True).data
 
         return data
+    
+    def get_login_history(self, obj: User):
+        history = getattr(obj, 'prefetched_login_history', [])
+        if not history:
+            return LoginHistorySerializer(obj.login_history.all()[:5], many=True).data
+        return LoginHistorySerializer(history, many=True).data
 
-    def create(self, validated_data):
+    @transaction.atomic
+    def create(self, validated_data) -> User:
         try:
             with transaction.atomic():
                 user = User(**validated_data)
@@ -50,7 +55,8 @@ class UserSerializer(serializers.ModelSerializer):
         except:
             raise ValidationError({"detail": "Có lỗi trong việc tạo người dùng"})
 
-    def update(self, instance, validated_data):
+    @transaction.atomic
+    def update(self, instance, validated_data) -> User:
         keys = set(validated_data.keys())
         if keys - {'first_name', 'last_name', 'email', 'avatar'}:
             raise ValidationError({'error': 'Chỉnh sửa không hợp lệ'})
@@ -59,7 +65,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name','email','username', 'password', 'avatar', 'profile']
+        fields = ['first_name', 'last_name','email','username', 'password', 'avatar', 'profile', 'login_history']
+        read_only_fields = ['username']
         extra_kwargs = {
             "password":{
                 "write_only": True

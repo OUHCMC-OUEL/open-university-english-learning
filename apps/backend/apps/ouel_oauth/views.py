@@ -9,11 +9,22 @@ class UserView(viewsets.ViewSet, generics.CreateAPIView):
     serializer_class = serializers.UserSerializer
     parser_classes = [parsers.MultiPartParser,parsers.JSONParser, parsers.FormParser,]
 
+    def get_queryset(self):
+        return User.objects.filter(is_active=True).prefetch_related(
+            'profile',
+            'profile__hobbies',
+            Prefetch('login_history', queryset=LoginHistory.objects.order_by('-login_date')[:5], to_attr='prefetched_login_history')
+        )
+
     @action(methods=['get', 'patch'], url_path='current-user',detail=False, permission_classes=[permissions.IsAuthenticated])
     def get_current_user(self, request):
         user = request.user
         user_fields = {'first_name', 'last_name', 'email', 'avatar'}
         profile_fields = {'biography', 'about', 'level', 'hobbies'}
+
+        if request.method == 'GET':
+            user = self.get_queryset().filter(pk=user.pk).first()
+            
         if request.method.__eq__('PATCH'):
             user_data = {k: v for k, v in request.data.items() if k in user_fields}
             profile_data = {k: v for k, v in request.data.items() if k in profile_fields}

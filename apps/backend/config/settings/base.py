@@ -1,11 +1,45 @@
-import pymysql
+import cloudinary.api, os, pymysql
 from pathlib import Path
-import cloudinary.api, os
+from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
+from config.utils import get_keys_by_pattern
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 MEDIA_ROOT = '%s/media/' % BASE_DIR
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [BASE_DIR / "static",]
+
+load_dotenv(BASE_DIR/'.env')
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+    raise ImproperlyConfigured("SECRET_KEY is missing in .env")
+
+GOOGLE_API_KEYS = get_keys_by_pattern(r'^GOOGLE_API_KEY_')
+if not GOOGLE_API_KEYS:
+    raise ImproperlyConfigured("No GOOGLE_API_KEY found.")
+
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "apps.ouel_gemini",
+    "apps.ouel_oauth",
+    "apps.ouel_reading_app",
+    "apps.ouel_writing_app",
+    "rest_framework",
+    "drf_yasg",
+    "oauth2_provider",
+    "corsheaders",
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google'
+]
 
 cloudinary.config(
   	cloud_name = os.getenv('CLOUDINARY_NAME'),
@@ -24,30 +58,6 @@ SWAGGER_SETTINGS = {
         }
     },
 }
-
-SECRET_KEY = os.getenv('SECRET_KEY')
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "apps.ouel_gemini",
-    "apps.ouel_oauth",
-    "apps.ouel_reading_app",
-    "apps.ouel_writing_app",
-    "rest_framework",
-    "oauth2_provider",
-    "corsheaders",
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
-]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

@@ -42,7 +42,7 @@ class PromptAdmin(admin.ModelAdmin):
         return mark_safe(f'<pre>{response}</pre>')
 
 class PromptLogAdmin(admin.ModelAdmin):
-    list_select_related = ['prompt']
+    list_select_related = ['prompt', 'prompt__ai_model']
     list_display = ['id', 'prompt_name','latency','token','status','created_date']
     list_filter = ['prompt__name','status','created_date']
     search_fields = ['prompt__name']

@@ -1,7 +1,10 @@
+import logging
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from . import serializers, selectors, services
+
+logger = logging.getLogger(__name__)
 
 class WritingAppView(viewsets.ViewSet):
     # permission_classes = [permissions.IsAuthenticated]
@@ -25,7 +28,7 @@ class WritingAppView(viewsets.ViewSet):
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as ex:
-            print(ex)
+            logger.exception(f"Lỗi không xác định: {ex}")
             return Response({"error": "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -34,16 +37,18 @@ class ReadingAppView(viewsets.ViewSet):
 
     @action(methods=['post'], url_path='highlight-passage', detail=False)
     def highlight(self, request):
-        passage = request.data.get("passage")
-        question = request.data.get("question")
-
-        if not passage or not question:
-            return Response({"error": "Thiếu thông tin câu hỏi hoặc đoạn văn"}, status=status.HTTP_400_BAD_REQUEST)
-
+        serializer = serializers.HighlightInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        passage = serializer.validated_data['passage']
+        question = serializer.validated_data['question']
+  
         try:
-            highlight_object = services.highlight_passage(passage=passage,question=question)
-            return Response(highlight_object)
+            result = services.highlight_passage(passage=passage,question=question)
+            return Response(result, status=status.HTTP_200_OK)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as ex:
-            print(ex)
+            logger.exception(f"Lỗi không xác định: {ex}")
             return Response({"error": "Gemini API error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
