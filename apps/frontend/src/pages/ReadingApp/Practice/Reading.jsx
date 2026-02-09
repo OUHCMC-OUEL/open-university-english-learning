@@ -46,14 +46,17 @@ function Reading() {
             <div className="basis-1/2 flex justify-center place-self-center">
                 {!partHistory ? (
                     questions && questions.length > 0 && (
-                        <Quiz
-                            passage={passage}
-                            questions={questions}
-                            question={currentQuestion}
-                            setQuestion={setCurrentQuestion}
-                            index={index}
-                            setIndex={setIndex}
-                            setPartHistory={setPartHistory} />
+                        <div className="flex w-5/6 gap-4">
+                            <Quiz
+                                passage={passage}
+                                questions={questions}
+                                question={currentQuestion}
+                                setQuestion={setCurrentQuestion}
+                                index={index}
+                                setIndex={setIndex}
+                                setPartHistory={setPartHistory} 
+                            />
+                        </div>
                     )
                 ) : (
 

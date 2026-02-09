@@ -39,11 +39,11 @@ export default function Quiz({ passage, questions, question, setQuestion, index,
     }
 
     return (
-        <div className="flex w-5/6 gap-4">
+        <div className="flex w-full gap-4">
             <QuizNavigation direction="prev" index={index} onClick={prev} />
 
-            <div className="flex-1 flex flex-col gap-4">
-                <Card>
+            <div className="flex-1 flex flex-col gap-4 w-full">
+                <Card className="w-full">
                     <CardHeader>
                         <CardTitle>Câu {index + 1}</CardTitle>
                         <CardDescription>{question.question_text}</CardDescription>

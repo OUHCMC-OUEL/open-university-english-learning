@@ -8,22 +8,6 @@ function PartList({ parts }) {
         return <p>Không có Part nào</p>;
     }
 
-    // const getTagColor = (name) => {
-    //     const colors = [
-    //         "bg-green-100 text-green-800",
-    //         "bg-blue-100 text-blue-800",
-    //         "bg-purple-100 text-purple-800",
-    //         "bg-pink-100 text-pink-800",
-    //         "bg-yellow-100 text-yellow-800",
-    //     ];
-    //     let hash = 0;
-    //     for (let i = 0; i < name.length; i++) {
-    //         console.log(hash)
-    //         hash = hash * 31 + name.charCodeAt(i);;
-    //     }
-    //     return colors[Math.abs(hash) % colors.length];
-    // };
-
     const getTagStyle = (name) => {
         let hash = 0;
         for (let i = 0; i < name.length; i++) {
@@ -43,9 +27,9 @@ function PartList({ parts }) {
                 <Card
                     key={part.id}
                     onClick={
-                        part.type_part === "reading_comprehension"
-                            ? () => navigate("/reading/exercise", { state: { part } })
-                            : undefined
+                        part.type_part === "complete_sentence"
+                            ? () => navigate("/reading/exercise/sentence", { state: { part } })
+                            : () => navigate("/reading/exercise", { state: { part } })
                     }
                     className="cursor-pointer"
                 >
