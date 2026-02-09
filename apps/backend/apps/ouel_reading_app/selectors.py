@@ -25,6 +25,12 @@ def get_type_parts(part_type:str):
     if parts:
         return parts
     return None
+def get_all_parts():
+    parts = Part.objects.all().annotate(question_count=Count("question"))
+    if parts:
+        return parts
+    return None
+
 
 def get_questions_by_part(part: Part):
     return Question.objects.filter(part=part)

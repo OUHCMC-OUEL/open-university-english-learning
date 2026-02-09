@@ -1,4 +1,4 @@
-import time, json
+import time, json, itertools
 from django.conf import settings
 from google import genai
 from google.genai import types
@@ -6,7 +6,14 @@ from rest_framework.exceptions import ValidationError
 from .models import Prompt
 from .managers import PromptLogManagement
 
-client = genai.Client(api_key=settings.GOOGLE_API_KEY)
+api_key_cycle = itertools.cycle(settings.GOOGLE_API_KEYS)
+MAX_RETRY = len(settings.GOOGLE_API_KEYS)
+# client = genai.Client(api_key=settings.GOOGLE_API_KEY)
+
+def get_client():
+    api_key = next(api_key_cycle)
+    print (api_key)
+    return genai.Client(api_key=api_key)
 
 def grammar_correction(user_input: str, prompt: Prompt):
     start_time = time.time()
@@ -21,30 +28,33 @@ def grammar_correction(user_input: str, prompt: Prompt):
         model_settings = prompt.settings
 
     temperature = model_settings.get('temperature', 0.5)
-
     try:
-        response = client.models.generate_content(
-            model=prompt.ai_model.name,
-            contents=user_input,
-            config=types.GenerateContentConfig(
-                system_instruction=full_instruction,
-                temperature=temperature,
-                response_mime_type="application/json"
-            )
-        )
-        response_text = response.text
-        if response.usage_metadata:
-            token_usage = response.usage_metadata.total_token_count
-        try:
-            result = json.loads(response_text)
-            return result
-        except json.JSONDecodeError:
-            status_code = 500
-            raise ValueError("AI trả về sai định dạng.")
+        for _ in range(MAX_RETRY):
+            client = get_client()
+            try:
+                response = client.models.generate_content(
+                    model=prompt.ai_model.name,
+                    contents=user_input,
+                    config=types.GenerateContentConfig(
+                        system_instruction=full_instruction,
+                        temperature=temperature,
+                        response_mime_type="application/json"
+                    )
+                )
+                response_text = response.text
+                if response.usage_metadata:
+                    token_usage = response.usage_metadata.total_token_count
+                try:
+                    result = json.loads(response_text)
+                    return result
+                except json.JSONDecodeError:
+                    status_code = 500
+                    raise ValueError("AI trả về sai định dạng.")
 
-    except Exception as ex:
-        status_code = 500
-        raise ex
+            except Exception as ex:
+                status_code = 500
+                raise ex
+        raise ValidationError("Tất cả API key đã vượt giới hạn.")
     finally:
         end_time = time.time()
         validated_data = {
@@ -84,13 +94,15 @@ def highlight_passage(passage,question):
                 - Do not add, delete or change any characters in "answerText". The text in "answerText" must exactly match the Paragraph section and have at least 2 sentences.
                 - Do not return additional text outside of JSON.
                 """
-
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-        text = response.text.strip().replace("```json", "").replace("```", "").strip()
-        return json.loads(text)
-    except Exception as e:
-        raise ValidationError(e)
+    for _ in range(MAX_RETRY):
+        client = get_client()
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
+            text = response.text.strip().replace("```json", "").replace("```", "").strip()
+            return json.loads(text)
+        except Exception as e:
+            raise ValidationError(e)
+    raise ValidationError("AI đang quá tải, vui lòng thử lại sau.")

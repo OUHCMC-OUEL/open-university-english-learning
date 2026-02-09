@@ -20,6 +20,7 @@ export function useHome(type) {
         };
 
         loadData();
+        console.log("Load data")
     }, []);
 
     useEffect(() => {

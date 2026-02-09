@@ -14,7 +14,13 @@ cloudinary.config(
 )
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_API_KEYS = [
+    # os.getenv("GOOGLE_API_KEY"),
+    os.getenv("GOOGLE_API_KEY_1"),
+    os.getenv("GOOGLE_API_KEY_2"),
+    os.getenv("GOOGLE_API_KEY_3"),
+]
+# GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
