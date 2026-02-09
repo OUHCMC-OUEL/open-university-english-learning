@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardAction } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { useHome } from "@/hooks/ReadingApp/Practice/useHomePractice";
+import { useHome } from "@/hooks/ReadingApp/Practice/useHomePracticeV2";
 import PartsList from "@/components/ReadingApp/HomePractice/PartList";
 import {
     Alert,

@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const endpoints = {
     'getHighlights': '/gemini/reading-app/highlight-passage/',
-    'getParts': '/reading/parts/',
+    'getAllParts': '/reading/parts/all',
     'getPart': (partId) => `/reading/parts/${partId}/`,
     'getPartRandom': '/reading/parts/random/',
     'getPartQuestions': (partId) => `/reading/parts/${partId}/questions/`,

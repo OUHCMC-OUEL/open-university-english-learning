@@ -34,6 +34,13 @@ class PartViewSet(viewsets.ModelViewSet):
         except Exception as ex:
             print(ex)
             return Response({"error": "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    @action(methods=['get'], url_name='all', detail=False)
+    def all(self, request):
+        try:
+            parts = Part.objects.all()
+            return Response(serializers.PartSerializer(parts, many=True).data, status=status.HTTP_200_OK)
+        except Exception as ex:
+            return Response({"error": "Internal Server Error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
