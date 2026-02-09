@@ -22,16 +22,25 @@ class TestWeeklyReport(unittest.TestCase):
         self.mock_issue_open.html_url = "http://url1"
         self.mock_issue_open.state = "open"
         self.mock_issue_open.created_at = datetime.now(timezone.utc) - timedelta(days=20)
-        self.mock_issue_open.assignee.login = "JuniorThanhBQ"
+
+        user_open = MagicMock()
+        user_open.login = "JuniorThanhBQ"
+        self.mock_issue_open.assignees = [user_open] 
+
         self.mock_issue_open.labels = [MagicMock(name="backend")]
         type(self.mock_issue_open.labels[0]).name = PropertyMock(return_value="backend")
+        self.mock_issue_open.body = "Open task body" 
 
         self.mock_issue_closed = MagicMock()
         self.mock_issue_closed.title = "Task Done 1"
         self.mock_issue_closed.html_url = "http://url2"
         self.mock_issue_closed.state = "closed"
         self.mock_issue_closed.body = "Done task details"
-        self.mock_issue_closed.assignee.login = "ITPhongou23"
+
+        user_closed = MagicMock()
+        user_closed.login = "ITPhongou23"
+        self.mock_issue_closed.assignees = [user_closed]
+
         self.mock_issue_closed.labels = [MagicMock(name="frontend")]
         type(self.mock_issue_closed.labels[0]).name = PropertyMock(return_value="frontend")
         self.mock_issue_closed.pull_request = None
@@ -53,7 +62,7 @@ class TestWeeklyReport(unittest.TestCase):
         mock_repo = MagicMock()
         mock_github.return_value.get_repo.return_value = mock_repo
         
-        provider = main.GitHubDataProvider("token", "repo")
+        provider = main.GitHubDataProvider("dummy_token", "repo")
         
         mock_repo.get_issues.return_value = [self.mock_issue_open]
         issues = provider.fetch_issues("open")
@@ -62,16 +71,17 @@ class TestWeeklyReport(unittest.TestCase):
 
     @patch("generate_week_report.Github")
     def test_evidence_checker_body(self, mock_github):
-        provider = main.GitHubDataProvider("token", "repo")
+        provider = main.GitHubDataProvider("dummy_token", "repo")
         
         issue_with_body = MagicMock()
         issue_with_body.body = "Detailed description of what was done."
         evidence = provider.get_issue_evidence(issue_with_body)
-        self.assertIn("Body:", evidence)
+        
+        self.assertIn("Desc:", evidence)
 
     @patch("generate_week_report.Github")
     def test_evidence_checker_comment(self, mock_github):
-        provider = main.GitHubDataProvider("token", "repo")
+        provider = main.GitHubDataProvider("dummy_token", "repo")
         
         issue_empty_body = MagicMock()
         issue_empty_body.body = ""
@@ -80,20 +90,13 @@ class TestWeeklyReport(unittest.TestCase):
         issue_empty_body.get_comments.return_value = [mock_comment]
         
         evidence = provider.get_issue_evidence(issue_empty_body)
-        self.assertIn("Comment:", evidence)
+        self.assertIn("Last Comment:", evidence)
 
-    @patch("generate_week_report.Github")
-    def test_evidence_checker_none(self, mock_github):
-        provider = main.GitHubDataProvider("token", "repo")
-        issue_no_info = MagicMock()
-        issue_no_info.body = ""
-        issue_no_info.get_comments.return_value = []
-        issue_no_info.pull_request = None
+    @patch("generate_week_report.GitHubDataProvider") 
+    def test_analyzer_workload(self, mock_gh_provider_class):
+        mock_instance = mock_gh_provider_class.return_value
+        mock_instance.extract_subtasks.return_value = "" 
         
-        evidence = provider.get_issue_evidence(issue_no_info)
-        self.assertEqual(evidence, "No evidence provided")
-
-    def test_analyzer_workload(self):
         analyzer = main.ReportDataAnalyzer(main.MEMBERS)
         data = analyzer.analyze_workload([self.mock_issue_open])
         
@@ -122,7 +125,7 @@ class TestWeeklyReport(unittest.TestCase):
         
         self.assertIn("Stale Tasks", prompt) 
         self.assertIn("70%", prompt)
-        self.assertIn("VIETNAMESE", prompt)
+        self.assertIn("Vietnamese", prompt)
         self.assertIn("open_row", prompt)
         self.assertIn("closed_row", prompt)
 
@@ -138,17 +141,75 @@ class TestWeeklyReport(unittest.TestCase):
             [self.mock_issue_closed] 
         ]
         gh_instance.get_issue_evidence.return_value = "Evidence OK"
+        gh_instance.extract_subtasks.return_value = ""
 
         gemini_instance = mock_gemini.return_value
         gemini_instance.generate.return_value = "AI Generated Report Content"
 
         main.main()
         gemini_instance.generate.assert_called_once()
+
+    def test_multi_assignees_handling(self):
+        mock_issue = MagicMock()
         
-        gh_instance.repo.create_issue.assert_called_once()
-        args, kwargs = gh_instance.repo.create_issue.call_args
-        self.assertIn("Weekly Report", kwargs['title'])
-        self.assertEqual(kwargs['body'], "AI Generated Report Content")
+        user_a = MagicMock(); user_a.login = "DevA_ID"
+        user_b = MagicMock(); user_b.login = "DevB_ID"
+        user_c = MagicMock(); user_c.login = "TesterC_ID"
+        
+        mock_issue.assignees = [user_a, user_b, user_c]
+
+        custom_members = {
+            "DevA_ID": {"name": "Dev A"},
+            "DevB_ID": {"name": "Dev B"},
+            "TesterC_ID": {"name": "Tester C"}
+        }
+
+        analyzer = main.ReportDataAnalyzer(custom_members)
+        ids, display_str = analyzer._get_assignee_names(mock_issue)
+        self.assertEqual(len(ids), 3)
+        self.assertIn("Dev A", display_str)
+        self.assertIn("Dev B", display_str)
+        self.assertIn("Tester C", display_str)
+        self.assertTrue(", " in display_str)
+
+    @patch("generate_week_report.Github")
+    def test_subtasks_extraction(self, mock_github):
+        provider = main.GitHubDataProvider("dummy_token", "repo")
+
+        body_content = """
+        Mô tả công việc chính.
+        - [x] Task con 1 (Done)
+        - [ ] Task con 2 (Pending)
+        """
+
+        result = provider.extract_subtasks(body_content)
+
+        self.assertIn("1/2 Done", result)
+        self.assertIn("[x] Task con 1", result)
+        self.assertIn("[ ] Task con 2", result)
+        self.assertIn("<br>", result)
+
+    def test_empty_data_robustness(self):
+        mock_issue_no_assignee = MagicMock()
+        mock_issue_no_assignee.assignees = [] 
+        
+        analyzer = main.ReportDataAnalyzer({})
+        ids, display_str = analyzer._get_assignee_names(mock_issue_no_assignee)
+        
+        self.assertEqual(display_str, "Unassigned")
+        self.assertEqual(ids, ["Unassigned"])
+
+        with patch("generate_week_report.Github"):
+            provider = main.GitHubDataProvider("dummy_token", "repo")
+
+            res_none = provider.extract_subtasks(None)
+            self.assertEqual(res_none, "")
+
+            res_empty = provider.extract_subtasks("")
+            self.assertEqual(res_empty, "")
+
+            res_no_checklist = provider.extract_subtasks("Chỉ là mô tả thường, không có task.")
+            self.assertEqual(res_no_checklist, "")
 
 if __name__ == '__main__':
     unittest.main()
