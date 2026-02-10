@@ -73,8 +73,8 @@ def create_html_body(member_name, issues):
             <thead>
                 <tr style="background-color: #f6f8fa;">
                     <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: left; font-size: 13px;">Tên công việc</th>
-                    <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: center; font-size: 13px; width: 80px;">Liên kết</th>
-                    <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: left; font-size: 13px; width: 80px;">Thời gian tồn tại</th>
+                    <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: center; font-size: 13px; width: 70px;">Liên kết</th>
+                    <th style="padding: 12px 8px; border: 1px solid #d1d5da; text-align: left; font-size: 13px; width: 60px;">Thời gian tồn tại</th>
                 </tr>
             </thead>
             <tbody style="font-size: 14px;">

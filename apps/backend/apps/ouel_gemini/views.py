@@ -44,7 +44,8 @@ class ReadingAppView(viewsets.ViewSet):
         question = serializer.validated_data['question']
   
         try:
-            result = services.highlight_passage(passage=passage,question=question)
+            prompt = selectors.get_active_prompt(name="highlight-passage")
+            result = services.highlight_passage(passage=passage, question=question, prompt=prompt)
             return Response(result, status=status.HTTP_200_OK)
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

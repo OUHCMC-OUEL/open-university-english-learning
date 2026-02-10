@@ -213,6 +213,37 @@ OUTPUT FORMAT:
         ai_model=ai_model
     )
 
+    highlight_instruction_content = f"""
+    You are an AI powered answer suggestion system. Your task is to find the consecutive and complete text range in the provided Passage that suggests the answer to the Question.
+
+    Your task:
+    1. Identify the most accurate consecutive text range that suggests the correct answer in the passage.
+    2. Calculate the start and end index based on the characters of the extracted text compared to the provided Passage above.
+    3. Output only one JSON object.
+
+    Rule:
+    - Do not add, delete or change any characters in "answerText". The text in "answerText" must exactly match the Paragraph section and have at least 2 sentences.
+    - Do not return additional text outside of JSON.
+    """
+
+    highlight_context_content = """
+        The JSON format must be strictly followed:
+    {{
+        "answerText": "exact suggested text range copied from the Passage",
+        "startIndex": number,
+        "endIndex": number
+    }}
+    """
+
+    Prompt.objects.create(
+        name="highlight-passage",
+        version=1,
+        instruction=highlight_instruction_content,
+        context=highlight_context_content,
+        settings={"temperature": 0.4, "topK": 30}, 
+        ai_model=ai_model
+    )
+
 def remove_grammar_prompt(apps, schema_editor):
     Prompt = apps.get_model('ouel_gemini', 'Prompt')
     Prompt.objects.filter(name="Writing Grammar Checker", version=1).delete()
