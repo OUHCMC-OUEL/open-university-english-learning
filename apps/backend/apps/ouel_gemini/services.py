@@ -31,6 +31,17 @@ class GeminiClientWrapper:
             raise ValueError("GOOGLE_API_KEYS chưa được cấu hình trong settings.")
         return keys
 
+    @staticmethod
+    def _is_retryable_error(error: Exception) -> bool:
+        error_str = str(error).lower()
+        auth_keywords = ["403", "permission", "invalid"]
+        quota_keywords = ["429", "quota", "resource exhausted"]
+
+        is_auth = any(k in error_str for k in auth_keywords)
+        is_quota = any(k in error_str for k in quota_keywords)
+        
+        return is_auth or is_quota
+
     @classmethod
     def generate_content(cls, model_name: str, contents: str, system_instruction: Optional[str] = None, 
                          temperature: float = 0.5, response_mime_type: str = "text/plain") -> types.GenerateContentResponse:
@@ -58,18 +69,13 @@ class GeminiClientWrapper:
                 return response
 
             except Exception as e:
-                error_str = str(e).lower()
-                is_auth_error = "403" in error_str or "permission" in error_str or "invalid" in error_str
-                is_quota_error = "429" in error_str or "quota" in error_str or "resource exhausted" in error_str
+                key_suffix = api_key[-4:]
+                last_exception = e
 
-                if is_auth_error or is_quota_error:
-                    logger.warning(f"Key ***{api_key[-4:]} failed (Index {index}). Error: {e}. Switching to next key...")
-                    last_exception = e
-                    continue 
-                else:                 
-                    logger.error(f"Lỗi không xác định  ***{api_key[-4:]}: {e}")
-                    last_exception = e
-                    continue
+                if cls._is_retryable_error(e):
+                    logger.warning(f"Key ***{key_suffix} failed (Index {index}). Error: {e}. Switching to next...")
+                else:
+                    logger.error(f"Lỗi không xác định ***{key_suffix}: {e}. Switching to next...")
 
         logger.critical("Không còn keys nào khả dụng.")
         if last_exception:
@@ -136,7 +142,10 @@ def run_prompt_flow(user_input: str, prompt: Prompt, prompt_vars: dict = None) -
 
     except Exception as e:
         status_code = 500 if not isinstance(e, NoKeysAvailable) else 503
-        response_text = str(e)
+
+        if not response_text:
+            response_text = str(e)
+
         raise e
         
     finally:
@@ -154,43 +163,14 @@ def run_prompt_flow(user_input: str, prompt: Prompt, prompt_vars: dict = None) -
 def grammar_correction(user_input: str, prompt: Prompt) -> Dict[str, Any]:
     return run_prompt_flow(user_input, prompt)
 
-def highlight_passage(passage: str, question: str):
+def highlight_passage(passage: str, question: str, prompt: Prompt) -> Dict[str, Any]:
     prompt_content = f"""
-    You are an AI powered answer suggestion system. Your task is to find the consecutive and complete text range in the provided Passage that suggests the answer to the Question.
-
     Passage:
     "{passage}"
 
     Question:
     "{question}"
-
-    Your task:
-    1. Identify the most accurate consecutive text range that suggests the correct answer in the passage.
-    2. Calculate the start and end index based on the characters of the extracted text compared to the provided Passage above.
-    3. Output only one JSON object.
-
-    The JSON format must be strictly followed:
-    {{
-        "answerText": "exact suggested text range copied from the Passage",
-        "startIndex": number,
-        "endIndex": number
-    }}
-
-    Rule:
-    - Do not add, delete or change any characters in "answerText". The text in "answerText" must exactly match the Paragraph section and have at least 2 sentences.
-    - Do not return additional text outside of JSON.
+    
     """
-    # Hard code
-    model = AIModel.objects.filter(name='gemini-2.5-flash').first()
-    prompt, created = Prompt.objects.get_or_create(
-        name="Highlight Passage Prompt (Auto-generated)", 
-        defaults={
-            "version": 1,
-            "instruction": prompt_content, 
-            "context": "Context mặc định cho highlight",
-            "ai_model": model,
-            "active": True
-        }
-    )
 
-    return run_prompt_flow("", prompt)
+    return run_prompt_flow(prompt_content, prompt)

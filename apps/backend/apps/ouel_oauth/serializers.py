@@ -8,7 +8,7 @@ class LoginHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = LoginHistory
         fields = ['login_date','description']
-        read_only_fields = ['login_date', 'description']
+        read_only_fields = ['login_date']
 
 class ProfileSerializer(serializers.ModelSerializer):
     hobbies = serializers.SlugRelatedField(
@@ -66,7 +66,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['first_name', 'last_name','email','username', 'password', 'avatar', 'profile', 'login_history']
-        read_only_fields = ['username']
         extra_kwargs = {
             "password":{
                 "write_only": True

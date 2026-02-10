@@ -2,12 +2,19 @@ from rest_framework import viewsets, generics, permissions, status, parsers
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from . import serializers
-from .models import User
+from django.db.models import Prefetch
+from .models import User, LoginHistory
 
 class UserView(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active=True)
     serializer_class = serializers.UserSerializer
     parser_classes = [parsers.MultiPartParser,parsers.JSONParser, parsers.FormParser,]
+
+    def get_permissions(self):
+        if self.action in ['create']:
+            return [permissions.AllowAny()]
+
+        return [permissions.IsAuthenticated()]
 
     def get_queryset(self):
         return User.objects.filter(is_active=True).prefetch_related(

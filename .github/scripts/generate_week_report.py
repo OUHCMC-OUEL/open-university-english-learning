@@ -274,6 +274,15 @@ def main():
         
         report_content = generator.generate(prompt)
 
+        logging.info("Pushing report to GitHub Issues...")
+        report_title = f"Weekly Report: {date_info['formatted_range']}"
+        
+        new_issue = gh_provider.repo.create_issue(
+            title=report_title, 
+            body=report_content, 
+            labels=["report", "weekly"]
+        )
+        
         logging.info(f"Report Generated Preview:\n{report_content[:500]}...")
         logging.info("Done.")
 

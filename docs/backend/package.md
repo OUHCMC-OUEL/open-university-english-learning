@@ -60,3 +60,34 @@
    + tenacity==9.1.2
    + typing-inspection==0.4.2
    + websockets==15.0.1   
+
+8. Bộ lib kiểm thử:
+   + colorama-0.4.6
+   + iniconfig-2.3.0
+   + model-bakery-1.23.2
+   + pluggy-1.6.0
+   + pygments-2.19.2
+   + pytest-9.0.2
+   + pytest-django-4.11.1
+   + iniconfig-2.3.0
+   + pluggy-1.6.0
+   + pygments-2.19.2
+   + pytest-9.0.2
+   + pytest-cov-7.0.0
+   + mando-0.7.1
+   + radon-6.0.1
+   + bandit-1.9.3
+   + markdown-it-py-4.0.0
+   + mdurl-0.1.2
+   + rich-14.3.2
+   + stevedore-5.6.0
+
+9. Commit:
+   + cfgv-3.5.0 
+   + distlib-0.4.0
+   + filelock-3.20.3
+   + identify-2.6.16
+   + nodeenv-1.10.0
+   + platformdirs-4.5.1
+   + pre-commit-4.5.1
+   + virtualenv-20.36.1
