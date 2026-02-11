@@ -1,0 +1,24 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div id="content-main">
+    <p>Nhấn nút bên dưới để tiến hành kéo code mới nhất từ GitHub và cập nhật hệ thống. <br/>
+       <b>Cảnh báo:</b> Quá trình này có thể mất vài giây và làm khởi động lại máy chủ.<br/><b>Note:</b> Đồng thời, hãy tạo một bản backup trước khi thực hiện để tránh mất dữ liệu quan trọng.
+    </p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="submit-row">
+            <input type="submit" value="Cập nhật hệ thống" class="default" style="background-color: #ba2121;">
+        </div>
+    </form>
+
+    {% if logs %}
+    <br>
+    <h2>System Logs:</h2>
+    <div style="background-color: #000; color: #0f0; padding: 15px; font-family: monospace; white-space: pre-wrap; border-radius: 5px; max-height: 500px; overflow-y: auto;">
+{{ logs }}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

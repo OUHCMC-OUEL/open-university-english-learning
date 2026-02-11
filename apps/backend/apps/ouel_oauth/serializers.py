@@ -4,27 +4,30 @@ from rest_framework.exceptions import ValidationError
 from .models import User, Profile, LoginHistory, Hobby
 from .managers import ProfileManager
 
+
 class LoginHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = LoginHistory
-        fields = ['login_date','description']
-        read_only_fields = ['login_date']
+        fields = ["login_date", "description"]
+        read_only_fields = ["login_date"]
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     hobbies = serializers.SlugRelatedField(
-        many=True,
-        slug_field='name',
-        queryset=Hobby.objects.all()
+        many=True, slug_field="name", queryset=Hobby.objects.all()
     )
 
     def update(self, user, validated_data):
-        profile_keys = {'biography', 'about', 'level', 'hobbies'}
-        ProfileManager.update_profile(user=user, profile_keys=profile_keys, **validated_data)
+        profile_keys = {"biography", "about", "level", "hobbies"}
+        ProfileManager.update_profile(
+            user=user, profile_keys=profile_keys, **validated_data
+        )
         return user
 
     class Meta:
         model = Profile
-        fields = ['biography','about','level','hobbies']
+        fields = ["biography", "about", "level", "hobbies"]
+
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(read_only=True)
@@ -33,12 +36,12 @@ class UserSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         if instance.avatar:
-            data['avatar'] = instance.avatar.url
+            data["avatar"] = instance.avatar.url
 
         return data
-    
+
     def get_login_history(self, obj: User):
-        history = getattr(obj, 'prefetched_login_history', [])
+        history = getattr(obj, "prefetched_login_history", [])
         if not history:
             return LoginHistorySerializer(obj.login_history.all()[:5], many=True).data
         return LoginHistorySerializer(history, many=True).data
@@ -58,16 +61,23 @@ class UserSerializer(serializers.ModelSerializer):
     @transaction.atomic
     def update(self, instance, validated_data) -> User:
         keys = set(validated_data.keys())
-        if keys - {'first_name', 'last_name', 'email', 'avatar'}:
-            raise ValidationError({'error': 'Chỉnh sửa không hợp lệ'})
+        if keys - {"first_name", "last_name", "email", "avatar"}:
+            raise ValidationError({"error": "Chỉnh sửa không hợp lệ"})
 
         return super().update(instance, validated_data)
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name','email','username', 'password', 'avatar', 'profile', 'login_history']
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "username",
+            "password",
+            "avatar",
+            "profile",
+            "login_history",
+        ]
         extra_kwargs = {
-            "password":{
-                "write_only": True
-            },
+            "password": {"write_only": True},
         }

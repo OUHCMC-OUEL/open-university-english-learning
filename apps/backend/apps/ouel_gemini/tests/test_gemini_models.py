@@ -5,19 +5,21 @@ from apps.ouel_gemini.models import AIModel, Prompt, PromptLog, Model, Provider
 
 pytestmark = pytest.mark.django_db
 
+
 class TestAIModel:
     def test_ai_model_creation(self):
         ai_model = baker.make(AIModel, name=Model.version2_5)
 
         assert ai_model.name == Model.version2_5
         assert ai_model.provider == Provider.GEMINI
-        assert ai_model.active is True  
-        assert ai_model.created_date is not None 
+        assert ai_model.active is True
+        assert ai_model.created_date is not None
         assert str(ai_model) == Model.version2_5
 
     def test_ai_model_str_method(self):
         ai_model = baker.make(AIModel, name=Model.version3)
         assert str(ai_model) == Model.version3
+
 
 class TestPrompt:
     def test_prompt_creation(self):
@@ -49,10 +51,11 @@ class TestPrompt:
         p3 = baker.make(Prompt, version=2)
 
         prompts = Prompt.objects.filter(id__in=[p1.id, p2.id, p3.id])
-        
+
         assert prompts[0] == p2
         assert prompts[1] == p3
         assert prompts[2] == p1
+
 
 class TestPromptLog:
     def test_prompt_log_creation(self):
