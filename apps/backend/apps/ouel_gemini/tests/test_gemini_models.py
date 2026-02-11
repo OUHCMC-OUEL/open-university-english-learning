@@ -5,33 +5,22 @@ from apps.ouel_gemini.models import AIModel, Prompt, PromptLog, Model, Provider
 
 pytestmark = pytest.mark.django_db
 
-<<<<<<< HEAD
 
-=======
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 class TestAIModel:
     def test_ai_model_creation(self):
         ai_model = baker.make(AIModel, name=Model.version2_5)
 
         assert ai_model.name == Model.version2_5
         assert ai_model.provider == Provider.GEMINI
-<<<<<<< HEAD
         assert ai_model.active is True
         assert ai_model.created_date is not None
-=======
-        assert ai_model.active is True  
-        assert ai_model.created_date is not None 
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
         assert str(ai_model) == Model.version2_5
 
     def test_ai_model_str_method(self):
         ai_model = baker.make(AIModel, name=Model.version3)
         assert str(ai_model) == Model.version3
 
-<<<<<<< HEAD
 
-=======
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 class TestPrompt:
     def test_prompt_creation(self):
         prompt = baker.make(Prompt, name="Translate English")
@@ -62,19 +51,12 @@ class TestPrompt:
         p3 = baker.make(Prompt, version=2)
 
         prompts = Prompt.objects.filter(id__in=[p1.id, p2.id, p3.id])
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
         assert prompts[0] == p2
         assert prompts[1] == p3
         assert prompts[2] == p1
 
-<<<<<<< HEAD
 
-=======
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 class TestPromptLog:
     def test_prompt_log_creation(self):
         log = baker.make(PromptLog)
@@ -96,8 +78,4 @@ class TestPromptLog:
 
         prompt.delete()
 
-<<<<<<< HEAD
         assert PromptLog.objects.count() == 0
-=======
-        assert PromptLog.objects.count() == 0
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100

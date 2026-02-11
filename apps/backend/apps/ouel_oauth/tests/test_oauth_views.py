@@ -9,42 +9,25 @@ from apps.ouel_oauth.models import Profile, Hobby, LoginHistory
 User = get_user_model()
 pytestmark = pytest.mark.django_db
 
-<<<<<<< HEAD
 
-=======
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 @pytest.fixture
 def factory():
     return APIRequestFactory()
 
-<<<<<<< HEAD
 
 class TestUserView:
     def test_register_user(self, factory):
         view = UserView.as_view({"post": "create"})
 
-=======
-class TestUserView:
-    def test_register_user(self, factory):
-        view = UserView.as_view({'post': 'create'})
-        
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
         data = {
             "username": "new_student",
             "password": "password123",
             "email": "student@ou.edu.vn",
             "first_name": "Nguyen",
-<<<<<<< HEAD
             "last_name": "Van A",
         }
 
         request = factory.post("/fake-url/", data, format="json")
-=======
-            "last_name": "Van A"
-        }
-
-        request = factory.post('/fake-url/', data, format='json')
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 
         response = view(request)
 
@@ -53,19 +36,11 @@ class TestUserView:
         assert Profile.objects.filter(user__username="new_student").exists()
 
     def test_get_current_user_unauthenticated(self, factory):
-<<<<<<< HEAD
         view = UserView.as_view({"get": "get_current_user"})
         request = factory.get("/fake-url/")
 
         response = view(request)
 
-=======
-        view = UserView.as_view({'get': 'get_current_user'})
-        request = factory.get('/fake-url/')
-        
-        response = view(request)
-        
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_get_current_user_success(self, factory):
@@ -73,7 +48,6 @@ class TestUserView:
         baker.make(Profile, user=user)
         baker.make(LoginHistory, user=user, _quantity=10)
 
-<<<<<<< HEAD
         view = UserView.as_view({"get": "get_current_user"})
         request = factory.get("/fake-url/")
 
@@ -84,23 +58,10 @@ class TestUserView:
         assert response.status_code == status.HTTP_200_OK
         assert response.data["username"] == "tester"
         assert len(response.data["login_history"]) <= 5
-=======
-        view = UserView.as_view({'get': 'get_current_user'})
-        request = factory.get('/fake-url/')
-        
-        force_authenticate(request, user=user)
-        
-        response = view(request)
-
-        assert response.status_code == status.HTTP_200_OK
-        assert response.data['username'] == "tester"
-        assert len(response.data['login_history']) <= 5
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 
     def test_patch_current_user_separate_fields(self, factory):
         user = baker.make(User, first_name="Old Name")
         baker.make(Profile, user=user, biography="Old Bio")
-<<<<<<< HEAD
 
         view = UserView.as_view({"patch": "get_current_user"})
 
@@ -113,24 +74,6 @@ class TestUserView:
 
         assert response.status_code == status.HTTP_200_OK
 
-=======
-        
-        view = UserView.as_view({'patch': 'get_current_user'})
-        
-        data = {
-            "first_name": "New Name",
-            "biography": "New Bio",
-            "about": "New About"
-        }
-        
-        request = factory.patch('/fake-url/', data, format='json')
-        force_authenticate(request, user=user)
-        
-        response = view(request)
-
-        assert response.status_code == status.HTTP_200_OK
-        
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
         user.refresh_from_db()
         assert user.first_name == "New Name"
         assert user.profile.biography == "New Bio"
@@ -138,18 +81,12 @@ class TestUserView:
     def test_patch_ignore_restricted_fields(self, factory):
         user = baker.make(User, username="original_user", is_superuser=False)
         baker.make(Profile, user=user)
-<<<<<<< HEAD
 
         view = UserView.as_view({"patch": "get_current_user"})
-=======
-        
-        view = UserView.as_view({'patch': 'get_current_user'})
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 
         data = {
             "first_name": "Changed",
             "username": "hacker_user",
-<<<<<<< HEAD
             "is_superuser": True,
         }
 
@@ -160,18 +97,6 @@ class TestUserView:
 
         assert response.status_code == status.HTTP_200_OK
 
-=======
-            "is_superuser": True
-        }
-
-        request = factory.patch('/fake-url/', data, format='json')
-        force_authenticate(request, user=user)
-        
-        response = view(request)
-
-        assert response.status_code == status.HTTP_200_OK
-        
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
         user.refresh_from_db()
         assert user.first_name == "Changed"
         assert user.username == "original_user"
@@ -183,7 +108,6 @@ class TestUserView:
         h1 = baker.make(Hobby, name="Coding")
         h2 = baker.make(Hobby, name="Music")
 
-<<<<<<< HEAD
         view = UserView.as_view({"patch": "get_current_user"})
 
         data = {"hobbies": ["Coding", "Music"]}
@@ -195,16 +119,3 @@ class TestUserView:
 
         assert response.status_code == status.HTTP_200_OK
         assert profile.hobbies.count() == 2
-=======
-        view = UserView.as_view({'patch': 'get_current_user'})
-
-        data = {"hobbies": ["Coding", "Music"]}
-
-        request = factory.patch('/fake-url/', data, format='json')
-        force_authenticate(request, user=user)
-        
-        response = view(request)
-
-        assert response.status_code == status.HTTP_200_OK
-        assert profile.hobbies.count() == 2
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100

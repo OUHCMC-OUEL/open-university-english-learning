@@ -31,7 +31,7 @@
 - Frontend: https://ouel-vite.vercel.app/
 - Backend API: https://juniort.pythonanywhere.com/
 
-## Điều đã làm và chưa làm được (Old)
+## Điều đã làm và chưa làm được
 | Nội dung | Đã làm được | Chưa làm được |
 |------|--------|---------|
 | Lý thuyết | Đã nghiên cứu lý thuyết các chức năng cần thiết của một ứng dụng tiếng Anh, nền tảng cá nhân hóa, cách thức tổ chức kiến trúc hệ thống, các kỹ thuật prompt và RAG | Các lý thuyết chỉ nằm ở mức tương đối chứ chưa thật sự đi sâu vào vấn đề, một số chỗ trong lý thuyết mang tính chất suy diễn cá nhân chứ chưa thực tế |

@@ -8,14 +8,9 @@ from .managers import ProfileManager
 class LoginHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = LoginHistory
-<<<<<<< HEAD
         fields = ["login_date", "description"]
         read_only_fields = ["login_date"]
 
-=======
-        fields = ['login_date','description']
-        read_only_fields = ['login_date']
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 
 class ProfileSerializer(serializers.ModelSerializer):
     hobbies = serializers.SlugRelatedField(
@@ -73,7 +68,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-<<<<<<< HEAD
         fields = [
             "first_name",
             "last_name",
@@ -84,9 +78,6 @@ class UserSerializer(serializers.ModelSerializer):
             "profile",
             "login_history",
         ]
-=======
-        fields = ['first_name', 'last_name','email','username', 'password', 'avatar', 'profile', 'login_history']
->>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
         extra_kwargs = {
             "password": {"write_only": True},
         }
