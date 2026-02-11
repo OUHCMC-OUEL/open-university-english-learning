@@ -21,6 +21,9 @@ DATABASES = {
         "NAME": os.getenv('DB_NAME_DEV'),
         "USER": os.getenv('DB_USER_DEV'),
         "PASSWORD": os.getenv('DB_PASSWORD_DEV'),
-        "HOST": os.getenv('DB_HOST_DEV')
+        "HOST": os.getenv('DB_HOST_DEV'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }

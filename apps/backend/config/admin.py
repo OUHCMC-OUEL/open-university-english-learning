@@ -66,6 +66,13 @@ class OUELAdminSite(admin.AdminSite):
                 current_commit = current_commit_cmd.stdout.strip()
                 logs.append(f"0. CURRENT COMMIT: {current_commit}")
 
+                if os.name == 'nt':  
+                    python_bin = os.path.join(sys.prefix, 'Scripts', 'python.exe')
+                else:
+                    python_bin = os.path.join(sys.prefix, 'bin', 'python')
+         
+                if not os.path.exists(python_bin):
+                    python_bin = 'python'
 
                 logs.append("\n1. GIT PULL ")
                 git_pull = subprocess.run(['git', 'pull', 'origin', 'main'], cwd=repo_dir, capture_output=True, text=True)
@@ -104,7 +111,7 @@ class OUELAdminSite(admin.AdminSite):
                     except Exception:
                         username = 'local_dev'
                 domain = os.environ.get('PYTHONANYWHERE_DOMAIN', 'pythonanywhere.com').replace('.', '_')
-                wsgi_path = f"/var/www/{username}_{domain}_wsgi.py"
+                wsgi_path = f"/var/www/{username.lower()}_{domain.lower()}_wsgi.py"
                 
                 if os.path.exists(wsgi_path):
                     os.utime(wsgi_path, None)
