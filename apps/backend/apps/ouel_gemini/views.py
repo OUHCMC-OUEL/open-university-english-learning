@@ -46,9 +46,13 @@ class ReadingAppView(viewsets.ViewSet):
 
         try:
             prompt = selectors.get_active_prompt(name="highlight-passage")
+<<<<<<< HEAD
             result = services.highlight_passage(
                 passage=passage, question=question, prompt=prompt
             )
+=======
+            result = services.highlight_passage(passage=passage, question=question, prompt=prompt)
+>>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
             return Response(result, status=status.HTTP_200_OK)
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

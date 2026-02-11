@@ -42,7 +42,11 @@ class GeminiClientWrapper:
 
         is_auth = any(k in error_str for k in auth_keywords)
         is_quota = any(k in error_str for k in quota_keywords)
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
         return is_auth or is_quota
 
     @classmethod
@@ -79,6 +83,7 @@ class GeminiClientWrapper:
                 last_exception = e
 
                 if cls._is_retryable_error(e):
+<<<<<<< HEAD
                     logger.warning(
                         f"Key ***{key_suffix} failed (Index {index}). Error: {e}. Switching to next..."
                     )
@@ -86,6 +91,11 @@ class GeminiClientWrapper:
                     logger.error(
                         f"Lỗi không xác định ***{key_suffix}: {e}. Switching to next..."
                     )
+=======
+                    logger.warning(f"Key ***{key_suffix} failed (Index {index}). Error: {e}. Switching to next...")
+                else:
+                    logger.error(f"Lỗi không xác định ***{key_suffix}: {e}. Switching to next...")
+>>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 
         logger.critical("Không còn keys nào khả dụng.")
         if last_exception:
@@ -186,7 +196,10 @@ def run_prompt_flow(
 def grammar_correction(user_input: str, prompt: Prompt) -> Dict[str, Any]:
     return run_prompt_flow(user_input, prompt)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 def highlight_passage(passage: str, question: str, prompt: Prompt) -> Dict[str, Any]:
     prompt_content = f"""
     Passage:

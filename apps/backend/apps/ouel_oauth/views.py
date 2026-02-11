@@ -4,7 +4,10 @@ from rest_framework.response import Response
 from . import serializers
 from django.db.models import Prefetch
 from .models import User, LoginHistory
+<<<<<<< HEAD
 
+=======
+>>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 
 class UserView(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active=True)
@@ -17,6 +20,12 @@ class UserView(viewsets.ViewSet, generics.CreateAPIView):
 
     def get_permissions(self):
         if self.action in ["create"]:
+            return [permissions.AllowAny()]
+
+        return [permissions.IsAuthenticated()]
+
+    def get_permissions(self):
+        if self.action in ['create']:
             return [permissions.AllowAny()]
 
         return [permissions.IsAuthenticated()]

@@ -237,11 +237,18 @@ OUTPUT FORMAT:
         version=1,
         instruction=highlight_instruction_content,
         context=highlight_context_content,
+<<<<<<< HEAD
         settings={"temperature": 0.4, "topK": 30},
         ai_model=ai_model,
     )
 
 
+=======
+        settings={"temperature": 0.4, "topK": 30}, 
+        ai_model=ai_model
+    )
+
+>>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
 def remove_grammar_prompt(apps, schema_editor):
     Prompt = apps.get_model("ouel_gemini", "Prompt")
     Prompt.objects.filter(name="Writing Grammar Checker", version=1).delete()

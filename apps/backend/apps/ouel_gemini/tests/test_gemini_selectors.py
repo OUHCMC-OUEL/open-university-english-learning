@@ -5,8 +5,12 @@ from apps.ouel_gemini.selectors import get_active_prompt
 
 pytestmark = pytest.mark.django_db
 
+<<<<<<< HEAD
 
 class TestGetActivePrompt:
+=======
+class TestGetActivePrompt:  
+>>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
     def test_get_latest_active_version(self):
         name = "Translation"
         baker.make(Prompt, name=name, version=1, active=True)
@@ -35,8 +39,14 @@ class TestGetActivePrompt:
     def test_prompt_not_found_all_inactive(self):
         name = "InactiveFeature"
         baker.make(Prompt, name=name, version=1, active=False)
+<<<<<<< HEAD
 
         with pytest.raises(
             ValueError, match=f"Không tìm thấy Prompt phù hợp cho model: {name}"
         ):
             get_active_prompt(name)
+=======
+        
+        with pytest.raises(ValueError, match=f"Không tìm thấy Prompt phù hợp cho model: {name}"):
+            get_active_prompt(name)
+>>>>>>> e644c4a50a726e74720f3844f5a30c79a5583100
