@@ -1,6 +1,6 @@
 from django.db import migrations
 from django.contrib.auth.hashers import make_password
-
+from apps.ouel_oauth.models import RoleEnum
 
 def create_superadmin(apps, schema_editor):
     user = apps.get_model("ouel_oauth", "User")
@@ -13,6 +13,7 @@ def create_superadmin(apps, schema_editor):
             is_superuser=True,
             is_staff=True,
             is_active=True,
+            role=RoleEnum.ADMIN
         )
 
 
@@ -23,7 +24,7 @@ def remove_superadmin(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("ouel_oauth", "0003_alter_loginhistory_options"),
+        ("ouel_oauth", "0004_instructorprofile_alter_loginhistory_options_and_more"),
     ]
 
     operations = [

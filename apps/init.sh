@@ -21,16 +21,8 @@ fi
 cd backend
 
 echo "Cài đặt requirements"
-if [ -f "requirements.txt" ]; then
-    pip install -r requirements.txt
-elif [ -f "requirements/base.txt" ]; then
-    pip install -r requirements/base.txt
-    if [ -f "requirements/development.txt" ]; then
-        pip install -r requirements/development.txt
-    fi
-    if [ -f "requirements/production.txt" ]; then
-        pip install -r requirements/production.txt
-    fi
+if [ -f "requirements/development.txt" ]; then
+    pip install -r requirements/development.txt
 else
     echo "Không tìm thấy file requirements"
 fi

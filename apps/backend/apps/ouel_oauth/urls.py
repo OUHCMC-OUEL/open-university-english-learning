@@ -5,6 +5,7 @@ from apps.ouel_oauth import views
 
 r = DefaultRouter()
 r.register("users", views.UserView, "users")
+r.register("user", views.UserFollowView, "user")
 
 urlpatterns = [
     path("", include(r.urls)),

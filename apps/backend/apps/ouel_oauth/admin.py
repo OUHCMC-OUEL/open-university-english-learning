@@ -10,17 +10,36 @@ from allauth.socialaccount.admin import (
 )
 from config.admin import admin_site
 from django.contrib.sites.models import Site
-from .models import User, Profile, LoginHistory, Hobby
+from .models import User, StudentProfile, InstructorProfile, LoginHistory, Hobby, UserFollow
+
+class StudentProfileInline(admin.StackedInline):
+    model = StudentProfile
+    can_delete = False
+    verbose_name_plural = 'Student Profile'
+    fk_name = 'user'
 
 
-class ProfileInlinesAdmin(admin.StackedInline):
-    model = Profile
-    extra = 0
-
+class InstructorProfileInline(admin.StackedInline):
+    model = InstructorProfile
+    can_delete = False
+    verbose_name_plural = 'Instructor Profile'
+    fk_name = 'user'
 
 class MyUserAdmin(UserAdmin):
-    fieldsets = [*UserAdmin.fieldsets, ("Avatar", {"fields": ("avatar",)})]
-    inlines = (ProfileInlinesAdmin,)
+    list_display = ('username', 'email', 'first_name', 'last_name', 'role', 'social_provider', 'is_staff')
+    list_filter = ('role', 'social_provider', 'is_staff', 'is_active')
+    fieldsets = UserAdmin.fieldsets + (
+        ('Extra Info', {'fields': ('avatar', 'role', 'social_provider')}),
+    )
+
+    def get_inlines(self, request, obj=None):
+        if not obj:
+            return []
+        if obj.role == 'student':
+            return [StudentProfileInline]
+        elif obj.role == 'instructor':
+            return [InstructorProfileInline]
+        return []
 
 
 class MyLoginHistoryAdmin(admin.ModelAdmin):
@@ -28,6 +47,14 @@ class MyLoginHistoryAdmin(admin.ModelAdmin):
     list_display = ["user__username", "login_date"]
     search_fields = ["user__username"]
 
+class UserFollowAdmin(admin.ModelAdmin):
+    list_display = ('follower', 'followed', 'created_at')
+    list_filter = ('created_at',)
+    search_fields = ('follower__username', 'follower__email', 'followed__username', 'followed__email')
+    list_select_related = ('follower', 'followed')
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 admin_site.register(User, MyUserAdmin)
 admin_site.register(EmailAddress, EmailAddressAdmin)
@@ -37,3 +64,4 @@ admin_site.register(SocialToken, SocialTokenAdmin)
 admin_site.register(LoginHistory, MyLoginHistoryAdmin)
 admin_site.register(Site)
 admin_site.register(Hobby)
+admin_site.register(UserFollow, UserFollowAdmin)

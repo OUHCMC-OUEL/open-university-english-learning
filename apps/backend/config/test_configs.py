@@ -2,18 +2,32 @@ import pytest
 from unittest.mock import patch, MagicMock
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from apps.ouel_oauth.models import RoleEnum
 
 User = get_user_model()
 pytestmark = pytest.mark.django_db
 
 @pytest.fixture
 def superuser_client(client):
-    user = User.objects.create_superuser(username='admin', password='password', email='admin@test.com')
-    client.login(username='admin', password='password')
+    password = "123"
+    admin_user, created = User.objects.get_or_create(
+        username="admin_test",
+        defaults={
+            "email": "admin@test.com",
+            "is_staff": True,
+            "is_superuser": True,
+            "is_active": True,
+            "role": RoleEnum.ADMIN
+        }
+    )
+    if created:
+        admin_user.set_password(password)
+        admin_user.save()
+
+    client.login(username='admin_test', password='123')
     return client
 
 class TestSystemUpdateView:
-    
     def mock_subprocess_run(self, *args, **kwargs):
         command = args[0]
         mock_result = MagicMock()

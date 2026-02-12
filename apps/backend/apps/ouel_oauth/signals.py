@@ -22,9 +22,12 @@ def create_login_history(user, data):
 @receiver(user_logged_in)
 def log_user_login(sender, request, user, **kwargs):
     ip = get_client_ip(request)
+    user_agent = request.META.get('HTTP_USER_AGENT', '')
 
     data = {
         "description": f"Đăng nhập qua google với IP: {ip}",
+        "ip_address": ip,
+        "user_agent": user_agent
     }
 
     create_login_history(user, data)
