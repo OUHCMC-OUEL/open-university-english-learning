@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Highlights as getHighlights } from "../../services/ReadingApp/serviceHighlights";
+import { highlights } from "@/services/ReadingApp/highlights";
 
 export function usePassage(passage, question, lockAi,setLockAi,index) {
     const [highlightedContent, setHighlightedContent] = useState(null);
@@ -17,7 +17,7 @@ export function usePassage(passage, question, lockAi,setLockAi,index) {
         setIsLoading(true);
 
         try {
-            const highlight = await getHighlights(passage.content, question.question_text);
+            const highlight = await highlights(passage.content, question.question_text);
             const contentToSlice = passage.content.replace(/[\r\n]+/g, " ").replace(/\s{2,}/g, " ").trim();
 
             const parts = [];

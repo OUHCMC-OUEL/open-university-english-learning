@@ -1,9 +1,9 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
-// import { usePassage } from "../../hooks/usePassage";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
 import { useState } from "react";
-import { usePassage } from "../../../hooks/ReadingApp/usePassage";
-const Passage = ({ passage, question, index }) => {
+import { usePassage } from "../../../hooks/ReadingApp/Quiz/usePassage";
+const Passage = ({ passage, question, index}) => {
     const [lockAi, setLockAi] = useState({});
     const { highlightedContent, aiSuggested, isLoading, getAiSuggestion } = usePassage(passage, question, lockAi,setLockAi,index);
 
