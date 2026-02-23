@@ -1,6 +1,39 @@
-function footer() {
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
+function Footer() {
+  const [showCTA, setShowCTA] = useState(false);
+  const location = useLocation();
+
+  const isHomePage = location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      const scrollPercent = (scrollTop / docHeight) * 100;
+
+      if (scrollPercent > 10) {
+        setShowCTA(true);
+      } else {
+        setShowCTA(false);
+      }
+    };
+
+    if (isHomePage) {
+      window.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isHomePage]);
+
   return (
-    <footer className="bg-gray-900 pd-5 sticky top-[100vh] pd-520'
+    <>
+      <footer className="bg-gray-900 pd-5 sticky top-[100vh] pd-520'
     ">
       <div className="max-w-7xl px-4 pt-16 pb-6 mx-auto sm:px-6 lg:px-8 lg:pt-24">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -14,7 +47,7 @@ function footer() {
             </p>
 
             <ul className="flex justify-center gap-6 mt-8 md:gap-8 sm:justify-start">
-            
+
 
               <li>
                 <a
@@ -39,7 +72,7 @@ function footer() {
                 </a>
               </li>
 
-             
+
             </ul>
           </div>
 
@@ -239,7 +272,7 @@ function footer() {
           <div className="text-center sm:flex sm:justify-between sm:text-left">
             <p className="text-sm text-gray-400">
               <span className="block sm:inline">All rights reserved.</span>
-          
+
             </p>
 
             <p className="mt-4 text-sm text-gray-500 sm:order-first sm:mt-0">
@@ -249,7 +282,24 @@ function footer() {
         </div>
       </div>
     </footer>
+
+      {/* CTA chỉ hiện ở trang chủ */}
+      {isHomePage && (
+        <div
+          className={`fixed bottom-6 left-1/2 -translate-x-1/2 transition-all duration-500 z-50
+          ${
+            showCTA
+              ? "translate-y-0 opacity-100"
+              : "translate-y-20 opacity-0 pointer-events-none"
+          }`}
+        >
+          <button className="bg-[#368baa] text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition">
+            Tham gia ngay
+          </button>
+        </div>
+      )}
+    </>
   );
 }
 
-export default footer;
+export default Footer;
