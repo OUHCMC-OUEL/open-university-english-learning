@@ -1,7 +1,11 @@
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/configs/AuthContext";
+import { useToast } from "@/components/Context/toastContext";
+
 const HomePage = () => {
-  const showAlert = () => {
-    alert("Hiện tại chưa hỗ trợ!");
-  };
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
 
   return (
     <div className="bg-gray-100 font-sans ">
@@ -16,19 +20,30 @@ const HomePage = () => {
             Nền tảng học tiếng Anh trực tuyến do sinh viên Đại học Mở TP.HCM phát triển
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <button
-              onClick={showAlert}
-              className="bg-white text-blue-600 px-8 py-4 text-lg rounded-xl font-semibold shadow-lg hover:bg-gray-100 hover:scale-105 transition"
-            >
-              Tham gia ngay
-            </button>
-            <button href="/" className="border-2 border-white px-8 py-4 text-lg rounded-xl font-semibold hover:bg-white hover:text-blue-600 hover:scale-105 transition">
-              Tôi đã có tài khoản
-            </button>
+            {isAuthenticated ? (
+            <>
+              <button onClick={() => toast.info("Đang trong quá trình phát triển")} className="bg-blue-700 text-white px-8 py-4 text-lg rounded-xl font-semibold shadow-lg hover:bg-blue-800 hover:scale-105 transition">
+                  Không gian học tập của bạn
+              </button>
+            </>
+            ) : (
+              <>
+              <button
+                onClick={() => navigate("/register")}
+                className="bg-white text-blue-600 px-8 py-4 text-lg rounded-xl font-semibold shadow-lg hover:bg-gray-100 hover:scale-105 transition"
+              >
+                Tham gia ngay
+              </button>
+              <button onClick={() => navigate("/login")} className="border-2 border-white px-8 py-4 text-lg rounded-xl font-semibold hover:bg-white hover:text-blue-600 hover:scale-105 transition">
+                Tôi đã có tài khoản
+              </button>
+              </>
+              )
+            }
           </div>
         </div>
-        <a
-          href="#about"
+        <button
+          onClick={() => navigate("/introduction")}
           className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer"
         >
           <svg
@@ -41,11 +56,11 @@ const HomePage = () => {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
           </svg>
-        </a>
+        </button>
       </section>
       <section className="container mx-auto px-6 py-20">
         <h3 className="text-4xl font-extrabold mb-10 leading-tight text-center tracking-tight">
-          What's at OUEL English Learning?
+          Hãy khám phá một góc của OUEL ngay hôm nay!
         </h3>
         <div className="grid md:grid-cols-2 gap-10 items-center bg-purple-100 rounded-3xl p-10 mb-12 shadow-lg">
           <img
@@ -60,11 +75,12 @@ const HomePage = () => {
             <p className="text-gray-700 mb-6">
               OUEL giúp luyện đọc hiệu quả qua các trò chơi hấp dẫn.
             </p>
-            <a href="/reading"
-                    className="bg-blue-700 text-white px-8 py-3 rounded-lg shadow hover:bg-blue-700"
-                    target="_blank">
+            <button 
+              onClick={() => navigate("/reading")}
+              className="bg-blue-700 text-white px-8 py-3 rounded-lg shadow hover:bg-blue-800 transition"
+            >
               Thử ngay
-            </a>
+            </button>
           </div>
         </div>
         <div className="grid md:grid-cols-2 gap-10 items-center bg-purple-100 rounded-3xl p-10 shadow-lg">
@@ -75,11 +91,12 @@ const HomePage = () => {
             <p className="text-gray-700 mb-6">
               Công cụ AI giúp bạn nâng cao kỹ năng viết nhanh chóng và chính xác.
             </p>
-            <a href="/writing"
-                    className="bg-indigo-700 text-white px-8 py-3 rounded-lg shadow hover:bg-indigo-700"
-                    target="_blank">
+            <button 
+              onClick={() => navigate("/writing")}
+              className="bg-blue-700 text-white px-8 py-3 rounded-lg shadow hover:bg-blue-800 transition"
+            >
               Thử ngay
-            </a>
+            </button>
           </div>
           <img
             src="https://res.cloudinary.com/dfz0dhsil/image/upload/v1771504584/Screenshot_2026-02-19_at_19.35.49_hkqivq.png"

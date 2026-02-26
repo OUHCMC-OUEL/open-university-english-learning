@@ -40,6 +40,10 @@ class UserFollowManager:
             follower=user_source,
             followed=user_target
         )
+
+        if not created:
+            raise ValidationError("Bạn đã theo dõi người dùng này rồi.")
+            
         return follow_instance
 
     @staticmethod

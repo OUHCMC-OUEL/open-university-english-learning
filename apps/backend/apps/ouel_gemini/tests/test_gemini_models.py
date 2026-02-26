@@ -5,7 +5,6 @@ from apps.ouel_gemini.models import AIModel, Prompt, PromptLog, Model, Provider
 
 pytestmark = pytest.mark.django_db
 
-
 class TestAIModel:
     def test_ai_model_creation(self):
         ai_model = baker.make(AIModel, name=Model.version2_5)

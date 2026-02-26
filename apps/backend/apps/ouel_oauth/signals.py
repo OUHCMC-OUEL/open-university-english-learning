@@ -25,7 +25,7 @@ def log_user_login(sender, request, user, **kwargs):
     user_agent = request.META.get('HTTP_USER_AGENT', '')
 
     data = {
-        "description": f"Đăng nhập qua google với IP: {ip}",
+        "description": f"Đăng nhập qua google",
         "ip_address": ip,
         "user_agent": user_agent
     }
@@ -36,7 +36,14 @@ def log_user_login(sender, request, user, **kwargs):
 @receiver(app_authorized)
 def log_oauth_login(sender, request, token, **kwargs):
     user = token.user
+  
+    ip = get_client_ip(request)
+    user_agent = request.META.get('HTTP_USER_AGENT', '')
+
     data = {
-        "description": "Đăng nhập qua mật khẩu o/token/",
+        "description": f"Đăng nhập qua mật khẩu",
+        "ip_address": ip,
+        "user_agent": user_agent
     }
+
     create_login_history(user, data)

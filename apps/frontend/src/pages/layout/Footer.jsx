@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "@/configs/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Footer() {
   const [showCTA, setShowCTA] = useState(false);
   const location = useLocation();
+  const {isAuthenticated} = useAuth();
+  const navigate = useNavigate();
 
   const isHomePage = location.pathname === "/";
 
@@ -42,41 +46,13 @@ function Footer() {
               <h3 className="text-xl font-bold">OUEL English Learning</h3>
             </div>
 
-            <p className="max-w-md mx-auto mt-6 leading-relaxed text-center text-gray-400 sm:max-w-xs sm:mx-0 sm:text-left">
+            <p className="max-w-md mx-auto mt-6 text-justify leading-relaxed text-gray-400 sm:max-w-xs sm:mx-0 ">
                 Hãy đồng hành cùng OUEL, kiến tạo nên một tương lai tươi sáng hơn cho việc học tiếng Anh trực tuyến.
             </p>
 
-            <ul className="flex justify-center gap-6 mt-8 md:gap-8 sm:justify-start">
-
-
-              <li>
-                <a
-                  href="https://github.com/OUHCMC-OUEL"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  className="text-teal-500 transition hover:text-teal-500/75"
-                >
-                  <span className="sr-only">GitHub</span>
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </li>
-
-
-            </ul>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:col-span-2 md:grid-cols-3">
             <div className="text-center sm:text-left">
               <p className="text-lg font-medium text-white">Công cụ</p>
 
@@ -85,38 +61,21 @@ function Footer() {
                   <li>
                     <a
                       className="text-white transition hover:text-white/75"
-                      href="/"
+                      href="/writing"
                     >
-                      Reading App
+                      Sửa lỗi ngữ pháp
                     </a>
                   </li>
 
                   <li>
                     <a
                       className="text-white transition hover:text-white/75"
-                      href="/"
+                      href="/reading"
                     >
-                      Writing App
+                      Trắc nghiệm đọc hiểu
                     </a>
                   </li>
-
-                  <li>
-                    <a
-                      className="text-white transition hover:text-white/75"
-                      href="/"
-                    >
-                      Speaking App
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      className="text-white transition hover:text-white/75"
-                      href="/"
-                    >
-                      Listening App
-                    </a>
-                  </li>
+                  
                 </ul>
               </nav>
             </div>
@@ -129,7 +88,8 @@ function Footer() {
                   <li>
                     <a
                       className="text-white transition hover:text-white/75"
-                      href="/"
+                      href="https://ou.edu.vn/"
+                      target="_blank"
                     >
                       Trường Đại học Mở TP.HCM
                     </a>
@@ -138,75 +98,16 @@ function Footer() {
                   <li>
                     <a
                       className="text-white transition hover:text-white/75"
-                      href="/"
+                      href="https://elearning.ou.edu.vn/"
+                      target="_blank"
                     >
                         E-Learning OUHCMC
                     </a>
                   </li>
-
-                  <li>
-                    <a
-                      className="text-white transition hover:text-white/75"
-                      href="/"
-                    >
-                      Đối tác
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      className="text-white transition hover:text-white/75"
-                      href="/"
-                    >
-                      Nhà sáng lập
-                    </a>
-                  </li>
                 </ul>
               </nav>
             </div>
-
-            <div className="text-center sm:text-left">
-              <p className="text-lg font-medium text-white">Helpful Links</p>
-
-              <nav className="mt-8">
-                <ul className="space-y-4 text-sm">
-                  <li>
-                    <a
-                      className="text-white transition hover:text-white/75"
-                      href="/"
-                    >
-                      FAQs
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      className="text-white transition hover:text-white/75"
-                      href="/"
-                    >
-                      Diễn đàn
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      className="flex group justify-center sm:justify-start gap-1.5"
-                      href="/"
-                    >
-                      <span className="text-white transition group-hover:text-white/75">
-                        Chatbot
-                      </span>
-
-                      <span className="relative flex w-2 h-2 -mr-2">
-                        <span className="absolute inline-flex w-full h-full bg-teal-400 rounded-full opacity-75 animate-ping"></span>
-                        <span className="relative inline-flex w-2 h-2 bg-teal-500 rounded-full"></span>
-                      </span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-
+            
             <div className="text-center sm:text-left">
               <p className="text-lg font-medium text-white">Liên hệ</p>
 
@@ -232,7 +133,7 @@ function Footer() {
                     </svg>
 
                     <span className="text-white transition group-hover:text-white/75">
-                      ouel@gmail.com
+                      2351050164thanh@gmail.com
                     </span>
                   </a>
                 </li>
@@ -283,7 +184,6 @@ function Footer() {
       </div>
     </footer>
 
-      {/* CTA chỉ hiện ở trang chủ */}
       {isHomePage && (
         <div
           className={`fixed bottom-6 left-1/2 -translate-x-1/2 transition-all duration-500 z-50
@@ -293,9 +193,16 @@ function Footer() {
               : "translate-y-20 opacity-0 pointer-events-none"
           }`}
         >
-          <button className="bg-[#368baa] text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition">
-            Tham gia ngay
-          </button>
+          {!isAuthenticated ? (
+            <button onClick={() => navigate("/register")} className="bg-[#368baa] text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition">
+              Tham gia ngay
+            </button>
+          ) : (
+            <button onClick={() => navigate("/dashboard")} className="bg-[#368baa] text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition">
+              Truy cập không gian học tập
+            </button>
+          )
+          }
         </div>
       )}
     </>

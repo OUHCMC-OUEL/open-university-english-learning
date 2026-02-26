@@ -13,7 +13,6 @@ from apps.ouel_gemini.models import Prompt, AIModel
 
 pytestmark = pytest.mark.django_db
 
-
 class TestGeminiClientWrapper:
     def test_get_api_keys_from_list(self, settings):
         settings.GOOGLE_API_KEYS = ["KEY1", "KEY2"]

@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from . import serializers, services, selectors
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 from .models import User, LoginHistory, RoleEnum
 
 
@@ -87,8 +87,40 @@ class UserFollowView(viewsets.ViewSet, generics.CreateAPIView):
         parsers.FormParser,
     ]
 
+    def get_permissions(self):
+        if self.action in ["followers", "following", "search"]:
+            return [permissions.AllowAny()]
+        return [permissions.IsAuthenticated()]
+
     def get_queryset(self):
         return User.objects.filter(is_active=True).prefetch_related("following", "followers")
+
+    @action(detail=False, methods=['get'], url_path='user-searching')
+    def search(self, request):
+        query = request.query_params.get('q', '').strip()
+        qs = self.get_queryset()
+
+        if query:
+            qs = qs.filter(
+                Q(username__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query)
+            )
+
+        if request.user.is_authenticated:
+            following_qs = selectors.get_following(request.user)
+            qs = qs.exclude(id=request.user.id).exclude(id__in=following_qs)
+
+        qs = qs[:20]
+
+        if hasattr(self, 'paginate_queryset'):
+            page = self.paginate_queryset(qs)
+            if page is not None:
+                serializer = serializers.UserSearchSerializers(page, many=True)
+                return self.get_paginated_response(serializer.data)
+
+        serializer = serializers.UserSearchSerializers(qs, many=True)
+        return Response(serializer.data)
 
     @action(methods=['post'], detail=True, url_path='follow-user')
     def follow(self, request, pk=None):

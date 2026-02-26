@@ -7,26 +7,30 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("access_token") || null);
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
   const [user, setUser] = useState(null); 
-  const [isInitializing, setIsInitializing] = useState(true); 
+  const [isInitializing, setIsInitializing] = useState(!!localStorage.getItem("access_token"));
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (token) {
-        try {
-          const res = await axiosInstance.get(endpoints['current-user'], {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          setUser(res.data);
-          setIsAuthenticated(true);
-        } catch {
-          console.log("Token hết hạn hoặc không hợp lệ");
-          localStorage.removeItem("access_token");
-          setToken(null);
-          setIsAuthenticated(false);
-          setUser(null);
-        }
+      if (!token) {
+        setIsInitializing(false);
+        return;
       }
-      setIsInitializing(false);
+      
+      try {
+        const res = await axiosInstance.get(endpoints['current-user'], {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setUser(res.data);
+        setIsAuthenticated(true);
+      } catch {
+        console.log("Token hết hạn hoặc không hợp lệ");
+        localStorage.removeItem("access_token");
+        setToken(null);
+        setIsAuthenticated(false);
+        setUser(null);
+      } finally{
+        setIsInitializing(false);
+      }
     };
     checkAuth();
   }, [token]);
@@ -61,19 +65,37 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setIsAuthenticated(false);
     setUser(null);
+    window.location.href = "/";
   };
 
   if (isInitializing) {
     return React.createElement(
       "div",
-      { className: "min-h-screen flex items-center justify-center" },
-      "Kiểm tra đăng nhập..."
+      { className: "min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4" },
+
+      React.createElement("div", {
+        className: "w-18 h-18 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin mb-4",
+        role: "status",
+        "aria-label": "Đang tải dữ liệu"
+      }),
+
+      React.createElement(
+        "h2",
+        { className: "text-xl font-semibold text-gray-800 text-center" },
+        "Vui lòng đợi trong giây lát"
+      ),
+      
+      React.createElement(
+        "p",
+        { className: "text-lg text-gray-500 mt-2 text-center animate-pulse" },
+        "Đang chuẩn bị nội dung cần thiết"
+      )
     );
   }
 
   return React.createElement(
     AuthContext.Provider,
-    { value: { token, isAuthenticated, user, login, register, logout } },
+    { value: { token, isAuthenticated, user, setUser, login, register, logout } }, 
     children
   );
 };

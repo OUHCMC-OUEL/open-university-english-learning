@@ -134,19 +134,12 @@ const optionItem = [
             </div>
         );
     };
-    const optionAIItem = [
-        { key: '1', icon: <EditOutlined />, label: 'Improve', children: 'Improve' },
-        { key: '2', icon: <BulbOutlined />, label: 'More ideas', children: 'More ideas' },
-    ];
 
     const AIOptions = () => {
         return (
-            <div className="p-4 mt-4">
-                <Tabs
-                    items={optionAIItem}
-                />
-                <Button type="primary" className="w-full mt-4 rounded-lg h-10 font-semibold" >Start</Button>
-            </div>
+           <div className="bg-white px-4 py-2 mb-4">
+                <p className="text-gray-600">Tính năng đang được phát triển. Vui lòng quay lại sau!</p>
+           </div>   
         );
     };
 

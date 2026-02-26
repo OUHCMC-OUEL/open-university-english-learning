@@ -110,3 +110,30 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "password": {"write_only": True},
         }
+
+class UserSearchSerializers(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        if instance.avatar:
+            data["avatar"] = instance.avatar.url
+
+        profile_data = None
+        if instance.role == RoleEnum.STUDENT and hasattr(instance, 'studentprofile'):
+            profile_data = StudentProfileSerializer(instance.studentprofile).data
+        elif instance.role == RoleEnum.INSTRUCTOR and hasattr(instance, 'instructorprofile'):
+            profile_data = InstructorProfileSerializer(instance.instructorprofile).data
+
+        data['profile'] = profile_data
+
+        if 'followers_count' not in data:
+            stats = selectors.get_follow_stats(instance)
+            data['followers_count'] = stats['followers_count']
+            data['following_count'] = stats['following_count']
+  
+        return data
+
+    class Meta:
+        model = User
+        fields = ["id", "first_name", "last_name", "email", "username", "avatar", "role"]
+
