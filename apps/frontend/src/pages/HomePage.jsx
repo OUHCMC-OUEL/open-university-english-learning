@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/configs/AuthContext";
-import { useToast } from "@/components/Context/toastContext";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const { toast } = useToast();
 
   return (
     <div className="bg-gray-100 font-sans ">
@@ -22,8 +20,11 @@ const HomePage = () => {
           <div className="flex flex-col sm:flex-row justify-center gap-6">
             {isAuthenticated ? (
             <>
-              <button onClick={() => toast.info("Đang trong quá trình phát triển")} className="bg-blue-700 text-white px-8 py-4 text-lg rounded-xl font-semibold shadow-lg hover:bg-blue-800 hover:scale-105 transition">
-                  Không gian học tập của bạn
+              <button 
+                onClick={() => navigate("/courses/dashboard")} 
+                className="bg-blue-700 text-white px-8 py-4 text-lg rounded-xl font-semibold shadow-lg hover:bg-blue-800 hover:scale-105 transition"
+              >
+                Không gian học tập của bạn
               </button>
             </>
             ) : (

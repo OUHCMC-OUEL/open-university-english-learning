@@ -1,6 +1,7 @@
 from .models import StudentProfile, InstructorProfile, UserFollow, RoleEnum
 from django.db import transaction
 
+
 class ProfileManager:
     @staticmethod
     def create_student_profile(user=None):
@@ -32,18 +33,18 @@ class ProfileManager:
 
         return profile
 
+
 class UserFollowManager:
     @staticmethod
     @transaction.atomic
     def follow(user_source, user_target):
         follow_instance, created = UserFollow.objects.get_or_create(
-            follower=user_source,
-            followed=user_target
+            follower=user_source, followed=user_target
         )
 
         if not created:
             raise ValidationError("Bạn đã theo dõi người dùng này rồi.")
-            
+
         return follow_instance
 
     @staticmethod
@@ -51,10 +52,7 @@ class UserFollowManager:
     def unfollow(user_source, user_target):
         try:
             UserFollow.objects.filter(
-                follower=user_source,
-                followed=user_target
+                follower=user_source, followed=user_target
             ).delete()
         except Exception as e:
             return f"Lỗi unfollow: ${e}"
-
-

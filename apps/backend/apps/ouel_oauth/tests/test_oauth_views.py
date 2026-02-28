@@ -7,7 +7,11 @@ from django.contrib.auth import get_user_model
 from rest_framework.exceptions import ValidationError
 from apps.ouel_oauth.views import UserView, UserFollowView
 from apps.ouel_oauth.models import (
-    StudentProfile, InstructorProfile, Hobby, LoginHistory, RoleEnum
+    StudentProfile,
+    InstructorProfile,
+    Hobby,
+    LoginHistory,
+    RoleEnum,
 )
 
 User = get_user_model()
@@ -18,6 +22,7 @@ pytestmark = pytest.mark.django_db
 def factory():
     return APIRequestFactory()
 
+
 class TestUserView:
     def test_register_student_user(self, factory):
         view = UserView.as_view({"post": "create"})
@@ -27,7 +32,7 @@ class TestUserView:
             "email": "student@ou.edu.vn",
             "first_name": "Nguyen",
             "last_name": "Van A",
-            "role": RoleEnum.STUDENT
+            "role": RoleEnum.STUDENT,
         }
         request = factory.post("/users/", data, format="json")
         response = view(request)
@@ -59,11 +64,7 @@ class TestUserView:
         baker.make(Hobby, name="Coding")
 
         view = UserView.as_view({"patch": "get_current_user"})
-        data = {
-            "first_name": "New Name",
-            "biography": "New Bio",
-            "hobbies": ["Coding"]
-        }
+        data = {"first_name": "New Name", "biography": "New Bio", "hobbies": ["Coding"]}
         request = factory.patch("/users/current-user/", data, format="json")
         force_authenticate(request, user=user)
         response = view(request)
@@ -85,7 +86,7 @@ class TestUserView:
         data = {
             "first_name": "Dr. Tuan",
             "title": "Professor",
-            "experience": "20 years"
+            "experience": "20 years",
         }
         request = factory.patch("/users/current-user/", data, format="json")
         force_authenticate(request, user=user)
@@ -102,10 +103,7 @@ class TestUserView:
         baker.make(StudentProfile, user=user)
 
         view = UserView.as_view({"patch": "get_current_user"})
-        data = {
-            "username": "hacker",
-            "is_superuser": True
-        }
+        data = {"username": "hacker", "is_superuser": True}
         request = factory.patch("/users/current-user/", data, format="json")
         force_authenticate(request, user=user)
         view(request)
@@ -113,6 +111,7 @@ class TestUserView:
         user.refresh_from_db()
         assert user.username == "original"
         assert user.is_superuser is False
+
 
 class TestUserFollowView:
     @patch("apps.ouel_oauth.services.follow_user")
@@ -128,7 +127,9 @@ class TestUserFollowView:
 
         assert response.status_code == status.HTTP_201_CREATED
         assert "Đã theo dõi" in response.data["detail"]
-        mock_service_follow.assert_called_once_with(user_source=source_user, user_target=target_user)
+        mock_service_follow.assert_called_once_with(
+            user_source=source_user, user_target=target_user
+        )
 
     @patch("apps.ouel_oauth.services.follow_user")
     def test_follow_user_validation_error(self, mock_service_follow, factory):
@@ -156,7 +157,9 @@ class TestUserFollowView:
         response = view(request, pk=target.pk)
 
         assert response.status_code == status.HTTP_200_OK
-        mock_service_unfollow.assert_called_once_with(user_source=source, user_target=target)
+        mock_service_unfollow.assert_called_once_with(
+            user_source=source, user_target=target
+        )
 
     def test_list_followers(self, factory):
         user = baker.make(User)
@@ -173,5 +176,9 @@ class TestUserFollowView:
             response = view(request, pk=user.pk)
 
             assert response.status_code == status.HTTP_200_OK
-            data = response.data['results'] if 'results' in response.data else response.data
+            data = (
+                response.data["results"]
+                if "results" in response.data
+                else response.data
+            )
             assert len(data) == 2

@@ -28,6 +28,7 @@ app_list = {
     'oauth/': 'apps.ouel_oauth.urls',
     'reading/': 'apps.ouel_reading_app.urls',
     'writing/': 'apps.ouel_writing_app.urls',
+    'elearning/': 'apps.ouel_courses.urls',
 }
 
 urlpatterns = [

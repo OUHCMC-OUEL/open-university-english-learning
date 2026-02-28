@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from . import models
 
+
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Tag
-        fields = '__all__'
+        fields = "__all__"
+
 
 # class TagExamSerializer(serializers.Serializer):
 #     class Meta:
@@ -26,10 +28,11 @@ class TagSerializer(serializers.ModelSerializer):
 #         model = models.Exam
 #         fields = '__all__'
 
+
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Question
-        fields = '__all__'
+        fields = "__all__"
 
 
 class PartSerializer(serializers.ModelSerializer):
@@ -39,14 +42,24 @@ class PartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Part
-        fields = ['id', 'content', 'exam', 'exam_id', 'image', 'name', 'tag', 'tag_parts', 'type_part',
-                  'question_count']
+        fields = [
+            "id",
+            "content",
+            "exam",
+            "exam_id",
+            "image",
+            "name",
+            "tag",
+            "tag_parts",
+            "type_part",
+            "question_count",
+        ]
 
 
 class UserAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserAnswer
-        fields = ['question', 'user_answer', 'is_correct']
+        fields = ["question", "user_answer", "is_correct"]
 
 
 class PartHistorySerializer(serializers.ModelSerializer):
@@ -54,4 +67,12 @@ class PartHistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.PartHistory
-        fields = ['part', 'user_id', 'total_answers', 'correct_answers', 'score', 'time', 'answers']
+        fields = [
+            "part",
+            "user_id",
+            "total_answers",
+            "correct_answers",
+            "score",
+            "time",
+            "answers",
+        ]

@@ -2,6 +2,7 @@ from django.db import migrations
 from django.contrib.auth.hashers import make_password
 from apps.ouel_oauth.models import RoleEnum
 
+
 def create_superadmin(apps, schema_editor):
     user = apps.get_model("ouel_oauth", "User")
 
@@ -13,7 +14,7 @@ def create_superadmin(apps, schema_editor):
             is_superuser=True,
             is_staff=True,
             is_active=True,
-            role=RoleEnum.ADMIN
+            role=RoleEnum.ADMIN,
         )
 
 

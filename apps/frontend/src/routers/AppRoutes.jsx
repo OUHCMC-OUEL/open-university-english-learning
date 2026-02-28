@@ -13,6 +13,14 @@ import AccountDashboard from '../pages/login/AccountDashboard';
 import Introduction from '../pages/Introduction';
 import FAQ from '../pages/Faq';
 import Contact from '../pages/Contact';
+import CourseDashboard from '../pages/Course/CourseDashboard';
+import CourseDetail from '../pages/Course/CourseDetail';
+import LearningWorkspace from '../pages/Course/LearningWorkspace';
+import PracticeDashboard from '../pages/Practice/PracticeDashboard';
+import DailyQuestsTab from '@/pages/Course/DailyQuestTab';
+import StudyGroupsTab from '@/pages/Course/StudyGroupTab';
+import GroupWorkspace from '@/components/Courses/GroupWorkSpace';
+
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -65,7 +73,15 @@ const AppRoutes = () => {
           <Route path="/account" element={
             <PageTransition><AccountDashboard /></PageTransition>
           } />
-          
+
+          <Route path="/courses/dashboard" element={<PageTransition><CourseDashboard /></PageTransition>} />
+          <Route path="/courses/:courseId" element={<PageTransition><CourseDetail /></PageTransition>} />
+          <Route path="/courses/:courseId/learn" element={<PageTransition><LearningWorkspace /></PageTransition>} />
+          <Route path="/practice/dashboard" element={<PageTransition><PracticeDashboard /></PageTransition>} />
+          <Route path="/mission/dashboard" element={<PageTransition><DailyQuestsTab /></PageTransition>} />
+          <Route path="/group/dashboard" element={<PageTransition><StudyGroupsTab /></PageTransition>} />
+          <Route path="/group/workspace" element={<PageTransition><GroupWorkspace /></PageTransition>} />
+
           <Route path="*" element={
             <PageTransition><HomePage /></PageTransition>
           } />

@@ -33,7 +33,7 @@ export default function Introduction() {
           </h1>
 
           <p className="animate-in fade-in slide-in-from-bottom-6 duration-700 delay-300 ease-out fill-mode-both text-xl md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Khơi dậy sự chủ động, xóa bỏ lối mòn. Kiến tạo không gian học tập thông minh và cá nhân hóa cho riêng bạn.
+            Khơi dậy sự chủ động, xóa bỏ lối mòn. Kiến tạo Không gian học tập (Chưa dùng được) thông minh và cá nhân hóa cho riêng bạn.
           </p>
 
           <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500 ease-out fill-mode-both">
@@ -87,7 +87,7 @@ export default function Introduction() {
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-4">Môi trường Trí tuệ Nhân tạo</h3>
             <p className="text-gray-600 leading-relaxed text-left">
-              Động lực của chúng tôi là lời giải thực tiễn. OUEL tiên phong ứng dụng các kỹ thuật AI để kiến tạo một không gian học tập thông minh, phản hồi tức thì và đạt hiệu quả tối đa.
+              Động lực của chúng tôi là lời giải thực tiễn. OUEL tiên phong ứng dụng các kỹ thuật AI để kiến tạo một Không gian học tập (Chưa dùng được) thông minh, phản hồi tức thì và đạt hiệu quả tối đa.
             </p>
           </div>
         </div>

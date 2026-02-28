@@ -20,6 +20,9 @@ export const endpoints = {
     'submitQuiz': '/reading/part-histories/submit/',
     'getPartByType':'/reading/parts/type/',
     'check-grammar': '/gemini/writing-app/grammar/',
+    'getCourse': '/elearning/course/1/',
+    'getLessons': '/elearning/lessons/',
+    'getLesson': (lessonId) => `/elearning/lessons/${lessonId}/`,
 };
 
 export default axios.create({

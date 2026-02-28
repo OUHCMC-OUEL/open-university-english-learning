@@ -1,9 +1,17 @@
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from .models import User, StudentProfile, InstructorProfile, LoginHistory, Hobby, RoleEnum
+from .models import (
+    User,
+    StudentProfile,
+    InstructorProfile,
+    LoginHistory,
+    Hobby,
+    RoleEnum,
+)
 from .managers import ProfileManager
 from . import selectors
+
 
 class LoginHistorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,23 +32,26 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
         return user
 
+
 class StudentProfileSerializer(ProfileSerializer):
     hobbies = serializers.SlugRelatedField(
-        source='interests',
+        source="interests",
         many=True,
         slug_field="name",
         queryset=Hobby.objects.all(),
-        required=False
+        required=False,
     )
 
     class Meta:
         model = StudentProfile
         fields = ["proficiency", "goal", "hobbies", "biography", "about"]
 
+
 class InstructorProfileSerializer(ProfileSerializer):
     class Meta:
         model = InstructorProfile
         fields = ["title", "experience", "biography", "about"]
+
 
 class UserSerializer(serializers.ModelSerializer):
     login_history = serializers.SerializerMethodField()
@@ -56,24 +67,28 @@ class UserSerializer(serializers.ModelSerializer):
             data["avatar"] = instance.avatar.url
 
         profile_data = None
-        if instance.role == RoleEnum.STUDENT and hasattr(instance, 'studentprofile'):
+        if instance.role == RoleEnum.STUDENT and hasattr(instance, "studentprofile"):
             profile_data = StudentProfileSerializer(instance.studentprofile).data
-        elif instance.role == RoleEnum.INSTRUCTOR and hasattr(instance, 'instructorprofile'):
+        elif instance.role == RoleEnum.INSTRUCTOR and hasattr(
+            instance, "instructorprofile"
+        ):
             profile_data = InstructorProfileSerializer(instance.instructorprofile).data
 
-        data['profile'] = profile_data
+        data["profile"] = profile_data
 
-        if 'followers_count' not in data:
+        if "followers_count" not in data:
             stats = selectors.get_follow_stats(instance)
-            data['followers_count'] = stats['followers_count']
-            data['following_count'] = stats['following_count']
+            data["followers_count"] = stats["followers_count"]
+            data["following_count"] = stats["following_count"]
 
         return data
 
     def get_login_history(self, obj: User):
         history = getattr(obj, "prefetched_login_history", [])
         if not history:
-            return LoginHistorySerializer(obj.login_history.all().order_by('-login_date')[:5], many=True).data
+            return LoginHistorySerializer(
+                obj.login_history.all().order_by("-login_date")[:5], many=True
+            ).data
         return LoginHistorySerializer(history, many=True).data
 
     @transaction.atomic
@@ -102,14 +117,25 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            "id", "first_name", "last_name", "email", "username", "password",
-            "avatar", "role", "social_provider",
-            "profile", "login_history",
-            "followers_count", "following_count", "is_following"
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "username",
+            "password",
+            "avatar",
+            "role",
+            "social_provider",
+            "profile",
+            "login_history",
+            "followers_count",
+            "following_count",
+            "is_following",
         ]
         extra_kwargs = {
             "password": {"write_only": True},
         }
+
 
 class UserSearchSerializers(serializers.ModelSerializer):
     def to_representation(self, instance):
@@ -119,21 +145,30 @@ class UserSearchSerializers(serializers.ModelSerializer):
             data["avatar"] = instance.avatar.url
 
         profile_data = None
-        if instance.role == RoleEnum.STUDENT and hasattr(instance, 'studentprofile'):
+        if instance.role == RoleEnum.STUDENT and hasattr(instance, "studentprofile"):
             profile_data = StudentProfileSerializer(instance.studentprofile).data
-        elif instance.role == RoleEnum.INSTRUCTOR and hasattr(instance, 'instructorprofile'):
+        elif instance.role == RoleEnum.INSTRUCTOR and hasattr(
+            instance, "instructorprofile"
+        ):
             profile_data = InstructorProfileSerializer(instance.instructorprofile).data
 
-        data['profile'] = profile_data
+        data["profile"] = profile_data
 
-        if 'followers_count' not in data:
+        if "followers_count" not in data:
             stats = selectors.get_follow_stats(instance)
-            data['followers_count'] = stats['followers_count']
-            data['following_count'] = stats['following_count']
-  
+            data["followers_count"] = stats["followers_count"]
+            data["following_count"] = stats["following_count"]
+
         return data
 
     class Meta:
         model = User
-        fields = ["id", "first_name", "last_name", "email", "username", "avatar", "role"]
-
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "username",
+            "avatar",
+            "role",
+        ]

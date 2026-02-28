@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "apps.ouel_oauth",
     "apps.ouel_reading_app",
     "apps.ouel_writing_app",
+    "apps.ouel_courses",
     "rest_framework",
     "drf_yasg",
     "oauth2_provider",

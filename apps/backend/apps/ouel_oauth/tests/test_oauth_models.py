@@ -3,11 +3,18 @@ from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from model_bakery import baker
 from apps.ouel_oauth.models import (
-    User, Hobby, StudentProfile, InstructorProfile,
-    LoginHistory, UserFollow, LevelType, RoleEnum
+    User,
+    Hobby,
+    StudentProfile,
+    InstructorProfile,
+    LoginHistory,
+    UserFollow,
+    LevelType,
+    RoleEnum,
 )
 
 pytestmark = pytest.mark.django_db
+
 
 class TestHobby:
     def test_hobby_str_method(self):
@@ -108,8 +115,8 @@ class TestInstructorProfile:
         profile = baker.make(InstructorProfile, title="Senior Lecturer")
 
         assert profile.title == "Senior Lecturer"
-        assert hasattr(profile, 'biography')
-        assert hasattr(profile, 'created_date')
+        assert hasattr(profile, "biography")
+        assert hasattr(profile, "created_date")
 
 
 class TestLoginHistory:

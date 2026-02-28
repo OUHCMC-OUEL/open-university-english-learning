@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from cloudinary.models import CloudinaryField
 
+
 class RoleEnum(models.TextChoices):
     STUDENT = "student", "Học viên"
     INSTRUCTOR = "instructor", "Giảng viên"
@@ -22,6 +23,7 @@ class LevelType(models.TextChoices):
     C1 = "c1", "Cấp độ C1"
     C2 = "c2", "Cấp độ C2"
 
+
 class Hobby(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -35,7 +37,9 @@ class Hobby(models.Model):
 class User(AbstractUser):
     avatar = CloudinaryField(null=True, blank=True)
     role = models.CharField(max_length=50, choices=RoleEnum, default=RoleEnum.STUDENT)
-    social_provider = models.CharField(max_length=50, choices=ProviderEnum.choices, default=ProviderEnum.EMAIL)
+    social_provider = models.CharField(
+        max_length=50, choices=ProviderEnum.choices, default=ProviderEnum.EMAIL
+    )
 
     @property
     def is_student(self):
@@ -45,9 +49,14 @@ class User(AbstractUser):
     def is_instructor(self):
         return self.role == RoleEnum.INSTRUCTOR
 
+
 class UserFollow(models.Model):
-    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
-    followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')
+    follower = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="following"
+    )
+    followed = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="followers"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -56,19 +65,17 @@ class UserFollow(models.Model):
 
         constraints = [
             models.UniqueConstraint(
-                fields=['follower', 'followed'],
-                name='unique_user_follow'
+                fields=["follower", "followed"], name="unique_user_follow"
             ),
-
             models.CheckConstraint(
-                condition=~models.Q(follower=models.F('followed')),
-                name='prevent_self_follow'
-            )
+                condition=~models.Q(follower=models.F("followed")),
+                name="prevent_self_follow",
+            ),
         ]
 
         indexes = [
-            models.Index(fields=['follower', '-created_at']),
-            models.Index(fields=['followed', '-created_at'])
+            models.Index(fields=["follower", "-created_at"]),
+            models.Index(fields=["followed", "-created_at"]),
         ]
 
     def clean(self):
@@ -98,9 +105,11 @@ class Profile(models.Model):
 
 
 class StudentProfile(Profile):
-    proficiency = models.CharField(max_length=255, choices=LevelType.choices, default=LevelType.A1)
+    proficiency = models.CharField(
+        max_length=255, choices=LevelType.choices, default=LevelType.A1
+    )
     interests = models.ManyToManyField(Hobby, blank=True)
-    goal = models.TextField(null=True,blank=True)
+    goal = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Student profile"
@@ -119,7 +128,9 @@ class LoginHistory(models.Model):
     login_date = models.DateTimeField(auto_now_add=True)
     description = models.TextField(null=True, blank=True)
     user_agent = models.CharField(max_length=500, null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="login_history")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="login_history"
+    )
 
     def __str__(self):
         return f"{self.user.username} - {self.login_date}"

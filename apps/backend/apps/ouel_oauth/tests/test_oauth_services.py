@@ -7,6 +7,7 @@ from apps.ouel_oauth import services
 
 pytestmark = pytest.mark.django_db
 
+
 class TestFollowServices:
 
     @patch("apps.ouel_oauth.services.UserFollowManager.follow")
@@ -22,8 +23,7 @@ class TestFollowServices:
         assert result == expected_result
 
         mock_manager_follow.assert_called_once_with(
-            user_source=source,
-            user_target=target
+            user_source=source, user_target=target
         )
 
     @patch("apps.ouel_oauth.services.UserFollowManager.follow")
@@ -45,6 +45,5 @@ class TestFollowServices:
         services.unfollow_user(user_source=source, user_target=target)
 
         mock_manager_unfollow.assert_called_once_with(
-            user_source=source,
-            user_target=target
+            user_source=source, user_target=target
         )

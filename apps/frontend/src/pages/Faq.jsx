@@ -9,7 +9,7 @@ const FAQ_DATA = [
     items: [
       {
         q: "OUEL cung cấp những tính năng gì?",
-        a: "OUEL cung cấp 2 phần chính là công cụ tiện ích và không gian học tập. Công cụ tiện ích hoàn toàn miễn phí, không cần đăng nhập và là một góc nhỏ của không gian học tập. Không gian học tập yêu cầu đăng nhập vì đây là chức năng quan trọng để quản lý cá nhân hóa cho bạn."
+        a: "OUEL cung cấp 2 phần chính là công cụ tiện ích và Không gian học tập (Chưa dùng được). Công cụ tiện ích hoàn toàn miễn phí, không cần đăng nhập và là một góc nhỏ của Không gian học tập (Chưa dùng được). Không gian học tập (Chưa dùng được) yêu cầu đăng nhập vì đây là chức năng quan trọng để quản lý cá nhân hóa cho bạn."
       },
       {
         q: "Dự án này mang tính thương mại hay phi lợi nhuận?",

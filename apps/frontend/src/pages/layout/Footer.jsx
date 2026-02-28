@@ -198,8 +198,8 @@ function Footer() {
               Tham gia ngay
             </button>
           ) : (
-            <button onClick={() => navigate("/dashboard")} className="bg-[#368baa] text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition">
-              Truy cập không gian học tập
+            <button onClick={() => navigate("/courses/dashboard ")} className="bg-[#368baa] text-white px-8 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition">
+              Truy cập Không gian học tập
             </button>
           )
           }

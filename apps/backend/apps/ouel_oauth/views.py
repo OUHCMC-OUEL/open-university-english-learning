@@ -43,7 +43,13 @@ class UserView(viewsets.ViewSet, generics.CreateAPIView):
     def get_current_user(self, request):
         user = request.user
         user_fields = {"first_name", "last_name", "email", "avatar"}
-        student_profile_fields = {"biography", "about", "goal", "hobbies", "proficiency"}
+        student_profile_fields = {
+            "biography",
+            "about",
+            "goal",
+            "hobbies",
+            "proficiency",
+        }
         instructor_profile_fields = {"biography", "about", "title", "experience"}
 
         if request.method == "GET":
@@ -61,22 +67,29 @@ class UserView(viewsets.ViewSet, generics.CreateAPIView):
                     k: v for k, v in request.data.items() if k in student_profile_fields
                 }
                 if profile_data:
-                    p = serializers.StudentProfileSerializer(user, data=profile_data, partial=True)
+                    p = serializers.StudentProfileSerializer(
+                        user, data=profile_data, partial=True
+                    )
                     p.is_valid(raise_exception=True)
                     p.save()
 
             elif user.role == RoleEnum.INSTRUCTOR:
                 profile_data = {
-                    k: v for k, v in request.data.items() if k in instructor_profile_fields
+                    k: v
+                    for k, v in request.data.items()
+                    if k in instructor_profile_fields
                 }
                 if profile_data:
-                    p = serializers.InstructorProfileSerializer(user, data=profile_data, partial=True)
+                    p = serializers.InstructorProfileSerializer(
+                        user, data=profile_data, partial=True
+                    )
                     p.is_valid(raise_exception=True)
                     p.save()
 
         return Response(
             serializers.UserSerializer(user).data, status=status.HTTP_200_OK
         )
+
 
 class UserFollowView(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active=True)
@@ -93,18 +106,20 @@ class UserFollowView(viewsets.ViewSet, generics.CreateAPIView):
         return [permissions.IsAuthenticated()]
 
     def get_queryset(self):
-        return User.objects.filter(is_active=True).prefetch_related("following", "followers")
+        return User.objects.filter(is_active=True).prefetch_related(
+            "following", "followers"
+        )
 
-    @action(detail=False, methods=['get'], url_path='user-searching')
+    @action(detail=False, methods=["get"], url_path="user-searching")
     def search(self, request):
-        query = request.query_params.get('q', '').strip()
+        query = request.query_params.get("q", "").strip()
         qs = self.get_queryset()
 
         if query:
             qs = qs.filter(
-                Q(username__icontains=query) |
-                Q(first_name__icontains=query) |
-                Q(last_name__icontains=query)
+                Q(username__icontains=query)
+                | Q(first_name__icontains=query)
+                | Q(last_name__icontains=query)
             )
 
         if request.user.is_authenticated:
@@ -113,7 +128,7 @@ class UserFollowView(viewsets.ViewSet, generics.CreateAPIView):
 
         qs = qs[:20]
 
-        if hasattr(self, 'paginate_queryset'):
+        if hasattr(self, "paginate_queryset"):
             page = self.paginate_queryset(qs)
             if page is not None:
                 serializer = serializers.UserSearchSerializers(page, many=True)
@@ -122,22 +137,28 @@ class UserFollowView(viewsets.ViewSet, generics.CreateAPIView):
         serializer = serializers.UserSearchSerializers(qs, many=True)
         return Response(serializer.data)
 
-    @action(methods=['post'], detail=True, url_path='follow-user')
+    @action(methods=["post"], detail=True, url_path="follow-user")
     def follow(self, request, pk=None):
         target_user = self.get_object()
         try:
             services.follow_user(user_source=request.user, user_target=target_user)
-            return Response({"detail": f"Đã theo dõi {target_user.username}"}, status=status.HTTP_201_CREATED)
+            return Response(
+                {"detail": f"Đã theo dõi {target_user.username}"},
+                status=status.HTTP_201_CREATED,
+            )
         except ValidationError as e:
             return Response({"error": e.detail}, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(methods=['post'], detail=True, url_path='unfollow-user')
+    @action(methods=["post"], detail=True, url_path="unfollow-user")
     def unfollow(self, request, pk=None):
         target_user = self.get_object()
         services.unfollow_user(user_source=request.user, user_target=target_user)
-        return Response({"detail": f"Đã hủy theo dõi {target_user.username}"}, status=status.HTTP_200_OK)
+        return Response(
+            {"detail": f"Đã hủy theo dõi {target_user.username}"},
+            status=status.HTTP_200_OK,
+        )
 
-    @action(methods=['get'], detail=True, url_path='followers')
+    @action(methods=["get"], detail=True, url_path="followers")
     def followers(self, request, pk=None):
         user = self.get_object()
         followers_qs = selectors.get_followers(user)
@@ -150,7 +171,7 @@ class UserFollowView(viewsets.ViewSet, generics.CreateAPIView):
         serializer = serializers.UserSerializer(followers_qs, many=True)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=True, url_path='following')
+    @action(methods=["get"], detail=True, url_path="following")
     def following(self, request, pk=None):
         user = self.get_object()
         following_qs = selectors.get_following(user)

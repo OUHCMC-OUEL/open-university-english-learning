@@ -3,7 +3,12 @@ from unittest.mock import patch, MagicMock
 from rest_framework.exceptions import ValidationError
 from model_bakery import baker
 from apps.ouel_oauth.models import (
-    User, StudentProfile, InstructorProfile, LoginHistory, Hobby, RoleEnum
+    User,
+    StudentProfile,
+    InstructorProfile,
+    LoginHistory,
+    Hobby,
+    RoleEnum,
 )
 from apps.ouel_oauth.serializers import (
     UserSerializer,
@@ -63,7 +68,9 @@ class TestStudentProfileSerializer:
 class TestInstructorProfileSerializer:
     def test_serialization(self):
         user = baker.make(User, role=RoleEnum.INSTRUCTOR)
-        profile = baker.make(InstructorProfile, user=user, title="Dr.", experience="10 years")
+        profile = baker.make(
+            InstructorProfile, user=user, title="Dr.", experience="10 years"
+        )
 
         serializer = InstructorProfileSerializer(profile)
         data = serializer.data
@@ -83,7 +90,7 @@ class TestUserSerializer:
             "password": "plain_password_123",
             "first_name": "New",
             "last_name": "User",
-            "role": RoleEnum.STUDENT
+            "role": RoleEnum.STUDENT,
         }
 
         serializer = UserSerializer(data=data)
@@ -103,7 +110,7 @@ class TestUserSerializer:
             "username": "instructor_user",
             "email": "teacher@test.com",
             "password": "password",
-            "role": RoleEnum.INSTRUCTOR
+            "role": RoleEnum.INSTRUCTOR,
         }
         serializer = UserSerializer(data=data)
         serializer.is_valid()
@@ -115,7 +122,9 @@ class TestUserSerializer:
     def test_create_user_transaction_error(self):
         data = {"username": "failuser", "password": "123"}
 
-        with patch("apps.ouel_oauth.models.User.save", side_effect=Exception("DB Error")):
+        with patch(
+            "apps.ouel_oauth.models.User.save", side_effect=Exception("DB Error")
+        ):
             serializer = UserSerializer(data=data)
             serializer.is_valid()
 

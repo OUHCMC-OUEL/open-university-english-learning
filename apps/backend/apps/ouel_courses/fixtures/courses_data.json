@@ -1,0 +1,299 @@
+[
+  {
+    "model": "ouel_courses.subject",
+    "pk": 1,
+    "fields": {
+      "name": "Tiếng Anh Giao Tiếp",
+      "description": "Nền tảng giao tiếp cơ bản cho người mới bắt đầu."
+    }
+  },
+  {
+    "model": "ouel_courses.subject",
+    "pk": 2,
+    "fields": {
+      "name": "Luyện thi IELTS",
+      "description": "Các kỹ năng chuyên sâu để đạt band điểm cao."
+    }
+  },
+  {
+    "model": "ouel_courses.subject",
+    "pk": 3,
+    "fields": {
+      "name": "Luyện thi TOEIC",
+      "description": "Trang bị kỹ năng Listening và Reading cho môi trường công sở."
+    }
+  },
+
+  {
+    "model": "ouel_courses.topic",
+    "pk": 1,
+    "fields": {
+      "name": "Ngữ pháp (Grammar)",
+      "description": "Các chủ điểm ngữ pháp cốt lõi."
+    }
+  },
+  {
+    "model": "ouel_courses.topic",
+    "pk": 2,
+    "fields": {
+      "name": "Từ vựng (Vocabulary)",
+      "description": "Từ vựng theo chủ đề thông dụng."
+    }
+  },
+
+  {
+    "model": "ouel_courses.course",
+    "pk": 1,
+    "fields": {
+      "name": "Giao tiếp Cơ bản - Level 1",
+      "image": "",
+      "description": "Khóa học giúp bạn tự tin chào hỏi và giới thiệu bản thân.",
+      "level": "beginner",
+      "subject": 1,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 2,
+    "fields": {
+      "name": "IELTS Reading Mastery",
+      "image": "",
+      "description": "Làm chủ kỹ năng Skimming và Scanning.",
+      "level": "advanced",
+      "subject": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 3,
+    "fields": {
+      "name": "TOEIC 600+ Mục tiêu",
+      "image": "",
+      "description": "Chiến thuật làm bài TOEIC part 1, 2, 5, 6.",
+      "level": "intermediate",
+      "subject": 3,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+
+  {
+    "model": "ouel_courses.section",
+    "pk": 1,
+    "fields": {
+      "title": "Chương 1: Chào hỏi cơ bản",
+      "content": "Những mẫu câu đầu tiên khi gặp người nước ngoài.",
+      "course": 1
+    }
+  },
+  {
+    "model": "ouel_courses.section",
+    "pk": 2,
+    "fields": {
+      "title": "Chương 1: Kỹ năng quét thông tin",
+      "content": "Tìm kiếm keyword trong văn bản học thuật.",
+      "course": 2
+    }
+  },
+  {
+    "model": "ouel_courses.section",
+    "pk": 3,
+    "fields": {
+      "title": "Chương 1: TOEIC Part 1 - Mô tả tranh",
+      "content": "Cách nghe từ khóa hành động và trạng thái.",
+      "course": 3
+    }
+  },
+
+  {
+    "model": "ouel_courses.lesson",
+    "pk": 1,
+    "fields": {
+      "title": "Lý thuyết: Động từ To-be",
+      "content": "<p>Nội dung bài giảng về động từ to-be: is/am/are.</p>",
+      "course": 1,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.theorylesson",
+    "pk": 1,
+    "fields": {
+      "minimum_time": 15
+    }
+  },
+  {
+    "model": "ouel_courses.lesson",
+    "pk": 2,
+    "fields": {
+      "title": "Bài tập: Chia động từ",
+      "content": "Kiểm tra kiến thức động từ to-be.",
+      "course": 1,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.assignmentlesson",
+    "pk": 2,
+    "fields": {
+      "score": 100,
+      "max_attempts": 3,
+      "strict_mode": false,
+      "assignment_type": "multiple_choice"
+    }
+  },
+  {
+    "model": "ouel_courses.lesson",
+    "pk": 3,
+    "fields": {
+      "title": "Lý thuyết: Hiện tại đơn",
+      "content": "<p>Cách dùng thì hiện tại đơn trong giao tiếp hàng ngày.</p>",
+      "course": 1,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.theorylesson",
+    "pk": 3,
+    "fields": {
+      "minimum_time": 20
+    }
+  },
+
+  {
+    "model": "ouel_courses.question",
+    "pk": 1,
+    "fields": {
+      "content": "I ___ a student.",
+      "assignment": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.choice",
+    "pk": 1,
+    "fields": {
+      "content": "am",
+      "is_correct": true,
+      "question": 1
+    }
+  },
+  {
+    "model": "ouel_courses.choice",
+    "pk": 2,
+    "fields": {
+      "content": "is",
+      "is_correct": false,
+      "question": 1
+    }
+  },
+  {
+    "model": "ouel_courses.question",
+    "pk": 2,
+    "fields": {
+      "content": "She ___ a doctor.",
+      "assignment": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.choice",
+    "pk": 3,
+    "fields": {
+      "content": "is",
+      "is_correct": true,
+      "question": 2
+    }
+  },
+  {
+    "model": "ouel_courses.choice",
+    "pk": 4,
+    "fields": {
+      "content": "are",
+      "is_correct": false,
+      "question": 2
+    }
+  },
+
+  {
+    "model": "ouel_courses.resource",
+    "pk": 1,
+    "fields": {
+      "name": "Bảng động từ bất quy tắc",
+      "description": "PDF tổng hợp 360 động từ bất quy tắc.",
+      "attachment": "resources/irregular_verbs.pdf",
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.resource",
+    "pk": 2,
+    "fields": {
+      "name": "Audio: Chào hỏi mẫu",
+      "description": "File nghe MP3 người bản xứ chào hỏi.",
+      "attachment": "resources/greetings.mp3",
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.resourcelesson",
+    "pk": 1,
+    "fields": {
+      "resource": 1,
+      "lesson": 1
+    }
+  },
+  {
+    "model": "ouel_courses.resourcelesson",
+    "pk": 2,
+    "fields": {
+      "resource": 2,
+      "lesson": 1
+    }
+  },
+
+  {
+    "model": "ouel_courses.forum",
+    "pk": 1,
+    "fields": {
+      "title": "Thảo luận: Giao tiếp Cơ bản",
+      "course": 1,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+
+  {
+    "model": "ouel_courses.enrollment",
+    "pk": 1,
+    "fields": {
+      "percentage_completed": 10.5,
+      "is_completed": false,
+      "conclusion": "",
+      "user": 1,
+      "course": 1,
+      "enrolled_at": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.likeinteraction",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "course": 1,
+      "lesson": 1,
+      "timestamp": "2026-02-28T00:00:00Z"
+    }
+  }
+]

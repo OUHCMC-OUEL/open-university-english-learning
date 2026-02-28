@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; 
 import { useAuth } from "@/configs/AuthContext";
+import NotificationPopover from '@/components/NotificationPopover';
 
 
 function Header() {
@@ -98,7 +99,9 @@ function Header() {
           <div className="flex gap-3 font-bold items-center">
 
             {isAuthenticated ? (
-              <div className="relative mr-2 text-lg">
+              <div className="flex items-center gap-3">
+                <NotificationPopover />
+                <div className="relative mr-2 text-lg">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               
@@ -127,6 +130,12 @@ function Header() {
                       >
                         Hồ sơ cá nhân
                       </Link>
+                      <Link
+                        to="/notifications"
+                        className="block px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-[#368baa] transition-colors"
+                      >
+                        Thông báo
+                      </Link>
                       <hr className="my-1 border-gray-100 dark:border-gray-700" />
                       <button
                         onClick={logout}
@@ -137,6 +146,7 @@ function Header() {
                     </div>
                   </div>
                 )}
+                </div>
               </div>
             ) : (
               <div className="flex gap-3">
