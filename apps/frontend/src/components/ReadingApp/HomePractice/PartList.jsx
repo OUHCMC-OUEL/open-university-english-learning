@@ -2,25 +2,12 @@ import React from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import { tagStyle } from "@/configs/tagStyle";
 function PartList({ parts }) {
     const navigate = useNavigate();
     if (!parts || parts.length === 0) {
-        return <p>Không có Part nào</p>;
+        return <p>Không có bài</p>;
     }
-
-    const getTagStyle = (name) => {
-        let hash = 0;
-        for (let i = 0; i < name.length; i++) {
-            hash = name.charCodeAt(i) + hash * 31;
-        }
-        const hue = Math.abs(hash) % 360;
-
-        return {
-            backgroundColor: `hsl(${hue}, 70%, 85%)`,
-            color: `hsl(${hue}, 60%, 25%)`
-        };
-    };
-
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {parts.map((part) => (
@@ -39,9 +26,7 @@ function PartList({ parts }) {
                             {part.tag?.map((t) => (
                                 <Badge
                                     key={t.name}
-                                    // variant="secondary"
-                                    // className={getTagColor(t.name)}
-                                    style={getTagStyle(t.name)}
+                                    style={tagStyle(t.name)}
                                 >
                                     {t.name}
                                 </Badge>
@@ -51,14 +36,9 @@ function PartList({ parts }) {
                     <CardContent>
                         <p>Số câu hỏi: {part.question_count}</p>
                     </CardContent>
-                    <CardFooter>
-                        <p className="">
-                        </p>
-                    </CardFooter>
                 </Card>
             ))}
         </div>
     );
 }
-
 export default PartList;

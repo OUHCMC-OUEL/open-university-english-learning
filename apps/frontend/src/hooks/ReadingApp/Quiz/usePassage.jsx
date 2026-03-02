@@ -1,30 +1,28 @@
 import { useEffect, useState } from "react";
 import { highlights } from "@/services/ReadingApp/highlights";
 
-export function usePassage(passage, question, lockAi,setLockAi,index) {
+export function usePassage({passage, questions, index}) {
     const [highlightedContent, setHighlightedContent] = useState(null);
-    const [aiSuggested, setAiSuggested] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [lockAi, setLockAi] = useState({});
+    const [question]= useState(questions[index]);
+    
     useEffect(() => {
         setHighlightedContent(null);
-        setAiSuggested(false);
         setIsLoading(false);
-    }, [question]);
+        console.log("question changed:", question);
+    },  [question]);
 
-    const getAiSuggestion = async () => {
-        if (aiSuggested || !question || isLoading || lockAi[index]) return;
-        setIsLoading(true);
-
+    const aiSuggestion = async () => {
+        if (!question || isLoading || lockAi[index]) return;
         try {
-            const highlight = await highlights(passage.content, question.question_text);
+            setIsLoading(true);
             const contentToSlice = passage.content.replace(/[\r\n]+/g, " ").replace(/\s{2,}/g, " ").trim();
-
+            const highlight = await highlights(contentToSlice, question.question_text);
             const parts = [];
             let lastIndex = 0;
-
             if (highlight && highlight.answerText) {
-                const answerText = highlight.answerText;
+                const answerText = highlight.answerText.replace(/[\r\n]+/g, " ").replace(/\s{2,}/g, " ").trim()
                 const start = contentToSlice.indexOf(answerText);
                 if (start !== -1) {
                     const end = start + answerText.length;
@@ -38,12 +36,10 @@ export function usePassage(passage, question, lockAi,setLockAi,index) {
             if (lastIndex < contentToSlice.length) {
                 parts.push(<span key="text-end">{contentToSlice.slice(lastIndex)}</span>);
             }
-
             setHighlightedContent(parts);
-            setAiSuggested(true);
             setLockAi(prev => ({
-            ...prev,
-            [index]: true
+                ...prev,
+                [index]: true
             }));
         } catch (err) {
             console.error("Lỗi khi lấy gợi ý từ AI:", err);
@@ -52,5 +48,5 @@ export function usePassage(passage, question, lockAi,setLockAi,index) {
         }
     };
 
-    return { highlightedContent, aiSuggested, isLoading, getAiSuggestion };
+    return { highlightedContent, isLoading, aiSuggestion, lockAi};
 }

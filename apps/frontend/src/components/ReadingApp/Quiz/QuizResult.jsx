@@ -1,39 +1,34 @@
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardAction, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-export default function QuizResult({ questions, userAnswers, onJump, onSubmit }) {
+function QuizResult({ questions, userAnswers, onJump, onSubmit,isSubmitting }) {
   const answeredCount = Object.values(userAnswers).filter(Boolean).length;
-
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Kết quả</CardTitle>
+        <CardTitle>Đã làm</CardTitle>
+        <CardAction>{answeredCount} / {questions.length}</CardAction>
       </CardHeader>
-
       <CardContent>
-        <p className="mb-4">
-          Đã làm: {answeredCount} / {questions.length}
-        </p>
-
         <div className="flex flex-wrap gap-2">
-          {questions.map((_, idx) => (
+          {questions.map((_, i) => (
             <Button
-              key={idx}
+              key={i}
               size="icon"
-              className={userAnswers[idx] ? "bg-green-500 text-white" : ""}
-              onClick={() => onJump(idx)}
+              className={userAnswers[i] ? "bg-teal-300 text-dark" : "bg-gray-200 text-dark"}
+              onClick={() => onJump(i)}
             >
-              {idx + 1}
+              {i + 1}
             </Button>
           ))}
         </div>
       </CardContent>
-
       <CardFooter>
-        <Button className="w-full" onClick={onSubmit}>
+        <Button type="submit" className="w-full" onClick={onSubmit} disabled={isSubmitting} >
           Nộp bài
         </Button>
       </CardFooter>
     </Card>
   );
 }
+export default QuizResult;

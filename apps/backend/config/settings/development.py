@@ -9,7 +9,6 @@ CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:5173']
 
 INSTALLED_APPS += [
     "debug_toolbar",
-    "drf_yasg",
 ]
 
 MIDDLEWARE += [
@@ -22,6 +21,9 @@ DATABASES = {
         "NAME": os.getenv('DB_NAME_DEV'),
         "USER": os.getenv('DB_USER_DEV'),
         "PASSWORD": os.getenv('DB_PASSWORD_DEV'),
-        "HOST": os.getenv('DB_HOST_DEV')
+        "HOST": os.getenv('DB_HOST_DEV'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }

@@ -1,108 +1,200 @@
-import time, json, itertools
+import time, json, logging
 from django.conf import settings
 from google import genai
 from google.genai import types
-from rest_framework.exceptions import ValidationError
-from .models import Prompt
+from rest_framework.exceptions import ValidationError, APIException
+from typing import List, Optional, Any, Dict, TypedDict
+from .models import Prompt, AIModel
 from .managers import PromptLogManagement
 
-api_key_cycle = itertools.cycle(settings.GOOGLE_API_KEYS)
-MAX_RETRY = len(settings.GOOGLE_API_KEYS)
-# client = genai.Client(api_key=settings.GOOGLE_API_KEY)
+logger = logging.getLogger(__name__)
 
-def get_client():
-    api_key = next(api_key_cycle)
-    print (api_key)
-    return genai.Client(api_key=api_key)
 
-def grammar_correction(user_input: str, prompt: Prompt):
-    start_time = time.time()
-    model_settings = {}
-    response = ""
-    status_code = 200
-    token_usage = 0
+class NoKeysAvailable(APIException):
+    status_code = 503
+    default_detail = "Hệ thống đang quá tải. Vui lòng thử lại sau."
+    default_code = "service_unavailable"
 
-    full_instruction = f"{prompt.instruction}\n\nRules: {prompt.context}"
 
-    if prompt.settings:
-        model_settings = prompt.settings
+class AIServiceResult(TypedDict):
+    result: Dict[str, Any]
+    token_usage: int
+    latency: int
 
-    temperature = model_settings.get('temperature', 0.5)
-    try:
-        for _ in range(MAX_RETRY):
-            client = get_client()
+
+class GeminiClientWrapper:
+    @staticmethod
+    def get_api_keys() -> List[str]:
+        keys = getattr(settings, "GOOGLE_API_KEYS", [])
+
+        if not keys:
+            single_key = getattr(settings, "GOOGLE_API_KEY", None)
+            if single_key:
+                return [single_key]
+            raise ValueError("GOOGLE_API_KEYS chưa được cấu hình trong settings.")
+        return keys
+
+    @staticmethod
+    def _is_retryable_error(error: Exception) -> bool:
+        error_str = str(error).lower()
+        auth_keywords = ["403", "permission", "invalid"]
+        quota_keywords = ["429", "quota", "resource exhausted"]
+
+        is_auth = any(k in error_str for k in auth_keywords)
+        is_quota = any(k in error_str for k in quota_keywords)
+
+        return is_auth or is_quota
+
+    @classmethod
+    def generate_content(
+        cls,
+        model_name: str,
+        contents: str,
+        system_instruction: Optional[str] = None,
+        temperature: float = 0.5,
+        response_mime_type: str = "text/plain",
+    ) -> types.GenerateContentResponse:
+        api_keys = cls.get_api_keys()
+        last_exception = None
+
+        for index, api_key in enumerate(api_keys):
             try:
-                response = client.models.generate_content(
-                    model=prompt.ai_model.name,
-                    contents=user_input,
-                    config=types.GenerateContentConfig(
-                        system_instruction=full_instruction,
-                        temperature=temperature,
-                        response_mime_type="application/json"
-                    )
-                )
-                response_text = response.text
-                if response.usage_metadata:
-                    token_usage = response.usage_metadata.total_token_count
-                try:
-                    result = json.loads(response_text)
-                    return result
-                except json.JSONDecodeError:
-                    status_code = 500
-                    raise ValueError("AI trả về sai định dạng.")
+                client = genai.Client(api_key=api_key)
 
-            except Exception as ex:
-                status_code = 500
-                raise ex
-        raise ValidationError("Tất cả API key đã vượt giới hạn.")
-    finally:
-        end_time = time.time()
-        validated_data = {
+                config = types.GenerateContentConfig(
+                    temperature=temperature, response_mime_type=response_mime_type
+                )
+
+                if system_instruction:
+                    config.system_instruction = system_instruction
+
+                response = client.models.generate_content(
+                    model=model_name, contents=contents, config=config
+                )
+
+                return response
+
+            except Exception as e:
+                key_suffix = api_key[-4:]
+                last_exception = e
+
+                if cls._is_retryable_error(e):
+                    logger.warning(
+                        f"Key ***{key_suffix} failed (Index {index}). Error: {e}. Switching to next..."
+                    )
+                else:
+                    logger.error(
+                        f"Lỗi không xác định ***{key_suffix}: {e}. Switching to next..."
+                    )
+
+        logger.critical("Không còn keys nào khả dụng.")
+        if last_exception:
+            logger.error(f"Lỗi gần đây nhất: {last_exception}")
+
+        raise NoKeysAvailable()
+
+
+def clean_parse_json(raw_text: str) -> Dict[str, Any]:
+    cleaned = raw_text.strip()
+    if cleaned.startswith("```"):
+        cleaned = cleaned.replace("```json", "").replace("```", "").strip()
+    try:
+        return json.loads(cleaned)
+    except json.JSONDecodeError:
+        logger.error(f"JSON Decode Error. Content: {raw_text[:200]}")
+        raise ValueError("AI trả về sai định dạng dữ liệu.")
+
+
+def write_log_prompt(
+    prompt: Prompt,
+    user_input: str,
+    full_instruction: str,
+    response_text: str,
+    token: int,
+    latency: int,
+    status_code: int,
+):
+    try:
+        data = {
             "prompt": prompt,
             "input": user_input,
             "final_context": full_instruction,
-            "response": response,
-            "token": token_usage,
-            "latency": int((end_time - start_time) * 1000),
+            "response": response_text,
+            "token": token,
+            "latency": latency,
             "status": status_code,
         }
-        PromptLogManagement.create_prompt(validated_data)
+        PromptLogManagement.create_prompt(data)
+    except Exception as e:
+        logger.error(f"Failed to write PromptLog: {e}")
 
-def highlight_passage(passage,question):
-    prompt = f"""
-                You are an AI powered answer suggestion system. Your task is to find the consecutive and complete text range in the provided Passage that suggests the answer to the Question.
 
-                Passage:
-                "{passage}"
+def run_prompt_flow(
+    user_input: str, prompt: Prompt, prompt_vars: dict = None
+) -> Dict[str, Any]:
+    start_time = time.time()
+    status_code = 200
+    token_usage = 0
+    response_text = ""
 
-                Question:
-                "{question}"
+    settings_dict = prompt.settings or {}
+    temperature = settings_dict.get("temperature", 0.5)
+    model_name = prompt.ai_model.name if prompt.ai_model else "gemini-2.5-flash"
 
-                Your task:
-                1. Identify the most accurate consecutive text range that suggests the correct answer in the passage.
-                2. Calculate the start and end index based on the characters of the extracted text compared to the provided Passage above.
-                3. Output only one JSON object.
+    full_instruction = f"{prompt.instruction}\n\nContext: {prompt.context}"
 
-                The JSON format must be strictly followed:
-                {{
-                    "answerText": "exact suggested text range copied from the Passage",
-                    "startIndex": number,
-                    "endIndex": number
-                }}
+    content_payload = user_input
+    if prompt_vars:
+        pass
 
-                Rule:
-                - Do not add, delete or change any characters in "answerText". The text in "answerText" must exactly match the Paragraph section and have at least 2 sentences.
-                - Do not return additional text outside of JSON.
-                """
-    for _ in range(MAX_RETRY):
-        client = get_client()
-        try:
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt
-            )
-            text = response.text.strip().replace("```json", "").replace("```", "").strip()
-            return json.loads(text)
-        except Exception as e:
-            raise ValidationError(e)
-    raise ValidationError("AI đang quá tải, vui lòng thử lại sau.")
+    try:
+        response = GeminiClientWrapper.generate_content(
+            model_name=model_name,
+            contents=content_payload,
+            system_instruction=full_instruction,
+            temperature=temperature,
+            response_mime_type="application/json",
+        )
+
+        response_text = response.text
+        if response.usage_metadata:
+            token_usage = response.usage_metadata.total_token_count
+
+        return clean_parse_json(response_text)
+
+    except Exception as e:
+        status_code = 500 if not isinstance(e, NoKeysAvailable) else 503
+
+        if not response_text:
+            response_text = str(e)
+
+        raise e
+
+    finally:
+        latency = int((time.time() - start_time) * 1000)
+        write_log_prompt(
+            prompt=prompt,
+            user_input=str(user_input)[:5000],
+            full_instruction=full_instruction,
+            response_text=response_text,
+            token=token_usage,
+            latency=latency,
+            status_code=status_code,
+        )
+
+
+def grammar_correction(user_input: str, prompt: Prompt) -> Dict[str, Any]:
+    return run_prompt_flow(user_input, prompt)
+
+
+def highlight_passage(passage: str, question: str, prompt: Prompt) -> Dict[str, Any]:
+    prompt_content = f"""
+    Passage:
+    "{passage}"
+
+    Question:
+    "{question}"
+    
+    """
+
+    return run_prompt_flow(prompt_content, prompt)

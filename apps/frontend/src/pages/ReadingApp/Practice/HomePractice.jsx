@@ -1,23 +1,17 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardAction } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger, } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { useHome } from "@/hooks/ReadingApp/Practice/useHomePracticeV2";
 import PartsList from "@/components/ReadingApp/HomePractice/PartList";
-import {
-    Alert,
-    AlertDescription,
-    AlertTitle,
-} from "@/components/ui/alert";
-import { useState, useEffect } from "react";
+import { useHomePractice } from "@/hooks/ReadingApp/Practice/useHomePractice";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Practice() {
     const navigate = useNavigate();
     const [type, setType] = useState("complete_sentence");
-    const { parts, loading } = useHome(type);
+    const { parts, loading } = useHomePractice(type);
     return (
         <div className="w-full min-h-full p-6">
-
             <Tabs value={type} onValueChange={setType} className="">
                 <TabsList className="">
                     <TabsTrigger value="complete_sentence">Hoàn thành câu</TabsTrigger>

@@ -1,26 +1,24 @@
-import pymysql
+import cloudinary.api, os, pymysql
 from pathlib import Path
-import cloudinary.api, os
+from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
+from config.utils import get_keys_by_pattern
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 MEDIA_ROOT = '%s/media/' % BASE_DIR
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [BASE_DIR / "static",]
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
-cloudinary.config(
-  	cloud_name = os.getenv('CLOUDINARY_NAME'),
-  	api_key = os.getenv('CLOUDINARY_API_KEY'),
-  	api_secret = os.getenv('CLOUDINARY_API_SECRET')
-)
+load_dotenv(BASE_DIR/'.env')
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-GOOGLE_API_KEYS = [
-    # os.getenv("GOOGLE_API_KEY"),
-    os.getenv("GOOGLE_API_KEY_1"),
-    os.getenv("GOOGLE_API_KEY_2"),
-    os.getenv("GOOGLE_API_KEY_3"),
-]
-# GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+if not SECRET_KEY:
+    raise ImproperlyConfigured("SECRET_KEY is missing in .env")
+
+GOOGLE_API_KEYS = get_keys_by_pattern(r'^GOOGLE_API_KEY_')
+if not GOOGLE_API_KEYS:
+    raise ImproperlyConfigured("No GOOGLE_API_KEY found.")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -33,15 +31,38 @@ INSTALLED_APPS = [
     "apps.ouel_oauth",
     "apps.ouel_reading_app",
     "apps.ouel_writing_app",
+    "apps.ouel_cources",
+    "apps.ouel_resources",
     "rest_framework",
+    "drf_yasg",
     "oauth2_provider",
     "corsheaders",
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
+    'ckeditor_uploader',
+    'ckeditor',
 ]
+
+cloudinary.config(
+  	cloud_name = os.getenv('CLOUDINARY_NAME'),
+  	api_key = os.getenv('CLOUDINARY_API_KEY'),
+  	api_secret = os.getenv('CLOUDINARY_API_SECRET')
+)
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_INFO': 'config.urls.api_info', 
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+}
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

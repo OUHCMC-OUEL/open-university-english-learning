@@ -1,21 +1,16 @@
-import Quiz from "@/components/ReadingApp/Quiz/QuizOne";
+import Quiz from "@/components/ReadingApp/Quiz/Quiz";
 import Passage from "@/components/ReadingApp/Quiz/Passage";
-import ResultQuiz from "@/components/ReadingApp/Quiz/ResultQuiz";
-import { useEffect, useState } from "react";
+import History from "@/components/ReadingApp/Quiz/History";
+import { useState } from "react";
 import { useReading } from "@/hooks/ReadingApp/Practice/useReading";
-import {
-    Alert,
-    AlertDescription,
-    AlertTitle,
-} from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle, } from "@/components/ui/alert";
 import { useLocation } from "react-router-dom";
 
 function Reading() {
     const { state } = useLocation();
     const part = state?.part;
     const type = state?.type;
-
-    const { passage, questions, currentQuestion, setCurrentQuestion, loading } = useReading(part,type);
+    const { passage, questions, loading } = useReading(part, type);
     const [index, setIndex] = useState(0);
     const [partHistory, setPartHistory] = useState(null);
 
@@ -34,15 +29,13 @@ function Reading() {
 
     return (
         <div className="flex flex-row min-h-full">
-            {/* <div className="flex flex-row h-screen bg-violet-500"> */}
             <div className="basis-1/2 flex justify-center place-self-center">
                 <Passage
                     passage={passage}
-                    question={currentQuestion}
+                    questions={questions}
                     index={index}
                 />
             </div>
-
             <div className="basis-1/2 flex justify-center place-self-center">
                 {!partHistory ? (
                     questions && questions.length > 0 && (
@@ -50,26 +43,19 @@ function Reading() {
                             <Quiz
                                 passage={passage}
                                 questions={questions}
-                                question={currentQuestion}
-                                setQuestion={setCurrentQuestion}
                                 index={index}
                                 setIndex={setIndex}
-                                setPartHistory={setPartHistory} 
+                                setPartHistory={setPartHistory}
                             />
                         </div>
                     )
                 ) : (
-
-
-                <ResultQuiz
-                    partHistory={partHistory}
-                    setPartHistory={setPartHistory}
-                    questions={questions}
-
-                />
+                    <History
+                        partHistory={partHistory}
+                        questions={questions}
+                    />
                 )}
             </div>
-            {/* </div> */}
         </div>
     );
 }

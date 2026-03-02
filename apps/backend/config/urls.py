@@ -25,6 +25,8 @@ app_list = {
     'oauth/': 'apps.ouel_oauth.urls',
     'reading/': 'apps.ouel_reading_app.urls',
     'writing/': 'apps.ouel_writing_app.urls',
+    'cources/':'apps.ouel_cources.urls',
+    'resources/':'apps.ouel_resources.urls'
 }
 
 urlpatterns = [

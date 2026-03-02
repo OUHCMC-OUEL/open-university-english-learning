@@ -3,14 +3,14 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const endpoints = {
-    'getHighlights': '/gemini/reading-app/highlight-passage/',
-    'getAllParts': '/reading/parts/all',
-    'getPart': (partId) => `/reading/parts/${partId}/`,
-    'getPartRandom': '/reading/parts/random/',
-    'getPartQuestions': (partId) => `/reading/parts/${partId}/questions/`,
+    'highlights': '/gemini/reading-app/highlight-passage/',
+    'allParts': '/reading/parts/all',
+    'part': (partId) => `/reading/parts/${partId}/`,
+    'partRandom': '/reading/parts/random/',
+    'partQuestions': (partId) => `/reading/parts/${partId}/questions/`,
     'checkAnswer': (questionId) => `/reading/questions/${questionId}/check_answer/`,
     'submitQuiz': '/reading/part-histories/submit/',
-    'getPartByType':'/reading/parts/type/',
+    'partByType':'/reading/parts/type/',
     'check-grammar': '/gemini/writing-app/grammar/',
 };
 
