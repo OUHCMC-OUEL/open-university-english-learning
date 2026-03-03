@@ -40,7 +40,7 @@ function Practice() {
                                     </span>
                                 </div>
                             )}
-                            <PartsList parts={parts} />
+                            <PartsList parts={parts} type={type} />
                         </CardContent>
                     </Card>
                 </TabsContent>

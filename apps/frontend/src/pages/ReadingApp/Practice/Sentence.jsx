@@ -1,5 +1,5 @@
 import Quiz from "@/components/ReadingApp/Quiz/Quiz";
-import ResultQuiz from "@/components/ReadingApp/Quiz/History";
+import History from "@/components/ReadingApp/Quiz/History";
 import { useState } from "react";
 import { useReading } from "@/hooks/ReadingApp/Practice/useReading";
 import { Alert, AlertDescription, AlertTitle, } from "@/components/ui/alert";
@@ -7,12 +7,18 @@ import { useLocation } from "react-router-dom";
 
 function Sentence() {
     const { state } = useLocation();
-    const part = state?.part;
+    const [part, setPart] = useState(state?.part);
     const type = state?.type;
-    const { passage, questions, loading } = useReading(part, type);
+    const [refreshKey, setRefreshKey] = useState(0);
+    const { passage, questions, loading } = useReading(part, type,refreshKey);
     const [index, setIndex] = useState(0);
     const [partHistory, setPartHistory] = useState(null);
-
+    const reset = () => {
+        setPartHistory(null);
+        setIndex(0);
+        setPart(null);
+        setRefreshKey(prev => prev + 1);
+    };
     if (loading) {
         return (
             <div className="flex min-h-screen items-center justify-center">
@@ -45,10 +51,10 @@ function Sentence() {
                         />
                     )
                 ) : (
-                    <ResultQuiz
+                    <History
                         partHistory={partHistory}
-                        setPartHistory={setPartHistory}
                         questions={questions}
+                        reset={reset}
                     />
                 )}
             </div>

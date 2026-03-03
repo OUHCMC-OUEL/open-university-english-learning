@@ -18,9 +18,6 @@ function HistoryDetails({ partHistory, questions }) {
         (a, b) =>
             a.question - b.question
     );
-    console.log(partHistory)
-    console.log(questions)
-    console.log("sortedAnswers",sortedAnswers)
     return (
         <Table>
             <TableHeader>

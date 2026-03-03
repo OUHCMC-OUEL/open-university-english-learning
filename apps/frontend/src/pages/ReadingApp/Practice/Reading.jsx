@@ -11,14 +11,14 @@ function Reading() {
     const [part,setPart] = useState(state?.part);
     const type = state?.type;
     const [refreshKey, setRefreshKey] = useState(0);
-    const { passage, questions, loading } = useReading(part, type, refreshKey);
+    const { passage, questions, loading } = useReading(part, type,refreshKey);
     const [index, setIndex] = useState(0);
     const [partHistory, setPartHistory] = useState(null);
     const reset = () => {
         setPartHistory(null);
         setIndex(0);
-        setRefreshKey(prev => prev + 1);
         setPart(null);
+        setRefreshKey(prev => prev + 1);
     };
     if (loading) {
         return (

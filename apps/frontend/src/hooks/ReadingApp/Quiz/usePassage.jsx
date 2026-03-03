@@ -10,7 +10,6 @@ export function usePassage({passage, questions, index}) {
     useEffect(() => {
         setHighlightedContent(null);
         setIsLoading(false);
-        console.log("question changed:", question);
     },  [question]);
 
     const aiSuggestion = async () => {

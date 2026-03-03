@@ -5,6 +5,7 @@ export function useReading(part,type,refreshKey) {
     const [passage, setPassage] = useState(null);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
+    console.log(part)
     useEffect(() => {
         const loadData = async () => {
             try {
@@ -19,7 +20,7 @@ export function useReading(part,type,refreshKey) {
             }
         };
         loadData();
-    }, [part, type, refreshKey]);
+    }, [refreshKey]);
 
     return {passage,questions,loading};
 }
