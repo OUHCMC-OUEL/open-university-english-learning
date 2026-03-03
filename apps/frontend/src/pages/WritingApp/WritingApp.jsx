@@ -3,7 +3,6 @@ import FixMenu, { Options, AIOptions } from "../../components/WritingApp/FixMenu
 import { Alert, Modal } from 'antd';
 import InputText from '../../components/WritingApp/InputText';
 import useUndoRedo from '../../hooks/WritingApp/useUndoRedo';
-import warning from 'antd/es/_util/warning';
 
 function WritingApp() {
   const [loading, setLoading] = useState(false);
@@ -77,14 +76,13 @@ function WritingApp() {
   return (
     <div className="w-full py-8">
       <h3 className="text-center py-8 text-2xl font-bold text-gray-800">
-        ENHANCE YOUR WRITING SKILL
+        CÔNG CỤ SỬA LỖI NGỮ PHÁP TIẾNG ANH
       </h3>
       
       <div className="mx-auto px-5">
         <div className="flex gap-6">
 
-          {/* PHẦN VIẾT */}
-          <div className="flex-[7]">
+          <div className="flex-7">
             <InputText 
               setData={setData}
               setLoading={setLoading} 
@@ -98,11 +96,9 @@ function WritingApp() {
             />
           </div>
 
-          {/* PHẦN SỬA LỖI */}
           <div className="flex-[3] border-l border-gray-300 pl-6">
           <Options onChange={setCurrentOption} />
 
-          {/* REVIEW */}
           {currentOption === "review" && (
             <>
               {data?.error ? (
@@ -126,7 +122,6 @@ function WritingApp() {
             </>
           )}
 
-          {/* AI */}
           {currentOption === "ai" && (
             <AIOptions />
           )}

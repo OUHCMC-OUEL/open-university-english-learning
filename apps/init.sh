@@ -21,16 +21,8 @@ fi
 cd backend
 
 echo "Cài đặt requirements"
-if [ -f "requirements.txt" ]; then
-    pip install -r requirements.txt
-elif [ -f "requirements/base.txt" ]; then
-    pip install -r requirements/base.txt
-    if [ -f "requirements/development.txt" ]; then
-        pip install -r requirements/development.txt
-    fi
-    if [ -f "requirements/production.txt" ]; then
-        pip install -r requirements/production.txt
-    fi
+if [ -f "requirements/development.txt" ]; then
+    pip install -r requirements/development.txt
 else
     echo "Không tìm thấy file requirements"
 fi
@@ -41,7 +33,7 @@ if [[ "$confirm" == "Y" || "$confirm" == "y" ]]; then
     python manage.py migrate
 
     echo "Nap dữ liệu mẫu"
-    python manage.py loaddata data.json
+    python manage.py loaddata data.json courses_data.json
 
     echo "Khởi tạo Frontend"
     cd ../frontend

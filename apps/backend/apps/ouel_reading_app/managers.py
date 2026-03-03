@@ -1,6 +1,7 @@
 from pydantic import ValidationError
 from .models import PartHistory, UserAnswer
 
+
 class PartHistoryManager:
     @staticmethod
     def create_part_history(part_history_data):
@@ -10,14 +11,17 @@ class PartHistoryManager:
         except:
             raise ValidationError({"Lỗi trong quá trình tạo part_history"})
 
+
 class UserAnswerManager:
     @staticmethod
     def create_user_answer(part_history, data):
         try:
-            UserAnswer.objects.bulk_create([
-                UserAnswer(part_history=part_history, **ans)
-                for ans in data['answers']
-            ])
+            UserAnswer.objects.bulk_create(
+                [
+                    UserAnswer(part_history=part_history, **ans)
+                    for ans in data["answers"]
+                ]
+            )
             return UserAnswer
         except:
             raise ValidationError({"detail": "Lỗi trong quá trình tạo part_history"})

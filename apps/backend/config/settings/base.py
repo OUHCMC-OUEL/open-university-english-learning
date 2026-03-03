@@ -8,7 +8,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 MEDIA_ROOT = '%s/media/' % BASE_DIR
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [BASE_DIR / "static",]
-CKEDITOR_UPLOAD_PATH = "uploads/"
 
 load_dotenv(BASE_DIR/'.env')
 
@@ -31,8 +30,7 @@ INSTALLED_APPS = [
     "apps.ouel_oauth",
     "apps.ouel_reading_app",
     "apps.ouel_writing_app",
-    "apps.ouel_cources",
-    "apps.ouel_resources",
+    "apps.ouel_courses",
     "rest_framework",
     "drf_yasg",
     "oauth2_provider",
@@ -41,9 +39,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'ckeditor_uploader',
-    'ckeditor',
+    'allauth.socialaccount.providers.google'
 ]
 
 cloudinary.config(

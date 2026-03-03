@@ -2,3 +2,4 @@
 2. Cấu trúc dự án: https://medium.com/@sizanmahmud08/django-folder-structure-best-practices-a-complete-guide-to-scalable-project-organization-508437899736
 3. Oauth: https://medium.com/@infowithkiiru/django-user-registration-with-google-67524cce5ab7
 4. Django-allauth: https://pypy-django.github.io/package/django-allauth/
+5. https://dev.to/ksharma20/how-to-deploy-a-django-web-app-on-vercel-for-free-4fhe

@@ -11,7 +11,7 @@ import { useQuizFiftyFifty } from "@/hooks/ReadingApp/Quiz/useQuizFiftyFifty";
 import { useQuizSubmit } from "@/hooks/ReadingApp/Quiz/useQuizSubmit";
 import React from 'react'
 
-function Quiz({ passage, questions, index, setIndex, setPartHistory }) {
+function Quiz({ passage, questions, index, setIndex, setPartHistory}) {
     const [showResult, setShowResult] = useState(false);
     const [startTime] = useState(() => Date.now());
     const { next, prev, jumpTo } = useQuizState({ questions, index, setIndex, setShowResult });
@@ -27,6 +27,7 @@ function Quiz({ passage, questions, index, setIndex, setPartHistory }) {
                 onJump={jumpTo}
                 onSubmit={submitQuiz}
                 isSubmitting={isSubmitting}
+                type={type}
             />
         );
     }

@@ -8,12 +8,18 @@ import { useLocation } from "react-router-dom";
 
 function Reading() {
     const { state } = useLocation();
-    const part = state?.part;
+    const [part,setPart] = useState(state?.part);
     const type = state?.type;
-    const { passage, questions, loading } = useReading(part, type);
+    const [refreshKey, setRefreshKey] = useState(0);
+    const { passage, questions, loading } = useReading(part, type, refreshKey);
     const [index, setIndex] = useState(0);
     const [partHistory, setPartHistory] = useState(null);
-
+    const reset = () => {
+        setPartHistory(null);
+        setIndex(0);
+        setRefreshKey(prev => prev + 1);
+        setPart(null);
+    };
     if (loading) {
         return (
             <div className="grid w-full max-w-md items-start gap-4">
@@ -53,6 +59,7 @@ function Reading() {
                     <History
                         partHistory={partHistory}
                         questions={questions}
+                        reset={reset}
                     />
                 )}
             </div>

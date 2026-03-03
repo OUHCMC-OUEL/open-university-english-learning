@@ -5,7 +5,7 @@ import { formatTime } from "@/configs/formatTime";
 import HistoryDetails from "./HistoryDetails";
 import { TooltipProvider } from "@/components/ui/tooltip"
 
-function History({ partHistory, questions }) {
+function History({ partHistory, questions,reset }) {
   return (
     <div className='flex w-5/6 items-start mt-4' >
       <Card>
@@ -30,7 +30,7 @@ function History({ partHistory, questions }) {
           </TooltipProvider>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full" onClick={() => window.location.reload()}>
+          <Button type="submit" className="w-full" onClick={ reset}>
             Làm bài khác
           </Button>
         </CardFooter>

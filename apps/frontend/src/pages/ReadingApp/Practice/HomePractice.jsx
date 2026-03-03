@@ -8,15 +8,15 @@ import { useNavigate } from "react-router-dom";
 
 function Practice() {
     const navigate = useNavigate();
-    const [type, setType] = useState("complete_sentence");
+    const [type, setType] = useState("reading_comprehension");
     const { parts, loading } = useHomePractice(type);
     return (
         <div className="w-full min-h-full p-6">
             <Tabs value={type} onValueChange={setType} className="">
                 <TabsList className="">
+                    <TabsTrigger value="reading_comprehension">Đọc hiểu đoạn văn</TabsTrigger>
                     <TabsTrigger value="complete_sentence">Hoàn thành câu</TabsTrigger>
                     <TabsTrigger value="complete_paragraph">Hoàn thành đoạn văn</TabsTrigger>
-                    <TabsTrigger value="reading_comprehension">Đọc hiểu đoạn văn</TabsTrigger>
                 </TabsList>
                 <TabsContent value={type}>
                     <Card className="relative">

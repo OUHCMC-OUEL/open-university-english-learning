@@ -7,15 +7,18 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from config.admin import admin_site
 from rest_framework import permissions
 import debug_toolbar
+from django.conf import settings
+
+api_info = openapi.Info(
+    title="OUEL API",
+    default_version='v0.1',
+    description="Open University English Learning",
+    contact=openapi.Contact(email="2351050164thanh@ou.edu.vn"),
+    license=openapi.License(name="ouel@2026"),
+)
 
 schema_view = get_schema_view(
-    openapi.Info(
-        title="OUEL API",
-        default_version='v0.1',
-        description="Open University English Learning",
-        contact=openapi.Contact(email="2351050164thanh@ou.edu.vn"),
-        license=openapi.License(name="ouel@2026"),
-    ),
+    api_info,
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
@@ -25,8 +28,7 @@ app_list = {
     'oauth/': 'apps.ouel_oauth.urls',
     'reading/': 'apps.ouel_reading_app.urls',
     'writing/': 'apps.ouel_writing_app.urls',
-    'cources/':'apps.ouel_cources.urls',
-    'resources/':'apps.ouel_resources.urls'
+    'elearning/': 'apps.ouel_courses.urls',
 }
 
 urlpatterns = [
@@ -38,7 +40,6 @@ urlpatterns += [
     path("admin/", admin_site.urls),
     path('o/', include('oauth2_provider.urls',
                        namespace='oauth2_provider')),
-    path('__debug__/',include(debug_toolbar.urls)),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui(cache_timeout=0),
             name='schema-json'),
@@ -50,3 +51,8 @@ urlpatterns += [
             name='schema-redoc'),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico')))
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]

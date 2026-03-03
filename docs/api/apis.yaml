@@ -1,0 +1,548 @@
+swagger: '2.0'
+info:
+  title: OUEL API
+  description: Open University English Learning
+  contact:
+    email: 2351050164thanh@ou.edu.vn
+  license:
+    name: ouel@2026
+  version: v0.1
+basePath: /
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+security:
+- Bearer: []
+paths:
+  /gemini/reading-app/highlight-passage/:
+    post:
+      operationId: gemini_reading-app_highlight
+      description: ''
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+      - gemini
+    parameters: []
+  /gemini/writing-app/grammar/:
+    post:
+      operationId: gemini_writing-app_correct_grammar
+      description: ''
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+      - gemini
+    parameters: []
+  /oauth/users/:
+    post:
+      operationId: oauth_users_create
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - oauth
+    parameters: []
+  /oauth/users/current-user/:
+    get:
+      operationId: oauth_users_current-user_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+      tags:
+      - oauth
+    patch:
+      operationId: oauth_users_current-user_partial_update
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/User'
+      tags:
+      - oauth
+    parameters: []
+  /reading/part-histories/submit/:
+    post:
+      operationId: reading_part-histories_submit
+      description: ''
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+      - reading
+    parameters: []
+  /reading/parts/:
+    get:
+      operationId: reading_parts_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Part'
+      tags:
+      - reading
+    post:
+      operationId: reading_parts_create
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Part'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Part'
+      tags:
+      - reading
+    parameters: []
+  /reading/parts/random/:
+    post:
+      operationId: reading_parts_random
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Part'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Part'
+      tags:
+      - reading
+    parameters: []
+  /reading/parts/type/:
+    post:
+      operationId: reading_parts_type
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Part'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Part'
+      tags:
+      - reading
+    parameters: []
+  /reading/parts/{id}/:
+    get:
+      operationId: reading_parts_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Part'
+      tags:
+      - reading
+    put:
+      operationId: reading_parts_update
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Part'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Part'
+      tags:
+      - reading
+    patch:
+      operationId: reading_parts_partial_update
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Part'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Part'
+      tags:
+      - reading
+    delete:
+      operationId: reading_parts_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - reading
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this part.
+      required: true
+      type: integer
+  /reading/parts/{id}/questions/:
+    get:
+      operationId: reading_parts_questions
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Part'
+      tags:
+      - reading
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this part.
+      required: true
+      type: integer
+  /reading/questions/:
+    get:
+      operationId: reading_questions_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Question'
+      tags:
+      - reading
+    post:
+      operationId: reading_questions_create
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Question'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Question'
+      tags:
+      - reading
+    parameters: []
+  /reading/questions/{id}/:
+    get:
+      operationId: reading_questions_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Question'
+      tags:
+      - reading
+    put:
+      operationId: reading_questions_update
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Question'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Question'
+      tags:
+      - reading
+    patch:
+      operationId: reading_questions_partial_update
+      description: ''
+      parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/Question'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Question'
+      tags:
+      - reading
+    delete:
+      operationId: reading_questions_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+      - reading
+    parameters:
+    - name: id
+      in: path
+      description: A unique integer value identifying this question.
+      required: true
+      type: integer
+definitions:
+  Profile:
+    required:
+    - hobbies
+    type: object
+    properties:
+      biography:
+        title: Biography
+        type: string
+        maxLength: 255
+        minLength: 1
+      about:
+        title: About
+        type: string
+        maxLength: 2600
+        minLength: 1
+      level:
+        title: Level
+        type: string
+        enum:
+        - a1
+        - a2
+        - b1
+        - b2
+        - c1
+        - c2
+      hobbies:
+        type: array
+        items:
+          type: string
+        uniqueItems: true
+  User:
+    required:
+    - username
+    - password
+    type: object
+    properties:
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+      email:
+        title: Email address
+        type: string
+        format: email
+        maxLength: 254
+      username:
+        title: Username
+        description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+          only.
+        type: string
+        pattern: ^[\w.@+-]+$
+        maxLength: 150
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 128
+        minLength: 1
+      avatar:
+        title: Avatar
+        type: string
+        x-nullable: true
+      profile:
+        $ref: '#/definitions/Profile'
+  Tag:
+    required:
+    - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      created_date:
+        title: Created date
+        type: string
+        format: date-time
+        readOnly: true
+        x-nullable: true
+      updated_date:
+        title: Updated date
+        type: string
+        format: date-time
+        readOnly: true
+        x-nullable: true
+      name:
+        title: Name
+        type: string
+        maxLength: 100
+        minLength: 1
+  Part:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      content:
+        title: Content
+        type: string
+        x-nullable: true
+      exam:
+        title: Exam
+        type: integer
+        x-nullable: true
+      exam_id:
+        title: Exam id
+        type: string
+        readOnly: true
+      image:
+        title: Image
+        type: string
+        x-nullable: true
+      name:
+        title: Name
+        type: string
+        maxLength: 100
+        x-nullable: true
+      tag:
+        type: array
+        items:
+          $ref: '#/definitions/Tag'
+        readOnly: true
+      tag_parts:
+        title: Tag parts
+        type: integer
+        x-nullable: true
+      type_part:
+        title: Type part
+        type: string
+        enum:
+        - complete_sentence
+        - complete_paragraph
+        - reading_comprehension
+      question_count:
+        title: Question count
+        type: integer
+        readOnly: true
+  Question:
+    required:
+    - question_text
+    - option_a
+    - option_b
+    - option_c
+    - option_d
+    - correct_answer
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      created_date:
+        title: Created date
+        type: string
+        format: date-time
+        readOnly: true
+        x-nullable: true
+      updated_date:
+        title: Updated date
+        type: string
+        format: date-time
+        readOnly: true
+        x-nullable: true
+      question_text:
+        title: Question text
+        type: string
+        maxLength: 225
+        minLength: 1
+      option_a:
+        title: Option a
+        type: string
+        maxLength: 225
+        minLength: 1
+      option_b:
+        title: Option b
+        type: string
+        maxLength: 225
+        minLength: 1
+      option_c:
+        title: Option c
+        type: string
+        maxLength: 225
+        minLength: 1
+      option_d:
+        title: Option d
+        type: string
+        maxLength: 225
+        minLength: 1
+      correct_answer:
+        title: Correct answer
+        type: string
+        enum:
+        - A
+        - B
+        - C
+        - D
+      explanation:
+        title: Explanation
+        type: string
+        x-nullable: true
+      part:
+        title: Part
+        type: integer
+        x-nullable: true

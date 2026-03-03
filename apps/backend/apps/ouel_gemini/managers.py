@@ -1,6 +1,6 @@
-from pydantic import ValidationError
-
+from rest_framework.exceptions import ValidationError
 from .models import PromptLog
+
 
 class PromptLogManagement:
     @staticmethod
