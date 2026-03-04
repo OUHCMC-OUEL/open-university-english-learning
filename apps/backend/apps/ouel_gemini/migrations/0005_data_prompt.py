@@ -148,7 +148,9 @@ For each category (correctness, clarity, engagement, delivery), return an object
 - "result":
     • A corrected or improved FULL English sentence (or short paragraph)
     • Keep the original meaning
-    • If no improvement is needed, return the original sentence
+    • If improvements are made, the "result" field in correctness, clarity, engagement, and delivery MUST NOT be identical to each other. 
+    • Each result must reflect improvements specific to that evaluation category.
+    • If no improvement is needed for a category, return "No need to fix".
 
 - "explanation":
     • Written in Vietnamese

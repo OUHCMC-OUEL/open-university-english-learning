@@ -8,7 +8,7 @@ function InputText({ setData, setLoading, loading, set, present, undo, redo, can
     const handleSubmit = async() => {
         try{
             setLoading(true)
-            setData("")
+            setData(null)
             
             const res = await handleSubmitWriting(present) 
             setData(res)
@@ -32,7 +32,10 @@ function InputText({ setData, setLoading, loading, set, present, undo, redo, can
                             placeholder="Please text here"
                             maxLength={MAX_LENGTH}
                             value={present}
-                            onChange={(e) => set(e.target.value)}
+                            onChange={(e) => {
+                                set(e.target.value)
+                                setData(null)
+                            }}
                         />
                     </div>
 

@@ -21,14 +21,18 @@ const ErrorItem = ({ data, activeTab, loading, onUpdate, onDismiss }) => {
           </div>
 
           <div className="flex justify-end gap-2 mt-3">
-            <Button
-              loading = {loading}
-              size="small"
-              type="primary"
-              onClick={() => onUpdate(issue)}
-            >
-              Update
-            </Button>
+           <Button
+            loading={loading}
+            size="small"
+            type="primary"
+            onClick={() => onUpdate(issue)}
+            disabled={
+              !issue.fix ||
+              issue.fix.trim() === issue.original.trim()
+            }
+          >
+            Update
+          </Button>
 
             <Button
               loading = {loading}

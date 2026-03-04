@@ -3,6 +3,7 @@ import FixMenu, { Options, AIOptions } from "../../components/WritingApp/FixMenu
 import { Alert, Modal } from 'antd';
 import InputText from '../../components/WritingApp/InputText';
 import useUndoRedo from '../../hooks/WritingApp/useUndoRedo';
+import { handleSubmitWriting } from '@/services/WritingApp/serviceGetResult';
 
 function WritingApp() {
   const [loading, setLoading] = useState(false);
@@ -12,21 +13,43 @@ function WritingApp() {
 
   const {present, set, undo, redo, canUndo, canRedo } = useUndoRedo("");
 
-  const handleUpdate = (issue) => {
-    Modal.confirm({
-      title: "Áp dụng chỉnh sửa?",
-      content: "Nội dung sẽ được cập nhật",
-      onOk: () => {
-        set(
-          present.slice(0, issue.start) +
-          issue.fix +
-          present.slice(issue.end)
-        );
+  // const handleUpdate = (issue) => {
+  //   Modal.confirm({
+  //     title: "Áp dụng chỉnh sửa?",
+  //     content: "Nội dung sẽ được cập nhật",
+  //     onOk: () => {
+  //       set(
+  //         present.slice(0, issue.start) +
+  //         issue.fix +
+  //         present.slice(issue.end)
+  //       );
 
-        handleDismiss(issue.id);
-      }
-    });
-  };
+  //       handleDismiss(issue.id);
+  //     }
+  //   });
+  // };
+
+  const handleUpdate = async (issue) => {
+  try {
+    setLoading(true);
+
+    const updatedText =
+      present.slice(0, issue.start) +
+      issue.fix +
+      present.slice(issue.end);
+
+    set(updatedText);
+
+    const newData = await handleSubmitWriting(updatedText);
+
+    setData(newData);
+
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleDismiss = (issueId) => {
     setData(prev => {
