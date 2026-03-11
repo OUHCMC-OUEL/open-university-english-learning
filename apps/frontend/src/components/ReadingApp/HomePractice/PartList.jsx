@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { tagStyle } from "@/configs/tagStyle";
+import { tagStyle } from "@/configs/ReadingApp/tagStyle";
 function PartList({ parts,type }) {
     const navigate = useNavigate();
     if (!parts || parts.length === 0) {

@@ -22,6 +22,8 @@ export const endpoints = {
     'getCourse': '/elearning/course/1/',
     'getLessons': '/elearning/lessons/',
     'getLesson': (lessonId) => `/elearning/lessons/${lessonId}/`,
+    'subject':'/elearning/subjects/',
+    'getCourseEnrolled':'/elearning/courses/',
 };
 
 export default axios.create({
@@ -32,10 +34,20 @@ export default axios.create({
     timeout: 30000
 });
 
-export const authApi = (token) => axios.create({
+
+export const authApi = axios.create({
     baseURL: BASE_URL,
     headers: { 
-        'Authorization': `Bearer ${token}`, 
+        // 'Authorization': `Bearer ${token}`, 
         'Content-Type': 'application/json' 
     }
+
+});
+
+authApi.interceptors.request.use((config) => {
+  const token = localStorage.getItem("access_token")
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });

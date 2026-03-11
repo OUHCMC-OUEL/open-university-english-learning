@@ -8,14 +8,12 @@ function InputText({ setData, setLoading, loading, set, present, undo, redo, can
     const handleSubmit = async() => {
         try{
             setLoading(true)
-            setData(null)
-            
+            setData("")
             const res = await handleSubmitWriting(present) 
             setData(res)
         }
         catch(ex){
             console.log(ex)
-        
         }
         finally{
             setLoading(false)
@@ -32,20 +30,14 @@ function InputText({ setData, setLoading, loading, set, present, undo, redo, can
                             placeholder="Please text here"
                             maxLength={MAX_LENGTH}
                             value={present}
-                            onChange={(e) => {
-                                set(e.target.value)
-                                setData(null)
-                            }}
+                            onChange={(e) => set(e.target.value)}
                         />
                     </div>
-
                     <div className="mt-3 flex items-center justify-between text-sm">
-
                     <div className="flex items-center gap-2">
                         <Button icon={<UndoOutlined />} onClick={undo} disabled={!canUndo}>
                             Undo
                         </Button>
-
                         <Button icon={<RedoOutlined />} onClick={redo} disabled={!canRedo}>
                             Redo
                         </Button>
@@ -54,11 +46,8 @@ function InputText({ setData, setLoading, loading, set, present, undo, redo, can
                     <span className={`font-medium ${present?.length >= MAX_LENGTH ? "text-red-500" : "text-gray-500"}`}>
                         {present?.length || 0}/{MAX_LENGTH} characters
                     </span>
-
                     </div>
-
                 </div>
-
                 <Button
                     type="primary"
                     size="large"

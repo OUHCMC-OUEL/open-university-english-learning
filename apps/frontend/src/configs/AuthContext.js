@@ -8,14 +8,12 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
   const [user, setUser] = useState(null); 
   const [isInitializing, setIsInitializing] = useState(!!localStorage.getItem("access_token"));
-
   useEffect(() => {
     const checkAuth = async () => {
       if (!token) {
         setIsInitializing(false);
         return;
       }
-      
       try {
         const res = await axiosInstance.get(endpoints['current-user'], {
           headers: { Authorization: `Bearer ${token}` }

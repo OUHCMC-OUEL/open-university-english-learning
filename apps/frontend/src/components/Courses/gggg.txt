@@ -1,0 +1,96 @@
+<Tabs value={tab} onValueChange={setTab} >
+                        <TabsList className="bg-gray-100 h-13 p-1 rounded-xl grid grid-cols-4 w-full">
+                            <TabsTrigger value="courses" className="h-11"  >
+                                <FolderKanban />
+                                Lộ trình Khóa học
+                            </TabsTrigger>
+                            <TabsTrigger value="practice" className="h-11" >
+                                <NotebookPen />
+                                Khu vực Luyện tập
+                            </TabsTrigger>
+                            <TabsTrigger value="mission" className="h-11" >
+                                <CalendarCheck />
+                                Nhiệm vụ hàng ngày
+                            </TabsTrigger>
+                            <TabsTrigger value="group" className="h-11"  >
+                                <Users />
+                                Nhóm học tập
+                            </TabsTrigger>
+                        </TabsList>
+                    </Tabs>
+
+
+
+        <Tabs.Root defaultValue="recommended" className="col-span-1 lg:col-span-3">
+          <Tabs.List className="flex gap-6 border-b border-gray-200 mb-8 overflow-x-auto hide-scrollbar">
+            <Tabs.Trigger value="recommended" className="pb-4 text-gray-500 font-semibold data-[state=active]:text-[#368baa] data-[state=active]:border-b-2 data-[state=active]:border-[#368baa] hover:text-gray-800 transition-colors whitespace-nowrap outline-none flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4" /> Đề xuất cho bạn
+            </Tabs.Trigger>
+            <Tabs.Trigger value="discover" className="pb-4 text-gray-500 font-semibold data-[state=active]:text-[#368baa] data-[state=active]:border-b-2 data-[state=active]:border-[#368baa] hover:text-gray-800 transition-colors whitespace-nowrap outline-none">
+              Khám phá khóa học
+            </Tabs.Trigger>
+            <Tabs.Trigger value="my_courses" className="pb-4 text-gray-500 font-semibold data-[state=active]:text-[#368baa] data-[state=active]:border-b-2 data-[state=active]:border-[#368baa] hover:text-gray-800 transition-colors whitespace-nowrap outline-none">
+              Đang học ({mockEnrollments.length})
+            </Tabs.Trigger>
+          </Tabs.List>
+          <Tabs.Content value="discover" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 outline-none animate-[fadeIn_0.3s_ease-out]">
+            {mockCourses.map(course => <CourseCard key={course.id} course={course} />)}
+          </Tabs.Content>
+          <Tabs.Content value="recommended" className="outline-none animate-[fadeIn_0.3s_ease-out]">
+            <div className="mb-8 p-6 bg-gradient-to-r from-[#eef7fa] to-white border border-[#368baa]/20 rounded-3xl flex flex-col sm:flex-row sm:items-center gap-4 shadow-sm">
+              <div className="p-3 bg-[#368baa] text-white rounded-2xl shadow-md shrink-0 w-fit">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-bold text-gray-900 text-lg">Khóa học dành riêng cho bạn</h3>
+                <p className="text-gray-600 text-sm mt-1">Dựa trên mục tiêu học tập và kết quả bài test đầu vào của bạn, AI của OUEL đã tinh chọn những lộ trình phù hợp nhất.</p>
+              </div>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...mockCourses].reverse().map(course => <CourseCard key={course.id} course={course} progress={null} />)}
+            </div>
+          </Tabs.Content>
+          <Tabs.Content value="my_courses" className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 outline-none animate-[fadeIn_0.3s_ease-out]">
+            {mockEnrollments.map(enr => <CourseCard key={enr.id} course={enr.course} progress={enr.percentage_completed} />)}
+          </Tabs.Content>
+        </Tabs.Root>
+
+
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+
+export function PaginationDemo() {
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href="#" />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#" isActive>
+            2
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">3</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationEllipsis />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href="#" />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  )
+}

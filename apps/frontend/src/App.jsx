@@ -8,7 +8,7 @@ const App = () => {
     <div className="min-h-screen flex flex-col">
         <Header />
        
-       <main className="grow mt-25 mb-12">
+       <main className="grow mt-20 mb-12">
           <AppRoutes />
         </main>
 

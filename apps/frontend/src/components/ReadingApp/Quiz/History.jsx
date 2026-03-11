@@ -1,7 +1,7 @@
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card.jsx"
 import { Button } from "@/components/ui/button.jsx";
 import React from 'react';
-import { formatTime } from "@/configs/formatTime";
+import { formatTime } from "@/configs/ReadingApp/formatTime";
 import HistoryDetails from "./HistoryDetails";
 import { TooltipProvider } from "@/components/ui/tooltip"
 

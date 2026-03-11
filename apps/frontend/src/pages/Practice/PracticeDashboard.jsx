@@ -5,22 +5,10 @@ import FloatingWritingTool from '@/components/Courses/FloatingWritingTool';
 
 export default function PracticeDashboard() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('practice'); 
+  const [activeTab, setActiveTab] = useState('practice');
+  const practiceItems = [
+    { id: 1, type: 'game', title: 'Reading Quiz: Chinh phục Từ vựng', tags: ['Trò chơi', 'Ôn luyện'], participants: 0, color: 'from-orange-400 to-red-500', icon: <Gamepad2 className="text-white w-6 h-6" /> },
 
-  const handleTabSwitch = (tab) => {
-    setActiveTab(tab);
-    if (tab === 'courses') {
-      navigate('/courses/dashboard');
-    } else if (tab === 'daily') {
-      navigate('/mission/dashboard'); 
-    } else if (tab === 'group') {
-      navigate('/group/dashboard'); 
-    }
-  };
-
-  const practiceItems = [ 
-    { id: 1, type: 'game', title: 'Reading Quiz: Chinh phục Từ vựng', tags: ['Trò chơi', 'Ôn luyện'], participants: 0, color: 'from-orange-400 to-red-500', icon: <Gamepad2 className="text-white w-6 h-6"/> },
-   
   ];
 
   const leaderboard = [
@@ -30,52 +18,6 @@ export default function PracticeDashboard() {
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] pb-24 font-sans">
-
-      <div className="bg-white border-b border-gray-100 pt-8 pb-4 px-6 sticky top-0 z-30 shadow-sm">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div>
-            <h1 className="text-3xl font-extrabold text-gray-900 mb-5">Không gian học tập (Chưa dùng được)</h1>
-            
-
-            <div className="flex bg-gray-100 p-1.5 rounded-xl w-fit">
-              <button 
-                onClick={() => handleTabSwitch('courses')}
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${activeTab === 'courses' ? 'bg-white text-[#368baa] shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
-              >
-                📚 Lộ trình Khóa học
-              </button>
-              <button 
-                onClick={() => handleTabSwitch('practice')}
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${activeTab === 'practice' ? 'bg-white text-[#368baa] shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
-              >
-                🎯 Khu vực Luyện tập
-              </button>
-              <button 
-                    onClick={() => navigate('/mission/dashboard')}
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 text-gray-500 hover:text-gray-800 hover:bg-gray-200/50"
-                  >
-                    🎯 Nhiệm vụ hàng ngày
-                  </button>
-                  <button 
-                    onClick={() => navigate('/group/dashboard')}
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 text-gray-500 hover:text-gray-800 hover:bg-gray-200/50"
-                  >
-                    👥 Nhóm học tập
-                  </button>
-            </div>
-          </div>
-
-          <div className="relative w-full lg:w-96">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input 
-              type="text" 
-              placeholder="Tìm kiếm đề thi, trò chơi..." 
-              className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-transparent focus:border-[#368baa] focus:bg-white focus:ring-4 focus:ring-[#368baa]/10 rounded-xl outline-none transition-all font-medium text-gray-700"
-            />
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-6 mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
 
         <div className="lg:col-span-8 space-y-10 animate-[fadeIn_0.3s_ease-out]">
@@ -123,7 +65,7 @@ export default function PracticeDashboard() {
 
         <div className="lg:col-span-4 animate-[fadeIn_0.4s_ease-out]">
           <div className="bg-white rounded-[32px] shadow-sm border border-gray-100 p-8 sticky top-32">
-            
+
             <div className="flex items-center justify-between mb-8 pb-5 border-b border-gray-100">
               <div>
                 <h3 className="text-xl font-extrabold text-gray-900 flex items-center gap-2">
@@ -140,19 +82,18 @@ export default function PracticeDashboard() {
             <div className="space-y-3">
               {leaderboard.map((user, index) => (
                 <div key={index} className={`flex items-center gap-4 p-4 rounded-2xl transition-colors hover:bg-gray-50 cursor-default ${index === 0 ? 'bg-gradient-to-r from-orange-50 to-transparent border border-orange-100/50' : ''}`}>
-  
+
                   <div className="w-8 font-bold text-center shrink-0">
-                    {index === 0 ? <span className="text-3xl drop-shadow-sm">🥇</span> : 
-                     index === 1 ? <span className="text-3xl drop-shadow-sm">🥈</span> : 
-                     index === 2 ? <span className="text-3xl drop-shadow-sm">🥉</span> : 
-                     <span className="text-lg text-gray-400">{user.rank}</span>}
+                    {index === 0 ? <span className="text-3xl drop-shadow-sm">🥇</span> :
+                      index === 1 ? <span className="text-3xl drop-shadow-sm">🥈</span> :
+                        index === 2 ? <span className="text-3xl drop-shadow-sm">🥉</span> :
+                          <span className="text-lg text-gray-400">{user.rank}</span>}
                   </div>
-      
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-black shadow-inner text-white ${
-                    index === 0 ? 'bg-gradient-to-tr from-orange-400 to-yellow-500 shadow-orange-200' :
-                    index === 1 ? 'bg-gradient-to-tr from-gray-300 to-gray-400' :
-                    index === 2 ? 'bg-gradient-to-tr from-amber-600 to-amber-800' : 'bg-blue-50 text-[#368baa] border border-blue-100'
-                  }`}>
+
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-black shadow-inner text-white ${index === 0 ? 'bg-gradient-to-tr from-orange-400 to-yellow-500 shadow-orange-200' :
+                      index === 1 ? 'bg-gradient-to-tr from-gray-300 to-gray-400' :
+                        index === 2 ? 'bg-gradient-to-tr from-amber-600 to-amber-800' : 'bg-blue-50 text-[#368baa] border border-blue-100'
+                    }`}>
                     {user.avatar}
                   </div>
 
@@ -182,7 +123,7 @@ export default function PracticeDashboard() {
 
           </div>
         </div>
-        
+
       </div>
       <FloatingWritingTool />
     </div>

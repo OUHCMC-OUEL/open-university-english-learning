@@ -44,7 +44,7 @@ function Header() {
       ${showHeader ? "translate-y-0" : "-translate-y-full"}
       bg-white dark:bg-gray-900 shadow-md dark:shadow-lg dark:shadow-blue-500/50 rounded`}
     >
-      <div className="flex items-center px-4 py-4 w-full h-20">
+      <div className="flex items-center px-4 py-4 w-full h-20 ">
           <button 
               onClick={() => navigate("/")}
               className="flex items-center gap-3 pl-5 hover:scale-105 transition-transform duration-200"

@@ -5,7 +5,7 @@ export const mockCourses = [
     level: "beginner",
     subject_name: "Tiếng Anh Giao Tiếp",
     description: "Khóa học giúp bạn tự tin chào hỏi và giới thiệu bản thân với người nước ngoài.",
-    image: "https://res.cloudinary.com/dfz0dhsil/image/upload/v1770940161/image_1_q6gxe8.png",
+    // image: "https://res.cloudinary.com/dfz0dhsil/image/upload/v1770940161/image_1_q6gxe8.png",
     students_count: 1240,
     sections: [
       {

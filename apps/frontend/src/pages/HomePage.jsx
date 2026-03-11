@@ -4,7 +4,6 @@ import { useAuth } from "@/configs/AuthContext";
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-
   return (
     <div className="bg-gray-100 font-sans ">
       <section
@@ -21,7 +20,7 @@ const HomePage = () => {
             {isAuthenticated ? (
             <>
               <button 
-                onClick={() => navigate("/courses/dashboard")} 
+                onClick={() => navigate("/home/space")} 
                 className="bg-blue-700 text-white px-8 py-4 text-lg rounded-xl font-semibold shadow-lg hover:bg-blue-800 hover:scale-105 transition"
               >
                 Không gian học tập của bạn
