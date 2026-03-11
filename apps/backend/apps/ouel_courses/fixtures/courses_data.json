@@ -23,24 +23,6 @@
       "description": "Trang bị kỹ năng Listening và Reading cho môi trường công sở."
     }
   },
-
-  {
-    "model": "ouel_courses.topic",
-    "pk": 1,
-    "fields": {
-      "name": "Ngữ pháp (Grammar)",
-      "description": "Các chủ điểm ngữ pháp cốt lõi."
-    }
-  },
-  {
-    "model": "ouel_courses.topic",
-    "pk": 2,
-    "fields": {
-      "name": "Từ vựng (Vocabulary)",
-      "description": "Từ vựng theo chủ đề thông dụng."
-    }
-  },
-
   {
     "model": "ouel_courses.course",
     "pk": 1,
@@ -68,6 +50,54 @@
     }
   },
   {
+    "model": "ouel_courses.topic",
+    "pk": 1,
+    "fields": {
+      "name": "Ngữ pháp (Grammar)",
+      "description": "Các chủ điểm ngữ pháp cốt lõi."
+    }
+  },
+  {
+    "model": "ouel_courses.topic",
+    "pk": 2,
+    "fields": {
+      "name": "Từ vựng (Vocabulary)",
+      "description": "Từ vựng theo chủ đề thông dụng."
+    }
+  },
+  {
+    "model": "ouel_courses.subject",
+    "pk": 4,
+    "fields": {
+      "name": "Tiếng Anh Thương Mại",
+      "description": "Kỹ năng giao tiếp và viết email trong môi trường công sở."
+    }
+  },
+  {
+    "model": "ouel_courses.subject",
+    "pk": 5,
+    "fields": {
+      "name": "Ngữ pháp Tiếng Anh",
+      "description": "Củng cố các cấu trúc ngữ pháp quan trọng."
+    }
+  },
+  {
+    "model": "ouel_courses.subject",
+    "pk": 6,
+    "fields": {
+      "name": "Phát âm Tiếng Anh",
+      "description": "Cải thiện phát âm và ngữ điệu chuẩn quốc tế."
+    }
+  },
+  {
+    "model": "ouel_courses.subject",
+    "pk": 7,
+    "fields": {
+      "name": "Tiếng Anh Du Lịch",
+      "description": "Giao tiếp khi đi du lịch và tại sân bay."
+    }
+  },
+  {
     "model": "ouel_courses.course",
     "pk": 3,
     "fields": {
@@ -80,7 +110,461 @@
       "updated_date": "2026-02-28T00:00:00Z"
     }
   },
-
+  {
+    "model": "ouel_courses.course",
+    "pk": 4,
+    "fields": {
+      "name": "Giao tiếp Công sở",
+      "image": "",
+      "description": "Học cách trao đổi với đồng nghiệp và khách hàng bằng tiếng Anh.",
+      "level": "intermediate",
+      "subject": 4,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 5,
+    "fields": {
+      "name": "IELTS Writing Task 2",
+      "image": "",
+      "description": "Phát triển kỹ năng viết essay đạt band 7+.",
+      "level": "advanced",
+      "subject": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 6,
+    "fields": {
+      "name": "TOEIC Listening Intensive",
+      "image": "",
+      "description": "Luyện nghe TOEIC với chiến thuật làm bài hiệu quả.",
+      "level": "intermediate",
+      "subject": 3,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 7,
+    "fields": {
+      "name": "English Grammar Foundation",
+      "image": "",
+      "description": "Nắm vững các thì cơ bản và cấu trúc câu.",
+      "level": "beginner",
+      "subject": 5,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 8,
+    "fields": {
+      "name": "IELTS Speaking Practice",
+      "image": "",
+      "description": "Luyện phản xạ và phát âm chuẩn cho phần thi Speaking.",
+      "level": "intermediate",
+      "subject": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 9,
+    "fields": {
+      "name": "Daily Conversation Skills",
+      "image": "",
+      "description": "Các mẫu câu giao tiếp thường dùng trong đời sống.",
+      "level": "beginner",
+      "subject": 1,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 10,
+    "fields": {
+      "name": "Business Email Writing",
+      "image": "",
+      "description": "Viết email chuyên nghiệp trong môi trường doanh nghiệp.",
+      "level": "intermediate",
+      "subject": 4,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 11,
+    "fields": {
+      "name": "Pronunciation Basics",
+      "image": "",
+      "description": "Học bảng phiên âm IPA và cách phát âm chuẩn.",
+      "level": "beginner",
+      "subject": 6,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 12,
+    "fields": {
+      "name": "Advanced English Pronunciation",
+      "image": "",
+      "description": "Cải thiện stress và intonation trong giao tiếp.",
+      "level": "advanced",
+      "subject": 6,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 13,
+    "fields": {
+      "name": "English for Travel",
+      "image": "",
+      "description": "Các mẫu câu giao tiếp khi đi du lịch.",
+      "level": "beginner",
+      "subject": 7,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 14,
+    "fields": {
+      "name": "Airport Conversation",
+      "image": "",
+      "description": "Giao tiếp tại sân bay và làm thủ tục.",
+      "level": "intermediate",
+      "subject": 7,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 15,
+    "fields": {
+      "name": "IELTS Listening Strategies",
+      "image": "",
+      "description": "Chiến thuật làm bài Listening band 7+.",
+      "level": "advanced",
+      "subject": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 16,
+    "fields": {
+      "name": "TOEIC Reading Speed",
+      "image": "",
+      "description": "Tăng tốc độ đọc hiểu trong bài thi TOEIC.",
+      "level": "intermediate",
+      "subject": 3,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 17,
+    "fields": {
+      "name": "Basic English Grammar",
+      "image": "",
+      "description": "Nắm chắc các thì cơ bản trong tiếng Anh.",
+      "level": "beginner",
+      "subject": 5,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 18,
+    "fields": {
+      "name": "Business Meeting English",
+      "image": "",
+      "description": "Kỹ năng thảo luận và trình bày trong cuộc họp.",
+      "level": "advanced",
+      "subject": 4,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 19,
+    "fields": {
+      "name": "Everyday English Conversation",
+      "image": "",
+      "description": "Luyện các đoạn hội thoại thường gặp trong cuộc sống.",
+      "level": "beginner",
+      "subject": 1,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 20,
+    "fields": {
+      "name": "IELTS Vocabulary Builder",
+      "image": "",
+      "description": "Mở rộng vốn từ vựng cho các chủ đề IELTS.",
+      "level": "intermediate",
+      "subject": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 21,
+    "fields": {
+      "name": "TOEIC Grammar Focus",
+      "image": "",
+      "description": "Ôn tập các cấu trúc ngữ pháp thường gặp trong TOEIC.",
+      "level": "intermediate",
+      "subject": 3,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 22,
+    "fields": {
+      "name": "English Presentation Skills",
+      "image": "",
+      "description": "Học cách thuyết trình chuyên nghiệp bằng tiếng Anh.",
+      "level": "advanced",
+      "subject": 4,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 23,
+    "fields": {
+      "name": "English Tenses Mastery",
+      "image": "",
+      "description": "Làm chủ 12 thì cơ bản trong tiếng Anh.",
+      "level": "beginner",
+      "subject": 5,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 24,
+    "fields": {
+      "name": "American Accent Training",
+      "image": "",
+      "description": "Luyện phát âm theo giọng Mỹ chuẩn.",
+      "level": "intermediate",
+      "subject": 6,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 25,
+    "fields": {
+      "name": "Travel English Essentials",
+      "image": "",
+      "description": "Những mẫu câu cần thiết khi đi du lịch nước ngoài.",
+      "level": "beginner",
+      "subject": 7,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 26,
+    "fields": {
+      "name": "IELTS Speaking Band 7+",
+      "image": "",
+      "description": "Chiến lược trả lời câu hỏi Speaking đạt band 7 trở lên.",
+      "level": "advanced",
+      "subject": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 27,
+    "fields": {
+      "name": "TOEIC Listening Practice",
+      "image": "",
+      "description": "Luyện nghe TOEIC qua các bài tập thực tế.",
+      "level": "intermediate",
+      "subject": 3,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 28,
+    "fields": {
+      "name": "Business Communication",
+      "image": "",
+      "description": "Kỹ năng giao tiếp trong môi trường doanh nghiệp.",
+      "level": "intermediate",
+      "subject": 4,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 29,
+    "fields": {
+      "name": "English Small Talk",
+      "image": "",
+      "description": "Cách bắt chuyện và duy trì hội thoại tự nhiên.",
+      "level": "beginner",
+      "subject": 1,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 30,
+    "fields": {
+      "name": "IELTS Reading Techniques",
+      "image": "",
+      "description": "Chiến lược làm bài Reading hiệu quả.",
+      "level": "intermediate",
+      "subject": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 31,
+    "fields": {
+      "name": "TOEIC Part 5 & 6 Mastery",
+      "image": "",
+      "description": "Tăng điểm ngữ pháp và điền từ trong TOEIC.",
+      "level": "intermediate",
+      "subject": 3,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 32,
+    "fields": {
+      "name": "Professional Email Writing",
+      "image": "",
+      "description": "Viết email chuyên nghiệp cho công việc.",
+      "level": "intermediate",
+      "subject": 4,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 33,
+    "fields": {
+      "name": "Grammar for Everyday Use",
+      "image": "",
+      "description": "Ứng dụng ngữ pháp trong giao tiếp hàng ngày.",
+      "level": "beginner",
+      "subject": 5,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 34,
+    "fields": {
+      "name": "British Accent Training",
+      "image": "",
+      "description": "Luyện phát âm theo giọng Anh-Anh.",
+      "level": "advanced",
+      "subject": 6,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 35,
+    "fields": {
+      "name": "Hotel & Restaurant English",
+      "image": "",
+      "description": "Giao tiếp khi đặt phòng và gọi món.",
+      "level": "beginner",
+      "subject": 7,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 36,
+    "fields": {
+      "name": "IELTS Writing Task 1 Charts",
+      "image": "",
+      "description": "Cách mô tả biểu đồ trong IELTS Writing Task 1.",
+      "level": "advanced",
+      "subject": 2,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 37,
+    "fields": {
+      "name": "TOEIC Listening Intensive",
+      "image": "",
+      "description": "Tăng khả năng nghe hiểu qua bài tập TOEIC thực tế.",
+      "level": "intermediate",
+      "subject": 3,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.course",
+    "pk": 38,
+    "fields": {
+      "name": "Business Negotiation English",
+      "image": "",
+      "description": "Kỹ năng thương lượng bằng tiếng Anh.",
+      "level": "advanced",
+      "subject": 4,
+      "created_date": "2026-02-28T00:00:00Z",
+      "updated_date": "2026-02-28T00:00:00Z"
+    }
+  },
   {
     "model": "ouel_courses.section",
     "pk": 1,
@@ -108,14 +592,13 @@
       "course": 3
     }
   },
-
   {
     "model": "ouel_courses.lesson",
     "pk": 1,
     "fields": {
       "title": "Lý thuyết: Động từ To-be",
       "content": "<p>Nội dung bài giảng về động từ to-be: is/am/are.</p>",
-      "course": 1,
+      "section": 1,
       "created_date": "2026-02-28T00:00:00Z",
       "updated_date": "2026-02-28T00:00:00Z"
     }
@@ -133,7 +616,7 @@
     "fields": {
       "title": "Bài tập: Chia động từ",
       "content": "Kiểm tra kiến thức động từ to-be.",
-      "course": 1,
+      "section": 1,
       "created_date": "2026-02-28T00:00:00Z",
       "updated_date": "2026-02-28T00:00:00Z"
     }
@@ -154,7 +637,7 @@
     "fields": {
       "title": "Lý thuyết: Hiện tại đơn",
       "content": "<p>Cách dùng thì hiện tại đơn trong giao tiếp hàng ngày.</p>",
-      "course": 1,
+      "section": 1,
       "created_date": "2026-02-28T00:00:00Z",
       "updated_date": "2026-02-28T00:00:00Z"
     }
@@ -166,7 +649,6 @@
       "minimum_time": 20
     }
   },
-
   {
     "model": "ouel_courses.question",
     "pk": 1,
@@ -223,7 +705,6 @@
       "question": 2
     }
   },
-
   {
     "model": "ouel_courses.resource",
     "pk": 1,
@@ -262,7 +743,6 @@
       "lesson": 1
     }
   },
-
   {
     "model": "ouel_courses.forum",
     "pk": 1,
@@ -273,7 +753,6 @@
       "updated_date": "2026-02-28T00:00:00Z"
     }
   },
-
   {
     "model": "ouel_courses.enrollment",
     "pk": 1,
@@ -283,6 +762,18 @@
       "conclusion": "",
       "user": 1,
       "course": 1,
+      "enrolled_at": "2026-02-28T00:00:00Z"
+    }
+  },
+  {
+    "model": "ouel_courses.enrollment",
+    "pk": 2,
+    "fields": {
+      "percentage_completed": 10.5,
+      "is_completed": false,
+      "conclusion": "",
+      "user": 2,
+      "course": 2,
       "enrolled_at": "2026-02-28T00:00:00Z"
     }
   },

@@ -1,18 +1,37 @@
-from rest_framework import viewsets, permissions, status 
+from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from . import selectors, services, serializers
+from . import selectors, services, serializers, paginators, perms
+from .models import Course
 
 class CourseViewSet(viewsets.ViewSet):
     permission_classes = [permissions.AllowAny]
+    pagination_class = paginators.CoursePaginator
 
     def list(self, request):
-        courses = selectors.get_available_courses()
-        serializer = serializers.CourseOutputSerializer(courses, many=True)
+        courses = selectors.get_available_courses(
+            user=request.user,
+            filters=request.query_params
+        )
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(courses, request)
+        if page is not None:
+            course_ids = [c.id for c in page]
+            enrollments_map = services.get_user_enrollments_map(request.user, course_ids)
+            serializer = serializers.CourseOutputSerializer(
+                page, many=True,
+                context={'request': request, 'enrollments_map': enrollments_map}
+            )
+            return paginator.get_paginated_response(serializer.data)
+
+        enrollments_map = services.get_user_enrollments_map(
+            request.user, [c.id for c in courses]
+        )
+        serializer = serializers.CourseOutputSerializer(courses, many=True, context={'request': request, 'enrollments_map': enrollments_map})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        course = selectors.get_course_by_id(pk)
+        course = selectors.get_course_by_id(course_id=pk)
         serializer = serializers.CourseOutputSerializer(course)
         return Response(serializer.data)
 
@@ -21,6 +40,48 @@ class CourseViewSet(viewsets.ViewSet):
         services.enroll_user_in_course(request.user, pk)
         return Response({"detail": "Đăng ký khóa học thành công."}, status=status.HTTP_201_CREATED)
 
+class LessonAttemptViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    @action(detail=True, methods=['post'], url_path='submit')
+    def submit_attempt(self, request, pk=None):
+        try:
+            attempt = services.attempt_lesson_service(
+                user=request.user,
+                lesson_id=pk,
+                data=request.data
+            )
+
+            return Response({
+                "detail": "Ghi nhận nộp bài thành công",
+                "is_completed": attempt.is_completed,
+                "score": attempt.score
+            }, status=status.HTTP_200_OK)
+
+        except ValueError as e:
+            return Response({"detail": e.messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            return Response({"detail": "Đã xảy ra lỗi hệ thống"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class SubjectViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.AllowAny]
+
+    def list(self, request):
+        subjects = selectors.get_list_subject()
+        serializer = serializers.SubjectSerializer(subjects, many=True)
+        return Response(serializer.data)
+
+class EnrollmentViewSet(viewsets.ViewSet):
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [perms.IsEnrollmentOwner()]
+        return [permissions.IsAuthenticated()]
+
+    def retrieve(self, request, pk=None):
+        enrollment = selectors.get_enrollment_by_id(pk)
+        self.check_object_permissions(request, enrollment)
+        serializer = serializers.EnrollmentSerializer(enrollment)
+        return Response(serializer.data)
 
 class ForumPostViewSet(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]

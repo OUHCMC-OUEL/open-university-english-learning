@@ -58,26 +58,26 @@ class SectionAdmin(admin.ModelAdmin):
     autocomplete_fields = ('course',)
 
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ('title', 'course', 'created_date', 'updated_date')
+    list_display = ('title', 'section', 'created_date', 'updated_date')
     search_fields = ('title',)
     readonly_fields = ('created_date', 'updated_date')
-    autocomplete_fields = ('course',)
+    autocomplete_fields = ('section',)
     inlines = (ResourceLessonInline,)
 
 
 class TheoryLessonAdmin(admin.ModelAdmin):
-    list_display = ('title', 'course', 'minimum_time', 'created_date')
+    list_display = ('title', 'section', 'minimum_time', 'created_date')
     search_fields = ('title',)
     readonly_fields = ('created_date', 'updated_date')
-    autocomplete_fields = ('course',)
+    autocomplete_fields = ('section',)
 
 
 class AssignmentLessonAdmin(admin.ModelAdmin):
-    list_display = ('title', 'course', 'assignment_type', 'score', 'max_attempts', 'strict_mode')
+    list_display = ('title', 'section', 'assignment_type', 'score', 'max_attempts', 'strict_mode')
     list_filter = ('assignment_type', 'strict_mode')
     search_fields = ('title',)
     readonly_fields = ('created_date', 'updated_date')
-    autocomplete_fields = ('course',)
+    autocomplete_fields = ('section',)
     inlines = (QuestionInline,)
 
 

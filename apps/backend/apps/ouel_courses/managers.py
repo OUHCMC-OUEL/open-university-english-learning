@@ -1,11 +1,25 @@
 from django.db import transaction
-from .models import Enrollment, ForumPost, Reply, CommentInteraction, LikeInteraction
+from .models import Enrollment, ForumPost, Reply, CommentInteraction, LikeInteraction, LessonAttempt
+
 
 class CourseManager:
     @staticmethod
     def create_enrollment(user, course):
         return Enrollment.objects.create(user=user, course=course)
 
+class LessonManager:
+    @staticmethod
+    def create_lesson_attempt(user, lesson, is_completed=False, score=None):
+        attempt, created = LessonAttempt.objects.update_or_create(
+            user=user,
+            lesson=lesson,
+            defaults={
+                'is_completed': is_completed,
+                'score': score,
+                'is_passed': (score >= 5 if score is not None else is_completed)
+            }
+        )
+        return attempt
 class ForumManager:
     @staticmethod
     def create_post(user, forum_id, name, content):

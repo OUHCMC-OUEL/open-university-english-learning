@@ -13,22 +13,6 @@ function WritingApp() {
 
   const {present, set, undo, redo, canUndo, canRedo } = useUndoRedo("");
 
-  // const handleUpdate = (issue) => {
-  //   Modal.confirm({
-  //     title: "Áp dụng chỉnh sửa?",
-  //     content: "Nội dung sẽ được cập nhật",
-  //     onOk: () => {
-  //       set(
-  //         present.slice(0, issue.start) +
-  //         issue.fix +
-  //         present.slice(issue.end)
-  //       );
-
-  //       handleDismiss(issue.id);
-  //     }
-  //   });
-  // };
-
   const handleUpdate = async (issue) => {
   try {
     setLoading(true);

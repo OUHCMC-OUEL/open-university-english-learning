@@ -6,8 +6,49 @@ def enroll_user_in_course(user, course_id: int):
     
     if selectors.check_user_enrolled(user, course):
         raise ValidationError("Bạn đã đăng ký khóa học này rồi.")
-        
     return managers.CourseManager.create_enrollment(user, course)
+
+def attempt_lesson_service(user, lesson_id: int, data: dict = None):
+    data = data or {}
+    lesson = selectors.get_lesson_by_id(lesson_id)
+
+    course = lesson.section.course
+    is_enrolled = selectors.check_user_enrolled(user, course)
+    if not is_enrolled:
+        raise PermissionDenied("Bạn chưa đăng ký khóa học này nên không thể thực hiện bài học.")
+
+    is_completed = False
+    score = data.get('score', 0)
+    time_spent = data.get('time_spent', 0)
+
+    if hasattr(lesson, 'theorylesson'):
+        theory = lesson.theorylesson
+        if time_spent >= theory.minimum_time:
+            is_completed = True
+        else:
+            raise ValidationError(f"Bạn cần học ít nhất {theory.minimum_time} giây để hoàn thành.")
+
+    elif hasattr(lesson, 'assignmentlesson'):
+        assignment = lesson.assignmentlesson
+        if score >= 5:
+            is_completed = True
+        else:
+            is_completed = False
+
+    attempt = managers.LessonManager.create_lesson_attempt(
+        user=user,
+        lesson=lesson,
+        is_completed=is_completed,
+        score=score
+    )
+    return attempt
+
+def get_user_enrollments_map(user, course_ids) -> dict:
+    if not user or not user.is_authenticated:
+        return {}
+
+    enrollments = selectors.get_enrollment_by_user(user).filter(course_id__in=course_ids)
+    return {e.course_id: e for e in enrollments}
 
 def manage_forum_post(action: str, user, data: dict, post_id: int = None):
     if action == 'create':
@@ -17,7 +58,6 @@ def manage_forum_post(action: str, user, data: dict, post_id: int = None):
         return managers.ForumManager.create_post(
             user=user, forum_id=data['forum_id'], name=data['name'], content=data['content']
         )
-    
 
     post = selectors.get_post_by_id(post_id)
     if post.user != user:

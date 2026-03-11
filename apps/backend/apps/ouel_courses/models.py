@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from apps.ouel_oauth.models import User
 
@@ -65,9 +66,14 @@ class Section(models.Model):
 class Lesson(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
+    attachment = models.FileField(upload_to='lessons/%Y/%m/%d',
+                                  validators=[FileExtensionValidator(
+                                      allowed_extensions=['pdf', 'doc', 'docx', 'ppt', 'pptx', 'zip', 'mp4', 'mp3',
+                                                          'png', 'jpg'])],
+                                  max_length=255, default='')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-    course = models.ForeignKey(Course, related_name='lessons', on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, related_name='lessons', on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.title
@@ -80,7 +86,7 @@ class ResourceLesson(models.Model):
         return f"{self.resource.name} for {self.lesson.title}"
 
 class TheoryLesson(Lesson):
-    minimum_time = models.IntegerField(help_text="Minimum time in minutes to complete the lesson")
+    minimum_time = models.IntegerField(help_text="Thời gian tối đa hoàn thành bài học")
 
 class AssignmentLesson(Lesson):
     score = models.IntegerField(help_text="Score for the assignment")
